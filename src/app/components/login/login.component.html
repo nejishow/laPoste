@@ -1,0 +1,28 @@
+  <div class="row justify-content-center">
+    <div class="col-12 text-center mt-5">
+      <img class="mx-2" src="../../../assets/logo.png" width="50" alt="La poste logo" />
+
+    </div>
+    <div class="col-sm-12 col-md-5 card p-5 border-info">
+      <h4>Connection</h4>
+      <div class="form-group">
+        <div class="form-group">
+          <label class="form-check-label small font-italic font-weight-bold">Votre email</label>
+          <input id="email" v-model="loginForm.email" type="text" class="form-control" placeholder="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-check-label small font-italic font-weight-bold">Votre mot de passe</label>
+          <input id="password" v-model="loginForm.password" type="password" class="form-control"
+            placeholder="mot de passe" />
+        </div>
+        <div class="form-group d-flex">
+          <button class="btn btn-group btn-outline-warning text-primary" (click)="submit()">
+            Connection
+          </button>
+        </div>
+      </div>
+      <span class="text-danger bg-white rounded-pill text-center">{{
+        error
+      }}</span>
+    </div>
+  </div>

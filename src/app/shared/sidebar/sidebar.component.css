@@ -1,0 +1,7 @@
+.divider {
+  border: #FFEB3B solid 1px;
+}
+.remove {
+  position: absolute;
+  z-index: 2;
+}

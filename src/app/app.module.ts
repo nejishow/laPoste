@@ -1,18 +1,57 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material/angular-material.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClientComponent } from './components/client/client.component';
+import { MyProfilComponent } from './components/my-profil/my-profil.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { BpComponent } from './components/bp/bp.component';
+import { AllBpComponent } from './components/all-bp/all-bp.component';
+import { ClientsComponent } from './components/clients/clients.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LoginComponent } from './components/login/login.component';
+import { AddClientComponent } from './components/add-client/add-client.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidebarComponent,
+    FooterComponent,
+    NavbarComponent,
+    ClientComponent,
+    MyProfilComponent,
+    NotificationsComponent,
+    BpComponent,
+    AllBpComponent,
+    ClientsComponent,
+    DashboardComponent,
+    LoginComponent,
+    AddClientComponent,
+
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
-export class AppModule { }
+export class AppModule {}

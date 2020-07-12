@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-sm-12 col-md-8">
+    <div class="card">
+      <h4 class="card-header bg-dark text-light">Abonnés</h4>
+      <div class="card-body menuB">
+        <button mat-raised-button class="btn btn-success btn-sm " routerLink="/addClient">
+          Ajouter un abonné
+        </button>
+      </div>
+      <div class="form-check-inline card-body">
+        <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher un abonné"
+          aria-label="Rechercher" />
+        <button class="btn btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
+          (click)="search()">
+          Rechercher
+        </button>
+        <button class="btn btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)=" this.initForm()">
+          Effacer
+        </button>
+      </div>
+      <div *ngIf="searchResults">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of Users; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user.name }}</td>
+              <td>
+                <button (click)="details(user.idUser)" class="btn btn-group btn-outline-primary">
+                  Consulter
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <button class="btn btn-group btn-danger" *ngIf="errorMessage">
+          Cet utilisateur n'existe pas
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-4">
+    <div class="card">
+      <h4 class="card-header bg-dark text-light">Messages</h4>
+      <div class="card-body menuB">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="d-flex sm">
+              <button class="btn btn-outline-success" (click)="showSms()">Message groupé</button>
+              <button class="btn btn-outline-primary" (click)="showMail()">Mail groupé</button>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <form *ngIf="mail">
+              <mat-form-field class="form-group">
+                <textarea matInput placeholder="Ecrivez votre mail" type="text" name="" id="" cols="5"
+                  rows="5"></textarea>
+              </mat-form-field>
+              <button class=" btn btn-primary mat-raised-button">envoyer le mail</button>
+            </form>
+            <form *ngIf="sms">
+              <mat-form-field class="form-group">
+                <textarea matInput placeholder="Ecrivez votre sms" type="text" name="" id="" cols="5"
+                  rows="5"></textarea>
+              </mat-form-field>
+              <button class="btn btn-success mat-raised-button">envoyer le sms</button>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-10">
+    <div class="card">
+      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+      </mat-paginator>
+      <div class="example-container mat-elevation-z8 card-body">
+        <mat-table [dataSource]="datasource" matSort>
+          <!-- ID Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nom
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="tel">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Tel
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.tel }} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Email
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
+          </ng-container>
+
+             <ng-container matColumnDef="address">
+               <mat-header-cell *matHeaderCellDef mat-sort-header>
+                 Addresse
+               </mat-header-cell>
+               <mat-cell *matCellDef="let row"> {{ row.address }} </mat-cell>
+             </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Action
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button (click)="details(row.id)" class="btn btn-group btn-outline-primary">
+                Consulter
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>
