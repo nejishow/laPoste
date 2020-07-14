@@ -1,3 +1,6 @@
+import { AddBPComponent } from './components/add-bp/add-bp.component';
+import { BpComponent } from './components/bp/bp.component';
+import { AllBpComponent } from './components/all-bp/all-bp.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ClientComponent } from './components/client/client.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
@@ -12,6 +15,9 @@ export const AppRoutes: Routes = [
   { path: 'clients', component: ClientsComponent },
   { path: 'addClient', component: AddClientComponent },
   { path: 'client/:id', component: ClientComponent },
+  { path: 'allBp', component: AllBpComponent },
+  { path: 'addBP', component: AddBPComponent },
+  { path: 'bp/:id', component: BpComponent },
   {
     path: '**',
     redirectTo: 'dashboard'

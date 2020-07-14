@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-12 p-4 text-right">
-        <fa-icon [icon]="faTimes" (click)="close()" class="remove btn-group btn p-1"></fa-icon>
+      <fa-icon [icon]="faTimes" (click)="close()" class="remove btn-group btn p-1"></fa-icon>
       <div class="logo d-flex align-items-center">
         <img width="50" class="img-fluid mr-2" src="assets/logo.png">
         <h4>La Poste</h4>
@@ -14,12 +14,17 @@
     <div class="col-12">
 
       <mat-list>
-        <mat-list-item *ngFor="let menuItem of menuItems" routerLinkActive="active" class="{{menuItem.class}}
-          nav-item">
-          <a [routerLink]="[menuItem.path]">
-            <i class="nc-icon {{menuItem.icon}}"></i>
+        <mat-list-item *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
+          <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()">
+            <fa-icon [icon]="menuItem.icon" class="mr-2"></fa-icon>
             <p>{{menuItem.title}}</p>
           </a>
+        </mat-list-item>
+        <mat-list-item class="nav-item">
+          <button class="btn-group  btn d-flex logout" (click)="close()">
+            <fa-icon [icon]="faSignOut"></fa-icon>
+            <p>Se deconnecter</p>
+          </button>
         </mat-list-item>
       </mat-list>
     </div>

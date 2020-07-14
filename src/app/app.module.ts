@@ -19,6 +19,8 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
+import { ComptabiliteComponent } from './components/statistiques/comptabilite/comptabilite.component';
+import { AddBPComponent } from './components/add-bp/add-bp.component';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { AddClientComponent } from './components/add-client/add-client.component
     DashboardComponent,
     LoginComponent,
     AddClientComponent,
+    ComptabiliteComponent,
+    AddBPComponent,
 
   ],
   imports: [

@@ -1,9 +1,14 @@
-<div class="container-fluid p-4 text-info navbar">
+<div class="container-fluid p-4 navbar mb-5">
   <div class="row">
     <div class="col-12">
-      <h4 class="navbar-brand">{{getTitle()}}</h4>
-      <button mat-raised-button (click)="toggle()">Toggle drawer</button>
+      <button class="navbar-toggler border" (click)="toggle()" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <fa-icon [icon]="faBars" class="remove btn-group btn p-1"></fa-icon>
 
+      </button>
+
+      <h2 class="navbar-brand title ml-5">{{getTitle()}}</h2>
 
     </div>
   </div>

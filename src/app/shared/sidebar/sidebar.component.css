@@ -5,3 +5,12 @@
   position: absolute;
   z-index: 2;
 }
+.logout {
+    color: #0c3da2;
+    border: red solid 1px;
+}
+
+.menu {
+  color: #0c3da2;
+
+}

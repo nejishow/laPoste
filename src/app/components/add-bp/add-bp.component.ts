@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-client',
-  templateUrl: './add-client.component.html',
-  styleUrls: ['./add-client.component.css']
+  selector: 'app-add-bp',
+  templateUrl: './add-bp.component.html',
+  styleUrls: ['./add-bp.component.css']
 })
-export class AddClientComponent implements OnInit {
+export class AddBPComponent implements OnInit {
   errorMessage;
-  userForm: FormGroup;
+  boiteForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
 
@@ -20,7 +20,7 @@ export class AddClientComponent implements OnInit {
     // );
   }
   initForm() {
-    this.userForm = this.formBuilder.group({
+    this.boiteForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       age: ['', [Validators.required]],
       genre: ['', [Validators.required]],

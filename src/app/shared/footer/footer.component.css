@@ -1,4 +1,5 @@
-.container {
+.container-fluid {
   bottom: 0;
-  border: solid black;
+  margin-top: 100px;
+  background: #0c3da2;
 }

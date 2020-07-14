@@ -1,1 +1,124 @@
-<p>client works!</p>
+<div class="row d-flex justify-content-between">
+  <div class=" col-12 col-md-5 rounded border" *ngIf="!modify">
+    <h2>
+      <fa-icon [icon]="faUser"></fa-icon>
+      Profil du client
+    </h2>
+    <div class="card-avatar d-flex justify-content-between">
+      <img class="img img-thumbnail" width="100" [src]="User?.photo" />
+      <div class="">
+        <button class="btn btn-group btn-outline-info" width="50" height="20" (click)="modify = true">Modifier</button>
+      </div>
+    </div>
+    <div class="mt-2">
+      <span class="border badge-pill badge-success">Statut actif</span>
+    </div>
+    <div class="card-body">
+      <mat-nav-list>
+        <mat-list-item class="card-header text-center">
+          <h4>{{ User?.name }}</h4>
+        </mat-list-item>
+        <mat-list-item> Telephone: {{ User?.tel }} </mat-list-item>
+        <mat-list-item> Sexe: {{ User?.sexe }} </mat-list-item>
+        <mat-list-item> Addresse: {{ User?.address }}</mat-list-item>
+        <mat-list-item> Email: {{ User?.email }} </mat-list-item>
+      </mat-nav-list>
+
+    </div>
+  </div>
+  <div class=" col-12 col-md-5 rounded border" *ngIf="modify">
+    <h2>
+      <fa-icon [icon]="faUser"></fa-icon>
+      Modifier le client
+    </h2>
+    <div class="card-avatar d-flex justify-content-between">
+      <img class="img img-thumbnail" width="100" [src]="User?.photo" />
+      <div class="">
+        <button class="btn btn-group btn-outline-danger" width="50" height="20"
+          (click)="modify = false">Annuler</button>
+        <button class="btn btn-group btn-outline-success" width="50" height="20" (click)="save()">Sauvegarder</button>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <mat-nav-list>
+        <mat-list-item class="card-header text-center">
+          <span>Nom: </span><input type="text" [value]="User?.name">
+        </mat-list-item>
+        <mat-list-item> Telephone: <input type="text" [value]="User?.tel"></mat-list-item>
+        <mat-list-item> Sexe: <input type="text" [value]="User?.sexe"></mat-list-item>
+        <mat-list-item> Addresse: <input type="text" [value]="User?.address"></mat-list-item>
+        <mat-list-item> Email: <input type="text" [value]="User?.email"></mat-list-item>
+      </mat-nav-list>
+
+    </div>
+  </div>
+  <div class="col-12 col-md-5 rounded border">
+    <h2>
+      <fa-icon [icon]="faBox"></fa-icon>
+      Boite Postale
+    </h2>
+    <div class="card-body">
+      <mat-nav-list>
+        <mat-list-item> Numero de la boite: {{ User?.tel }} </mat-list-item>
+        <mat-list-item> Année de l'abonnement: 2013 </mat-list-item>
+      </mat-nav-list>
+      <mat-divider></mat-divider>
+      <button class="mt-3 btn btn-group btn-danger text-white" width="50" height="20">Resilier</button>
+
+    </div>
+
+  </div>
+</div>
+<mat-divider class="mt-2 mb-2"></mat-divider>
+
+<div class="row">
+  <div class="col-12">
+    <h2>
+      <fa-icon [icon]="faMoney"></fa-icon>
+      Historique des paiements
+    </h2>
+    <div class="table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Période</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Payé le</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Decembre 2019</td>
+            <td>Impayé <fa-icon [icon]="faExc" class="text-danger"></fa-icon>
+            </td>
+            <td></td>
+            <td><button class="btn btn-group btn-info">Payer</button></td>
+          </tr>
+          <tr>
+            <td>Novembre 2019</td>
+            <td>Impayé <fa-icon [icon]="faExc" class="text-danger"></fa-icon>
+            </td>
+            <td></td>
+            <td><button class="btn btn-group btn-info">Payer</button></td>
+          </tr>
+          <tr>
+            <td>Octobre 2019</td>
+            <td>Impayé <fa-icon [icon]="faExc" class="text-danger"></fa-icon>
+            </td>
+            <td></td>
+            <td><button class="btn btn-group btn-info">Payer</button></td>
+          </tr>
+          <tr>
+            <td>Septembre 2019</td>
+            <td>Impayé <fa-icon [icon]="faExc" class="text-danger"></fa-icon>
+            </td>
+            <td></td>
+            <td><button class="btn btn-group btn-info">Payer</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,93 @@
-<p>add-client works!</p>
+<div class="row">
+  <div class="col-md-8">
+    <div class="card border-info">
+      <h4 class="card-header">Ajouter un client</h4>
+      <div class="card-body">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <mat-form-field class=" form-group border-right border-left border-dark rounded">
+                  <input matInput formControlName="name" placeholder="Nom complet" type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <mat-form-field class="form-group border-right border-left border-dark rounded">
+                  <input matInput formControlName="email" placeholder="Addresse email" type="email" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field class="form-group border-right border-left border-dark rounded">
+                  <input matInput formControlName="cin" placeholder="CIN" type="number" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <mat-form-field class="form-group border-right border-left border-dark rounded">
+                  <input matInput formControlName="address" placeholder="Addresse complete" type="text" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <mat-form-field class="form-group border-right border-left border-dark rounded">
+                  <input matInput formControlName="number" placeholder="Numero" type="number" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label>Sexe</label>
+              <div class="form-group">
+                <mat-form-field class="form-group border  border-dark rounded">
+                  <mat-select matInput formControlName="genre" name="genre" id="genre">
+                    <mat-option value="Homme">Homme</mat-option>
+                    <mat-option value="Femme">Femme</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label>BP</label>
+              <div class="form-group">
+                <mat-form-field class="form-group border  border-dark rounded">
+                  <mat-select matInput formControlName="bp" name="bp" id="bp">
+                    <mat-option value="1">123</mat-option>
+                    <mat-option value="2">124</mat-option>
+                    <mat-option value="3">125</mat-option>
+                    <mat-option value="4">126</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <span>
+                <em>Prix: 2500 fDJ </em>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" id="pic">
+            <label for="file" class="disappear">Ajouter une photo</label>
+            <input type="file" class="disappear" accept=".png,.jpg" />
+          </div>
+
+          <button mat-raised-button type="submit" class="btn-group btn-outline-primary" [disabled]="userForm.invalid">
+            Ajouter un client
+          </button>
+          <div class="clearfix"></div>
+        </form>
+        <p class="text-danger">{{ errorMessage }}</p>
+      </div>
+    </div>
+  </div>
+
+</div>

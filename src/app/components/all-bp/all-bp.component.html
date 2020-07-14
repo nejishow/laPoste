@@ -1,1 +1,99 @@
-<p>all-bp works!</p>
+<div class="row">
+  <div class="col-sm-12 col-md-8">
+    <div class="card">
+      <h4 class="card-header">Boites postales</h4>
+      <div class="card-body menuB">
+        <button mat-raised-button class="btn btn-success btn-sm " routerLink="/addBP">
+          Ajouter une boite postale
+        </button>
+      </div>
+      <div class="form-check-inline card-body">
+        <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher une boite"
+          aria-label="Rechercher" />
+        <button class="btn btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
+          (click)="search()">
+          Rechercher
+        </button>
+        <button class="btn btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)=" this.initForm()">
+          Effacer
+        </button>
+      </div>
+      <div *ngIf="searchResults">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of Users; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user.name }}</td>
+              <td>
+                <button (click)="details(user.idUser)" class="btn btn-group btn-outline-primary">
+                  Consulter
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <button class="btn btn-group btn-danger" *ngIf="errorMessage">
+          Cet utilisateur n'existe pas
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-10">
+    <div class="card">
+      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+      </mat-paginator>
+      <div class="example-container mat-elevation-z8 card-body">
+        <mat-table [dataSource]="datasource" matSort>
+          <!-- Progress Column -->
+          <ng-container matColumnDef="number">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Numero
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.number }} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Type
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.type }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Prix
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.price }} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Action
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button (click)="details(row.id)" class="btn btn-group btn-outline-primary">
+                Consulter
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>
