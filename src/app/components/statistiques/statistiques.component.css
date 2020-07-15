@@ -1,0 +1,13 @@
+.client-card {
+  border:solid 1px #0c3da2;
+}
+.boite-card{
+  border: solid 1px #fced1a;
+}
+.boite-header {
+  background: #fced1a;
+  color: #0c3da2;
+}
+.list-group-item {
+  border: blue;
+}

@@ -1,3 +1,4 @@
+import { StatistiquesComponent } from './components/statistiques/statistiques.component';
 import { AddBPComponent } from './components/add-bp/add-bp.component';
 import { BpComponent } from './components/bp/bp.component';
 import { AllBpComponent } from './components/all-bp/all-bp.component';
@@ -18,6 +19,7 @@ export const AppRoutes: Routes = [
   { path: 'allBp', component: AllBpComponent },
   { path: 'addBP', component: AddBPComponent },
   { path: 'bp/:id', component: BpComponent },
+  { path: 'stats', component: StatistiquesComponent },
   {
     path: '**',
     redirectTo: 'dashboard'

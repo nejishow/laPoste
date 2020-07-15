@@ -10,12 +10,10 @@ export interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'Acceuil', icon: faHome, class: '' },
-  { path: '/login', title: 'Se connecter', icon: faSignInAlt, class: '' },
   { path: '/clients', title: 'Clients', icon: faUser, class: '' },
   { path: '/allBp', title: 'Boites postales', icon: faBox, class: '' },
   { path: '/stats', title: 'Statistiques', icon: faChartLine, class: '' },
   { path: '/notifications', title: 'Notifications', icon: faBell, class: '' },
-  { path: '/profil', title: 'Mon profil', icon: faCog, class: '' }
 ];
 
 @Component({
@@ -28,6 +26,8 @@ export class SidebarComponent implements OnInit {
 
   faTimes = faTimes;
   faSignOut = faSignOutAlt;
+  faSignIn = faSignInAlt;
+  faCog = faCog;
   public menuItems: any[];
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);

@@ -21,6 +21,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { ComptabiliteComponent } from './components/statistiques/comptabilite/comptabilite.component';
 import { AddBPComponent } from './components/add-bp/add-bp.component';
+import { StatistiquesComponent } from './components/statistiques/statistiques.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { AddBPComponent } from './components/add-bp/add-bp.component';
     AddClientComponent,
     ComptabiliteComponent,
     AddBPComponent,
+    StatistiquesComponent,
 
   ],
   imports: [

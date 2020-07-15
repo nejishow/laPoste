@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <mat-drawer-container class="example-container" hasBackDrop="true">
+  <mat-drawer-container class="example-container" [hasBackdrop]="true">
     <mat-drawer #drawer mode="over" class="sidebar">
       <div class="" data-color="white" data-active-color="danger">
         <app-sidebar (closed)="drawer.toggle()"></app-sidebar>

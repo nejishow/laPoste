@@ -2,14 +2,44 @@
   <div class="row">
     <div class="col-12 p-4 text-right">
       <fa-icon [icon]="faTimes" (click)="close()" class="remove btn-group btn p-1"></fa-icon>
-      <div class="logo d-flex align-items-center">
-        <img width="50" class="img-fluid mr-2" src="assets/logo.png">
-        <h4>La Poste</h4>
+      <div class="logo d-flex menu align-items-center">
+        <img width="70" class="img-fluid mr-2" src="assets/logo.png">
+        <span class="h2">𝕃𝕒 ℙ𝕠𝕤𝕥𝕖</span>
       </div>
     </div>
     <div class="col-12">
       <mat-divider class="divider"></mat-divider>
-
+    </div>
+    <div class="col-12">
+      <mat-list>
+        <mat-mat-list-item class="nav-item">
+          <a class="d-flex menu align-items-center mb-3" (click)="close()">
+            <img src="../../../assets/agent.png" width="30" alt="">
+            <span class="agent">Houssein Bodeh</span>
+          </a>
+        </mat-mat-list-item>
+        <mat-list-item class="nav-item">
+          <a routerLink="/login" class="d-flex menu" (click)="close()">
+            <fa-icon [icon]="faSignIn" class="mr-2"></fa-icon>
+            <p>Se connecter</p>
+          </a>
+        </mat-list-item>
+        <mat-list-item class="nav-item">
+          <a routerLink="/profile" class="d-flex menu" (click)="close()">
+            <fa-icon [icon]="faCog" class="mr-2"></fa-icon>
+            <p>Mon profil</p>
+          </a>
+        </mat-list-item>
+        <mat-list-item class="nav-item">
+          <a class="d-flex text-danger" (click)="close()">
+            <fa-icon [icon]="faSignOut" class="mr-2"></fa-icon>
+            <p>Se deconnecter</p>
+          </a>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-12">
+      <mat-divider class="divider"></mat-divider>
     </div>
     <div class="col-12">
 
@@ -19,12 +49,6 @@
             <fa-icon [icon]="menuItem.icon" class="mr-2"></fa-icon>
             <p>{{menuItem.title}}</p>
           </a>
-        </mat-list-item>
-        <mat-list-item class="nav-item">
-          <button class="btn-group  btn d-flex logout" (click)="close()">
-            <fa-icon [icon]="faSignOut"></fa-icon>
-            <p>Se deconnecter</p>
-          </button>
         </mat-list-item>
       </mat-list>
     </div>
