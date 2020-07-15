@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { ChartsModule } from 'ng2-charts';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,6 +54,7 @@ import { StatistiquesComponent } from './components/statistiques/statistiques.co
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    ChartsModule
 
   ],
   providers: [],

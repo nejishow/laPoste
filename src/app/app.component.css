@@ -14,7 +14,6 @@
   overflow-x: hidden;
   /* Disable horizontal scroll */
 }
-
 @media (max-width: 769px) {
   .sidebar {
     width: 80%;
@@ -34,4 +33,5 @@
   /* Stay at the top */
   left: 0;
   /* Black */
+
 }

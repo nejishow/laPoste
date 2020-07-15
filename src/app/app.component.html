@@ -6,13 +6,14 @@
       </div>
     </mat-drawer>
     <mat-drawer-content class=" border mainPanel">
-      <div>
+      <div class="container-fluid mb-5 bg-white">
         <app-navbar (toggled)="drawer.toggle()"></app-navbar>
-        <div class="content container">
-          <router-outlet></router-outlet>
-        </div>
-        <app-footer></app-footer>
+
       </div>
+      <div class="content container">
+        <router-outlet></router-outlet>
+      </div>
+      <app-footer></app-footer>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>

@@ -1,1 +1,73 @@
-<p>dashboard works!</p>
+<div class="row justify-content-between">
+  <div class="col-12 col-md-3 ">
+    <div class="card box mat-raised-button m-2 bg-warning">
+      <img src="../../../assets/box.png" width="120" alt="">
+    </div>
+    <div class="top border-warning d-flex justify-content-between card mat-raised-button p-2 mt-4">
+      <div class="text text-right d-flex flex-column">
+        <span style="opacity: 0.6;">Boites</span>
+        <span class="h3">124</span>
+      </div>
+      <mat-divider class="p-2 border-warning"></mat-divider>
+      <div class="bottom">
+        <span class="h6">
+          Le nombre de boites postales en services.
+
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+   <div class="col-12 col-md-3 ">
+     <div class="card box mat-raised-button m-2 bg-info">
+       <img src="../../../assets/user.png" width="120" alt="">
+     </div>
+     <div class="top border-info d-flex justify-content-between card mat-raised-button p-2 mt-4">
+       <div class="text text-right d-flex flex-column">
+         <span style="opacity: 0.6;">Clients</span>
+         <span class="h3">6439</span>
+       </div>
+       <mat-divider class="p-2 border-info"></mat-divider>
+       <div class="bottom">
+         <span class="h6">
+           Le nombre de clients de la poste.
+
+         </span>
+       </div>
+     </div>
+
+   </div>
+    <div class="col-12 col-md-4 ">
+      <div class="card box mat-raised-button m-2 bg-success">
+        <img src="../../../assets/money.png" width="120" alt="">
+      </div>
+      <div class="top border-success d-flex justify-content-between card mat-raised-button p-2 mt-4">
+        <div class="text text-right d-flex flex-column">
+          <span style="opacity: 0.6;">Revenue mensuelle</span>
+          <span class="h3">2.387.920 FDJ</span>
+        </div>
+        <mat-divider class="p-2 border-success"></mat-divider>
+        <div class="bottom">
+          <span class="h6">
+            La recette de la poste du mois precedent.
+
+          </span>
+        </div>
+      </div>
+
+    </div>
+</div>
+<div class="row mt-5">
+  <div class="col-12 col-md-5">
+    <div class=" mat-raised-button rounded border border-success p-3" style="display: block;">
+      <div class="mb-5">
+        <span class="h2">Pourcentage de boites utilisées</span>
+      </div>
+      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+        [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+      </canvas>
+    </div>
+
+  </div>
+</div>

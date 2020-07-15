@@ -1,16 +1,12 @@
-<div class="container-fluid">
-  <nav class="p-4 navbar mb-5">
-    <button class="navbar-toggler border" (click)="toggle()" type="button" data-toggle="collapse"
-      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <fa-icon [icon]="faBars" class="btn-group btn p-1"></fa-icon>
+  <nav class="p-4 navbar align-items-baseline">
+    <button class="navbar-toggler border" (click)="toggle()" >
+      <fa-icon [icon]="faBars"></fa-icon>
     </button>
     <h2 class="navbar-brand title ml-5">{{getTitle()}}</h2>
-        <button matBadge="4" matBadgeOverlap="true" class="navbar-toggler border ml-auto right-0 btn-group btn p-1"
+        <button matBadge="4" matBadgeOverlap="true" class="navbar-toggler border ml-auto right-0 p-1"
           type="button">
     <fa-icon [icon]="faBell" class=""></fa-icon>
         </button>
 
   </nav>
 
-</div>

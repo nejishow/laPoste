@@ -1,0 +1,13 @@
+    .box {
+      position: absolute;
+      top: 0;
+      z-index: 9;
+
+      /* for demo purpose  */
+    }
+
+    .text {
+      position: relative;
+      margin: 20px;
+      /* for demo purpose  */
+    }
