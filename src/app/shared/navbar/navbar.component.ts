@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   private listTitles: any[];
   location: Location;
   faBars = faBars;
+  faBell = faBell;
   public isCollapsed = true;
   @ViewChild('app-navbar', { static: false }) button;
   @Output() toggled = new EventEmitter<boolean>();
@@ -26,7 +27,7 @@ export class NavbarComponent implements OnInit {
     { path: '/bp/', title: 'Informations sur la boite' },
     { path: '/addBP', title: 'Ajouter une boite postale' },
     { path: '/notifications', title: 'Notifications' },
-    { path: '/myProfil', title: 'Mon profil' },
+    { path: '/profil', title: 'Mon profil' },
     { path: '/stats', title: 'Statistiques' }
   ];
 

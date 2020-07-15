@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { ClientsComponent } from './components/clients/clients.component';
+import { MyProfilComponent } from './components/my-profil/my-profil.component';
 
 export const AppRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -20,6 +21,7 @@ export const AppRoutes: Routes = [
   { path: 'addBP', component: AddBPComponent },
   { path: 'bp/:id', component: BpComponent },
   { path: 'stats', component: StatistiquesComponent },
+  { path: 'profil', component: MyProfilComponent },
   {
     path: '**',
     redirectTo: 'dashboard'
