@@ -3,18 +3,35 @@
     <div class="card">
       <h4 class="card-header">Clients</h4>
       <div class="card-body menuB">
-        <button mat-raised-button class="btn btn-success btn-sm " routerLink="/addClient">
+        <button
+          mat-raised-button
+          class="btn btn-success btn-sm"
+          routerLink="/addClient"
+        >
           Ajouter un client
         </button>
       </div>
       <div class="form-check-inline card-body">
-        <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher un abonné"
-          aria-label="Rechercher" />
-        <button class="btn btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
-          (click)="search()">
+        <input
+          class="form-control"
+          [(ngModel)]="searchClient"
+          type="text"
+          placeholder="Rechercher un abonné"
+          aria-label="Rechercher"
+        />
+        <button
+          class="btn btn-outline-success"
+          type="submit"
+          [disabled]="searchClient.trim().length == 0"
+          (click)="search()"
+        >
           Rechercher
         </button>
-        <button class="btn btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)=" this.initForm()">
+        <button
+          class="btn btn-outline-danger"
+          [disabled]="searchClient.trim().length == 0"
+          (click)="this.initForm()"
+        >
           Effacer
         </button>
       </div>
@@ -32,7 +49,10 @@
               <td>{{ i + 1 }}</td>
               <td>{{ user.name }}</td>
               <td>
-                <button (click)="details(user.idUser)" class="btn btn-group btn-outline-primary">
+                <button
+                  (click)="details(user.idUser)"
+                  class="btn btn-group btn-outline-primary"
+                >
                   Consulter
                 </button>
               </td>
@@ -51,7 +71,12 @@
 <div class="row">
   <div class="col-sm-12 col-md-10">
     <div class="card">
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+      <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+      >
       </mat-paginator>
       <div class="example-container mat-elevation-z8 card-body">
         <mat-table [dataSource]="datasource" matSort>
@@ -63,36 +88,31 @@
             <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
           </ng-container>
 
-          <!-- Progress Column -->
-          <ng-container matColumnDef="tel">
+          <!-- clientType Column -->
+          <ng-container matColumnDef="clientType">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Tel
+              Type de client
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.tel }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.clientType }} </mat-cell>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="email">
+          <ng-container matColumnDef="boite">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Email
+              Numero de boite
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.boite }} </mat-cell>
           </ng-container>
 
-             <ng-container matColumnDef="address">
-               <mat-header-cell *matHeaderCellDef mat-sort-header>
-                 Addresse
-               </mat-header-cell>
-               <mat-cell *matCellDef="let row"> {{ row.address }} </mat-cell>
-             </ng-container>
-
-          <!-- Name Column -->
+          <!-- Action Column -->
           <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Action
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <button (click)="details(row.id)" class="btn btn-group btn-outline-primary">
+              <button
+                (click)="details(row.id)"
+                class="btn btn-group btn-outline-primary"
+              >
                 Consulter
               </button>
             </mat-cell>
@@ -104,4 +124,7 @@
       </div>
     </div>
   </div>
+</div>
+<div class="loading" *ngIf="clients.length<1">
+  <mat-spinner color="warning"></mat-spinner>
 </div>

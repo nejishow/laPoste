@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
+import { SharedService } from 'src/app/shared/shared.service';
 
 const ELEMENT_DATA = [
   { id: 1, number: 1234456, type: 'PETIT', price: '5000' },
@@ -39,8 +40,11 @@ export class AllBpComponent implements OnInit {
   constructor(
     // private userS: ClientsService,
     private route: Router,
-    private formBuilder: FormBuilder
+    private shared: SharedService
   ) {//
+    this.shared.getClients().subscribe((data)=>{
+      console.log(data);
+    })
   }
   showSms() {
     this.sms = true;

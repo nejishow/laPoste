@@ -5,7 +5,7 @@
       Profil du client
     </h2>
     <div class="card-avatar d-flex justify-content-between">
-      <img class="img img-thumbnail" width="100" [src]="User?.photo" />
+      <img class="img img-thumbnail" width="100" [src]="client?.photo" />
       <div class="">
         <button class="btn btn-group btn-outline-info" width="50" height="20" (click)="modify = true">Modifier</button>
       </div>
@@ -16,12 +16,12 @@
     <div class="card-body">
       <mat-nav-list>
         <mat-list-item class="card-header text-center">
-          <h4>{{ User?.name }}</h4>
+          <h4>{{ client?.name }}</h4>
         </mat-list-item>
-        <mat-list-item> Telephone: {{ User?.tel }} </mat-list-item>
-        <mat-list-item> Sexe: {{ User?.sexe }} </mat-list-item>
-        <mat-list-item> Addresse: {{ User?.address }}</mat-list-item>
-        <mat-list-item> Email: {{ User?.email }} </mat-list-item>
+        <mat-list-item> Telephone: {{ client?.number }} </mat-list-item>
+        <mat-list-item> Type de client: {{ client?.sexe }} </mat-list-item>
+        <mat-list-item> Addresse: {{ client?.address }}</mat-list-item>
+        <mat-list-item> Email: {{ client?.email }} </mat-list-item>
       </mat-nav-list>
 
     </div>
@@ -32,7 +32,7 @@
       Modifier le client
     </h2>
     <div class="card-avatar d-flex justify-content-between">
-      <img class="img img-thumbnail" width="100" [src]="User?.photo" />
+      <img class="img img-thumbnail" width="100" [src]="client?.photo" />
       <div class="">
         <button class="btn btn-group btn-outline-danger" width="50" height="20"
           (click)="modify = false">Annuler</button>
@@ -43,12 +43,12 @@
     <div class="card-body">
       <mat-nav-list>
         <mat-list-item class="card-header text-center">
-          <span>Nom: </span><input type="text" [value]="User?.name">
+          <span>Nom: </span><input type="text" [value]="client?.name">
         </mat-list-item>
-        <mat-list-item> Telephone: <input type="text" [value]="User?.tel"></mat-list-item>
-        <mat-list-item> Sexe: <input type="text" [value]="User?.sexe"></mat-list-item>
-        <mat-list-item> Addresse: <input type="text" [value]="User?.address"></mat-list-item>
-        <mat-list-item> Email: <input type="text" [value]="User?.email"></mat-list-item>
+        <mat-list-item> Telephone: <input type="text" [value]="client?.tel"></mat-list-item>
+        <mat-list-item> Type de client: <input type="text" [value]="client?.sexe"></mat-list-item>
+        <mat-list-item> Addresse: <input type="text" [value]="client?.address"></mat-list-item>
+        <mat-list-item> Email: <input type="text" [value]="client?.email"></mat-list-item>
       </mat-nav-list>
 
     </div>
@@ -60,7 +60,7 @@
     </h2>
     <div class="card-body">
       <mat-nav-list>
-        <mat-list-item> Numero de la boite: {{ User?.tel }} </mat-list-item>
+        <mat-list-item> Numero de la boite: {{ client?.boiteNumber }} </mat-list-item>
         <mat-list-item> Année de l'abonnement: 2013 </mat-list-item>
       </mat-nav-list>
       <mat-divider></mat-divider>

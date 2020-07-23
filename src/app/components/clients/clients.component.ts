@@ -1,55 +1,73 @@
 // import { ClientsService } from './../../services/clients.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { FormBuilder } from '@angular/forms';
-
-export interface User {
-  name: string;
-  tel: number;
-  id: number;
-  address: string;
-  email: string;
-}
-const ELEMENT_DATA = [
-  { id: 1, tel: 1234456, name: 'Osman', address: 'Balbala', email: 'xx@gmail.com' },
-  { id: 1, tel: 2234456, name: 'Idleh', address: 'Balbala', email: 'xx@gmail.come' },
-  { id: 1, tel: 3234456, name: 'Ali', address: 'Balbala', email: 'xx@gmail.comi' },
-  { id: 1, tel: 4234456, name: 'Mouna', address: 'Balbala', email: 'xx@gmail.come' },
-  { id: 1, tel: 5234456, name: 'Said', address: 'Balbala', email: 'xx@gmail.com' },
-  { id: 1, tel: 6234456, name: 'Kafia', address: 'Balbala', email: 'xx@gmail.com' },
-  { id: 1, tel: 7234456, name: 'Gregory', address: 'Balbala', email: 'xx@gmail.com' },
-  { id: 1, tel: 8234456, name: 'Liban', address: 'Balbala', email: 'xx@gmail.com' },
-  { id: 1, tel: 9234456, name: 'Chamis', address: 'Balbala', email: 'xx@gmail.com' },
-  { id: 1, tel: 12344560, name: 'Fozia', address: 'Balbala', email: 'xx@gmail.come' },
-];
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnChanges,
+  OnDestroy,
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
+import { FormBuilder } from "@angular/forms";
+import { ClientsService } from "src/app/services/clients.service";
+import { SharedService } from "src/app/shared/shared.service";
+import { Subscription } from "rxjs";
+import { BoitesService } from 'src/app/services/boites.service';
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css']
+  selector: "app-clients",
+  templateUrl: "./clients.component.html",
+  styleUrls: ["./clients.component.css"],
 })
 export class ClientsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   sms = true;
   mail = false;
-  searchClient = '';
+  searchClient = "";
   searchResults = false;
-  displayedColumns = ['name', 'address', 'tel', 'email', 'action'];
+  displayedColumns = ["name", "clientType", "boite", "action"];
   errorMessage = false;
   Users = [];
-  datasource = new MatTableDataSource(ELEMENT_DATA);
+  datasource;
+  clients= []; // le tableau final
+  allClients; // tous les clients
+  allClientTypes; // tous les types de clients
+  allBoites; // toutes les boites
+  subscription: Subscription; // doit etre supprimé sert a rien
   length;
   pageSize = 5;
-  pageSizeOptions: number[] = [5, 10];
+  pageSizeOptions: number[] = [5, 10, 15];
   constructor(
-    // private userS: ClientsService,
     private route: Router,
-    private formBuilder: FormBuilder
-  ) {//
+    private clientS: ClientsService,
+    private boiteS: BoitesService
+  ) { 
+    this.getData();
+
+   }
+  async getData() {
+    await this.clientS.getClients().subscribe(async (clients) => {
+      this.allClients = clients
+      await this.clientS.getClientType().subscribe(async (data) => {
+        this.allClientTypes = data
+        await this.boiteS.getBoites().subscribe(async (data) => {
+          this.allBoites = data          
+          this.clients = await this.createClientTable(this.allClients, this.allClientTypes, this.allBoites);
+          this.datasource = new MatTableDataSource(this.clients);
+          this.length = this.datasource.length;
+          this.datasource.sort = this.sort;
+          this.datasource.paginator = this.paginator;
+        });
+      });
+    });
+    this.initTable()
+    
+  }
+  ngOnChanges() {
+    //
   }
   showSms() {
     this.sms = true;
@@ -60,18 +78,36 @@ export class ClientsComponent implements OnInit {
     this.mail = true;
   }
   details(idUser) {
-    this.route.navigate(['/client/', idUser]);
+    this.route.navigate(["/client/", idUser]);
   }
-  ngOnInit() {
+  createClientTable(client, clientT, boite) {
+    let clients: Array <{id:string,name:string, clientType:string, boite:string}> =[] ;
+    client.forEach((c) => {
+      let data= {id:"",name:"",clientType:'',boite:""};
+      clientT.forEach((clientType) => {
+        if (c.idClientType == clientType._id) {
+          (data.name = c.name),
+          (data.id = c._id),
+            (data.clientType = clientType.name);
+        }
+      });
+      boite.forEach((b) => {
+        if (c.idBoite == b._id) {
+          (data.boite = b.number)
+        }
+      });
+      clients.push(data)
+    });
+    return clients;
+  }
+  async ngOnInit() {
     this.initForm();
-    this.length = ELEMENT_DATA.length;
+    //
+  }
+  initTable(){
+  }
+  // tslint:disable-next-line:use-lifecycle-interfac
 
-  }
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngAfterViewInit() {
-    this.datasource.sort = this.sort;
-    this.datasource.paginator = this.paginator;
-  }
   search() {
     // this.Users = [];
     // this.searchResults = false;

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faUser, faBox, faMoneyBillWave, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { ClientsService } from 'src/app/services/clients.service';
+import { BoitesService } from 'src/app/services/boites.service';
 
 
 @Component({
@@ -16,23 +18,19 @@ export class ClientComponent implements OnInit {
   faMoney = faMoneyBillWave;
   faExc = faExclamation;
 
-  User = {
-    name: 'Houssein',
-    tel: '234567',
-    address: 'Balbala',
-    email: 'xx@gmail.com',
-    sexe: 'Homme',
-    bp: '234',
-    photo: 'https://yscorporate.com/wp-content/uploads/2019/01/Photo-profil-professionnelle-par-photographe-entreprise10.jpg'
-  }
+  client ;
+  boite;
   constructor(private aR: ActivatedRoute,
     private route: Router,
+    private clientS: ClientsService,
+    private boiteS: BoitesService
   ) {
     this.aR.params.subscribe(params => {
       this.idUser = params.id;
-      // userS.getClient(this.id).subscribe((data: any) => {
-      //   this.User = data[0];
-      // });
+      clientS.getClient(params.id).subscribe((data: any) => {
+        this.client = data;
+        
+      });
     });
   }
 

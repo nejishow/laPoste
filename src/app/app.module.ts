@@ -5,9 +5,9 @@ import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { NavbarComponent } from './shared/navbar/navbar.component';
+import { SidebarComponent } from './layouts/sidebar/sidebar.component';
+import { FooterComponent } from './layouts/footer/footer.component';
+import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -24,6 +24,13 @@ import { AddClientComponent } from './components/add-client/add-client.component
 import { ComptabiliteComponent } from './components/statistiques/comptabilite/comptabilite.component';
 import { AddBPComponent } from './components/add-bp/add-bp.component';
 import { StatistiquesComponent } from './components/statistiques/statistiques.component';
+import { ClientsService } from './services/clients.service';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedService } from './shared/shared.service';
+import { StoreModule } from '@ngrx/store';
+import { clientReducers } from './store/index';
+import { EffectsModule } from '@ngrx/effects';
+import { ClientEffect } from './store/effects/clients.effect';
 
 
 @NgModule({
@@ -54,10 +61,12 @@ import { StatistiquesComponent } from './components/statistiques/statistiques.co
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    ChartsModule
-
+    ChartsModule,
+    HttpClientModule,
+    StoreModule.forRoot(clientReducers),
+    EffectsModule.forRoot([ClientEffect])
   ],
-  providers: [],
+  providers: [ ClientsService, SharedService],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
