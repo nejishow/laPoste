@@ -15,6 +15,8 @@ url = "http://localhost:3000"
   }
   getClientType() {
     return this.http.get(this.url +"/ClientT")
-
+  }
+  getClientBoite(id) {
+    return this.http.get(this.url +"/clientBoite/" + id)
   }
 }

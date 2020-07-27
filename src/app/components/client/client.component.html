@@ -19,7 +19,7 @@
           <h4>{{ client?.name }}</h4>
         </mat-list-item>
         <mat-list-item> Telephone: {{ client?.number }} </mat-list-item>
-        <mat-list-item> Type de client: {{ client?.sexe }} </mat-list-item>
+        <mat-list-item> Type de client: {{ client?.clientType }} </mat-list-item>
         <mat-list-item> Addresse: {{ client?.address }}</mat-list-item>
         <mat-list-item> Email: {{ client?.email }} </mat-list-item>
       </mat-nav-list>
@@ -46,7 +46,7 @@
           <span>Nom: </span><input type="text" [value]="client?.name">
         </mat-list-item>
         <mat-list-item> Telephone: <input type="text" [value]="client?.tel"></mat-list-item>
-        <mat-list-item> Type de client: <input type="text" [value]="client?.sexe"></mat-list-item>
+        <mat-list-item> Type de client: <input type="text" [value]="client?.clientType"></mat-list-item>
         <mat-list-item> Addresse: <input type="text" [value]="client?.address"></mat-list-item>
         <mat-list-item> Email: <input type="text" [value]="client?.email"></mat-list-item>
       </mat-nav-list>
@@ -120,5 +120,27 @@
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Numero de boite</th>
+          <th scope="col">Année de l'abonnement</th>
+          <th scope="col">Année de resiliation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let boite of boites">
+          <th scope="row">index</th>
+          <td>{{boite.boiteNumber}}</td>
+          <td>{{boite.startDate}}</td>
+          <td>{{boite.releaseDate}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

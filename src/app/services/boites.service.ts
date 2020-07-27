@@ -5,17 +5,19 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BoitesService {
-  url = "http://localhost:3000"
+  url = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
 
   getBoites() {
-    return this.http.get(this.url +"/boites")
+    return this.http.get(this.url + '/boites');
   }
   getBoite(id) {
-    return this.http.get(this.url +"/boite/"+id)
+    return this.http.get(this.url + '/boite/' + id);
   }
   getBoiteTypes() {
-    return this.http.get(this.url +"/boiteT")
-
+    return this.http.get(this.url + '/boiteT');
+  }
+  getBoiteClients(id) {
+    return this.http.get(this.url + '/boiteClient/' + id);
   }
 }

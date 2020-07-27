@@ -19,17 +19,19 @@ export class ClientComponent implements OnInit {
   faExc = faExclamation;
 
   client ;
-  boite;
+  boites;
   constructor(private aR: ActivatedRoute,
     private route: Router,
     private clientS: ClientsService,
     private boiteS: BoitesService
   ) {
-    this.aR.params.subscribe(params => {
+    this.aR.params.subscribe(async params => {
       this.idUser = params.id;
-      clientS.getClient(params.id).subscribe((data: any) => {
+      await clientS.getClient(params.id).subscribe((data: any) => {
         this.client = data;
-        
+      });
+      await clientS.getClientBoite(params.id).subscribe((data: any) => {
+        this.boites = data;
       });
     });
   }

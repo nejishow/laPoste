@@ -28,18 +28,14 @@ export class ClientsComponent implements OnInit {
   mail = false;
   searchClient = "";
   searchResults = false;
-  displayedColumns = ["name", "clientType", "boite", "action"];
+  displayedColumns = ["name", "clientType", "boiteNumber", "action"];
   errorMessage = false;
   Users = [];
   datasource;
-  clients= []; // le tableau final
-  allClients; // tous les clients
-  allClientTypes; // tous les types de clients
-  allBoites; // toutes les boites
-  subscription: Subscription; // doit etre supprimé sert a rien
+  allClients= []; // tous les clients
   length;
   pageSize = 5;
-  pageSizeOptions: number[] = [5, 10, 15];
+  pageSizeOptions: number[] = [5, 10, 15, 25];
   constructor(
     private route: Router,
     private clientS: ClientsService,
@@ -49,19 +45,12 @@ export class ClientsComponent implements OnInit {
 
    }
   async getData() {
-    await this.clientS.getClients().subscribe(async (clients) => {
+    await this.clientS.getClients().subscribe(async (clients: any) => {
       this.allClients = clients
-      await this.clientS.getClientType().subscribe(async (data) => {
-        this.allClientTypes = data
-        await this.boiteS.getBoites().subscribe(async (data) => {
-          this.allBoites = data          
-          this.clients = await this.createClientTable(this.allClients, this.allClientTypes, this.allBoites);
-          this.datasource = new MatTableDataSource(this.clients);
-          this.length = this.datasource.length;
-          this.datasource.sort = this.sort;
-          this.datasource.paginator = this.paginator;
-        });
-      });
+      this.datasource = await new MatTableDataSource(this.allClients);
+      this.length = this.datasource.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
     });
     this.initTable()
     
@@ -80,26 +69,26 @@ export class ClientsComponent implements OnInit {
   details(idUser) {
     this.route.navigate(["/client/", idUser]);
   }
-  createClientTable(client, clientT, boite) {
-    let clients: Array <{id:string,name:string, clientType:string, boite:string}> =[] ;
-    client.forEach((c) => {
-      let data= {id:"",name:"",clientType:'',boite:""};
-      clientT.forEach((clientType) => {
-        if (c.idClientType == clientType._id) {
-          (data.name = c.name),
-          (data.id = c._id),
-            (data.clientType = clientType.name);
-        }
-      });
-      boite.forEach((b) => {
-        if (c.idBoite == b._id) {
-          (data.boite = b.number)
-        }
-      });
-      clients.push(data)
-    });
-    return clients;
-  }
+  // createClientTable(client, clientT, boite) {
+  //   let clients: Array <{id:string,name:string, clientType:string, boiteNumber:string}> =[] ;
+  //   client.forEach((c) => {
+  //     let data= {id:"",name:"",clientType:'',boiteNumber:""};
+  //     clientT.forEach((clientType) => {
+  //       if (c.idClientType == clientType._id) {
+  //         (data.name = c.name),
+  //         (data.id = c._id),
+  //           (data.clientType = clientType.name);
+  //       }
+  //     });
+  //     boite.forEach((b) => {
+  //       if (c.idBoite == b._id) {
+  //         (data.boiteNumber = b.number)
+  //       }
+  //     });
+  //     clients.push(data)
+  //   });
+  //   return clients;
+  // }
   async ngOnInit() {
     this.initForm();
     //

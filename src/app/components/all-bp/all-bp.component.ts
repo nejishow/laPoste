@@ -4,24 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { SharedService } from 'src/app/shared/shared.service';
+import { BoitesService } from 'src/app/services/boites.service';
 
-const ELEMENT_DATA = [
-  { id: 1, number: 1234456, type: 'PETIT', price: '5000' },
-  { id: 1, number: 2234456, type: 'PETIT', price: '5000' },
-  { id: 1, number: 3234456, type: 'PETIT', price: '5000' },
-  { id: 1, number: 4234456, type: 'MOYEN', price: '5000' },
-  { id: 1, number: 5234456, type: 'MOYEN', price: '5000' },
-  { id: 1, number: 6234456, type: 'MOYEN', price: '5000' },
-  { id: 1, number: 7234456, type: 'GRAND', price: '5000' },
-  { id: 1, number: 8234456, type: 'GRAND', price: '5000' },
-  { id: 1, number: 9234456, type: 'GRAND', price: '5000' },
-  { id: 1, number: 12344560, type: 'SPECIAL', price: '5000' },
-];
 @Component({
   selector: 'app-all-bp',
   templateUrl: './all-bp.component.html',
-  styleUrls: ['./all-bp.component.css']
+  styleUrls: ['./all-bp.component.css'],
 })
 export class AllBpComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
@@ -30,22 +18,29 @@ export class AllBpComponent implements OnInit {
   mail = false;
   searchClient = '';
   searchResults = false;
-  displayedColumns = ['number','type', 'price', 'action'];
+  displayedColumns = ['number', 'type', 'price', 'action'];
   errorMessage = false;
-  Users = [];
-  datasource = new MatTableDataSource(ELEMENT_DATA);
+  datasource;
   length;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10];
+  boites = [];
+  boiteTypes = [];
   constructor(
     // private userS: ClientsService,
     private route: Router,
-    private shared: SharedService
-  ) {//
-    this.shared.getClients().subscribe((data)=>{
-      console.log(data);
-    })
+    private boiteS: BoitesService
+  ) {
+    //
+    this.boiteS.getBoites().subscribe((data: any) => {
+      this.boites = data;
+      this.datasource = new MatTableDataSource(this.boites);
+      this.length = this.boites.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+    });
   }
+  initTab() {}
   showSms() {
     this.sms = true;
     this.mail = false;
@@ -59,14 +54,8 @@ export class AllBpComponent implements OnInit {
   }
   ngOnInit() {
     this.initForm();
-    this.length = ELEMENT_DATA.length;
+  }
 
-  }
-  // tslint:disable-next-line:use-lifecycle-interface
-  ngAfterViewInit() {
-    this.datasource.sort = this.sort;
-    this.datasource.paginator = this.paginator;
-  }
   search() {
     // this.Users = [];
     // this.searchResults = false;
@@ -91,7 +80,6 @@ export class AllBpComponent implements OnInit {
     // }
   }
   initForm(): void {
-    this.Users = [];
     this.searchResults = false;
     this.errorMessage = false;
   }

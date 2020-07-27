@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-12 col-md-8">
+  <div class="col-sm-12 col-md-8" *ngIf="boites.length>=1">
     <div class="card">
       <h4 class="card-header">Boites postales</h4>
       <div class="card-body menuB">
@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of Users; let i = index">
+            <tr *ngFor="let user of true; let i = index">
               <td>{{ i + 1 }}</td>
               <td>{{ user.name }}</td>
               <td>
@@ -48,11 +48,12 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm-12 col-md-10">
-    <div class="card">
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
-      </mat-paginator>
+<div class="row" >
+  <div class="col-12 col-md-10">
+    <mat-paginator  [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+  <div class="col-sm-12 col-md-10" *ngIf="boites.length>=1">
       <div class="example-container mat-elevation-z8 card-body">
         <mat-table [dataSource]="datasource" matSort>
           <!-- Progress Column -->
@@ -68,7 +69,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Type
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.type }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.boiteType }} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="price">
@@ -84,7 +85,7 @@
               Action
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <button (click)="details(row.id)" class="btn btn-group btn-outline-primary">
+              <button (click)="details(row._id)" class="btn btn-group btn-outline-primary">
                 Consulter
               </button>
             </mat-cell>
@@ -94,6 +95,8 @@
           <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
         </mat-table>
       </div>
-    </div>
   </div>
+</div>
+<div class="loading" *ngIf="boites.length<1">
+  <mat-spinner color="warning"></mat-spinner>
 </div>

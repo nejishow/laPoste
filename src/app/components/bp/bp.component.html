@@ -2,14 +2,15 @@
   <div class=" col-12 col-md-5 rounded border" *ngIf="!modify">
     <h2>
       <fa-icon [icon]="faBox"></fa-icon>
-      Profil de la boite
+      Information sur la boite
     </h2>
     <div class="card-body">
       <mat-nav-list>
-        <mat-list-item> Numero: {{ Boite?.number }}</mat-list-item>
-        <mat-list-item> Type: {{ Boite?.type }} </mat-list-item>
-        <mat-list-item> Prix: {{ Boite?.price }} Fdj</mat-list-item>
-        <mat-list-item> Statut: Actif</mat-list-item>
+        <mat-list-item> Numero: {{ boite?.number }}</mat-list-item>
+        <mat-list-item> Type: {{ boite?.boiteType }} </mat-list-item>
+        <mat-list-item> Prix: {{ boite?.price }} Fdj</mat-list-item>
+        <mat-list-item *ngIf="boite?.enabled"> Statut: Actif</mat-list-item>
+        <mat-list-item *ngIf="!boite?.enabled"> Statut: Indisponible</mat-list-item>
 
       </mat-nav-list>
 
@@ -18,15 +19,14 @@
   <div class=" col-12 col-md-5 rounded border" *ngIf="modify">
     <h2>
       <fa-icon [icon]="faBox"></fa-icon>
-      Modifier le client
+      Modifier la boite
     </h2>
     <div class="card-body">
       <mat-nav-list>
         <mat-list-item class="card-header text-center">
-          <span>Numero: </span><input type="text" [value]="Boite?.number">
+          <span>Numero: </span><input type="text" [value]="boite?.number">
         </mat-list-item>
-        <mat-list-item> Type: <input type="text" [value]="Boite?.type"></mat-list-item>
-        <mat-list-item> Prix: <input type="text" [value]="Boite?.price"></mat-list-item>
+        <mat-list-item> Type: <input type="text" [value]="boite?.type"></mat-list-item>
       </mat-nav-list>
 
     </div>
@@ -51,29 +51,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let boite of boites">
             <th scope="row">1</th>
-            <td>Ismael</td>
-            <td>Octobre 2017</td>
-            <td>Non resilié</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Degmo</td>
-            <td>Fevrier 2013 </td>
-            <td>Mars 2016</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Hassan</td>
-            <td>Janvier 2009 </td>
-            <td> Octobre 2013</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Ismael</td>
-            <td>Juin 2006 </td>
-            <td>Septembre 2008</td>
+            <td>{{boite?.clientName}}</td>
+            <td>{{boite?.startDate}}</td>
+            <td *ngIf="boite.releaseDate">{{boite?.releaseDate}}</td>
+            <td *ngIf="!boite.releaseDate">Non resilié</td>
           </tr>
         </tbody>
       </table>
