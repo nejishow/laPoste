@@ -16,11 +16,18 @@ url = 'http://localhost:3000';
   getClientType() {
     return this.http.get(this.url + '/ClientT');
   }
+
+  getOneClientType(id) {
+    return this.http.get(this.url + '/ClientT/' + id);
+  }
   getClientBoite(id) {
     return this.http.get(this.url + '/clientBoite/' + id);
   }
   getForfaits() {
     return this.http.get(this.url + '/forfaits');
+  }
+  getForfaitClientT(id) {
+    return this.http.get(this.url + '/forfaitClientT/' + id);
   }
   postForfait() {
 

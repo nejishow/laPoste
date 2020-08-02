@@ -12,6 +12,7 @@ export class AddClientComponent implements OnInit {
   errorMessage;
   clientForm: FormGroup;
   forfaits; // tous les forfaits
+  forfaitClient = []; // les forfaits approprié ce type de client
   clientTypes;
   boites; // toutes les boites "disponibles"
   clientProfil = {
@@ -58,7 +59,7 @@ export class AddClientComponent implements OnInit {
       address: ['', Validators.required],
     });
   }
-  onSubmit(): void {
+  async onSubmit(): Promise<any> {
     //
     this.clientProfil = {
       name: '',
@@ -67,16 +68,46 @@ export class AddClientComponent implements OnInit {
       boiteNumber: this.clientProfil.boiteNumber,
       email: this.clientForm.get('email').value,
       cin: this.clientForm.get('cin').value,
-      clientType: this.clientForm.get('type').value,
+      idClientType: this.clientForm.get('type').value,
+      clientType: '',
+      enabled: true,
+      idBoite: this.clientProfil.idBoite,
+    };
+    await this.clientS.getOneClientType(this.clientForm.get('type').value).subscribe((data: any) => {
+      this.clientProfil.clientType = data.name;
+      this.step2();
+
+    });
+
+  }
+  async onSubmit2(): Promise<any> {
+    //
+    this.clientProfil = {
+      name: '',
+      number: this.clientForm.get('number').value,
+      address: this.clientForm.get('address').value,
+      boiteNumber: this.clientProfil.boiteNumber,
+      email: this.clientForm.get('email').value,
+      cin: this.clientForm.get('cin').value,
+      clientType: '',
       idClientType: this.clientForm.get('type').value,
       enabled: true,
       idBoite: this.clientProfil.idBoite,
     };
-    this.step2();
   }
   attribuer() { // attribuer une boite aléatoirement
     this.clientProfil.boiteNumber = this.boites[0].number;
     this.clientProfil.idBoite = this.boites[0]._id;
+  }
+  async getForfaits() {
+    const ct = this.clientTypes.filter((c) => c._id === this.clientProfil.idClientType);
+    await ct[0].forfaits.forEach(forfait => {
+      this.forfaits.forEach(async element => {
+        if (forfait.idForfait === element._id) {
+          await this.forfaitClient.push(element);
+        }
+      });
+    });
   }
 
   step1() {
@@ -85,6 +116,7 @@ export class AddClientComponent implements OnInit {
     this.E3 = false;
   }
   step2() {
+    this.getForfaits();
     this.E1 = false;
     this.E2 = true;
     this.E3 = false;

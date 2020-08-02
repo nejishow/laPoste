@@ -25,7 +25,7 @@
               <div class="form-group ">
                 <mat-form-field class="form-group">
                   <mat-select matInput formControlName="type" name="type" id="type">
-                    <mat-option *ngFor="let type of clientTypes" :value="type.name">{{type.description}}</mat-option>
+                    <mat-option *ngFor="let type of clientTypes" :id="type._id" value={{type._id}}>{{type.description}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -94,77 +94,11 @@
     <div class="card border-info">
       <h4 class="card-header">Enregistrer les forfaits</h4>
       <div class="card-body">
-        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group ">
-                <mat-form-field class=" form-group">
-                  <input matInput formControlName="name" placeholder="Nom complet" type="text" />
-                </mat-form-field>
-              </div>
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit2()">
+            <div class="form-check" *ngFor="let forfait of forfaitClient">
+              <input type="checkbox" class="form-check-input" value="{{forfait._id}}">
+              <label class="form-check-label" for="exampleCheck1">{{forfait.name}}</label>
             </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <mat-form-field class="form-group">
-                  <input matInput formControlName="email" placeholder="Addresse email" type="email" />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <mat-form-field class="form-group">
-                  <input matInput formControlName="cin" placeholder="Numero de carte d'identité/passport" type="text" />
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <mat-form-field class="form-group">
-                  <input matInput formControlName="address" placeholder="Addresse complete" type="text" />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <mat-form-field class="form-group">
-                  <input matInput formControlName="number" placeholder="Numero" type="number" />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label>Sexe</label>
-              <div class="form-group">
-                <mat-form-field class="form-group border  border-dark rounded">
-                  <mat-select matInput formControlName="genre" name="genre" id="genre">
-                    <mat-option value="Homme">Homme</mat-option>
-                    <mat-option value="Femme">Femme</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label>BP</label>
-              <div class="form-group">
-                <mat-form-field class="form-group border  border-dark rounded">
-                  <mat-select matInput formControlName="bp" name="bp" id="bp">
-                    <mat-option value="1">123</mat-option>
-                    <mat-option value="2">124</mat-option>
-                    <mat-option value="3">125</mat-option>
-                    <mat-option value="4">126</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <span>
-                <em>Prix: 2500 fDJ </em>
-              </span>
-            </div>
-          </div>
           <div class="col-12 d-flex justify">
             <button mat-raised-button (click)="step1()" class="btn-group btn-outline-warning">
               Revenir a l'étape 1
