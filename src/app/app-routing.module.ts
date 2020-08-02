@@ -1,3 +1,5 @@
+import { AddPaymentComponent } from './components/payments/add-payment/add-payment.component';
+import { CheckPaymentComponent } from './components/payments/check-payment/check-payment.component';
 import { StatistiquesComponent } from './components/statistiques/statistiques.component';
 import { AddBPComponent } from './components/add-bp/add-bp.component';
 import { BpComponent } from './components/bp/bp.component';
@@ -22,11 +24,15 @@ export const AppRoutes: Routes = [
   { path: 'bp/:id', component: BpComponent },
   { path: 'stats', component: StatistiquesComponent },
   { path: 'profil', component: MyProfilComponent },
+  { path: 'checkPayment/:id', component: CheckPaymentComponent },
+  { path: 'addPayment/:id', component: AddPaymentComponent },
+
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: '/login',
+    pathMatch: 'full'
   },
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(AppRoutes)],

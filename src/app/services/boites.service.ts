@@ -11,6 +11,9 @@ export class BoitesService {
   getBoites() {
     return this.http.get(this.url + '/boites');
   }
+  getAvailableBoite() {
+    return this.http.get(this.url + '/Aboites');
+  }
   getBoite(id) {
     return this.http.get(this.url + '/boite/' + id);
   }

@@ -31,6 +31,8 @@ import { StoreModule } from '@ngrx/store';
 import { clientReducers } from './store/index';
 import { EffectsModule } from '@ngrx/effects';
 import { ClientEffect } from './store/effects/clients.effect';
+import { CheckPaymentComponent } from './components/payments/check-payment/check-payment.component';
+import { AddPaymentComponent } from './components/payments/add-payment/add-payment.component';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { ClientEffect } from './store/effects/clients.effect';
     ComptabiliteComponent,
     AddBPComponent,
     StatistiquesComponent,
+    CheckPaymentComponent,
+    AddPaymentComponent,
 
   ],
   imports: [

@@ -16,7 +16,7 @@ export class AllBpComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   sms = true;
   mail = false;
-  searchClient = '';
+  searchBoite = '';
   searchResults = false;
   displayedColumns = ['number', 'type', 'price', 'action'];
   errorMessage = false;
@@ -25,7 +25,7 @@ export class AllBpComponent implements OnInit {
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10];
   boites = [];
-  boiteTypes = [];
+  boiteSearch = [];
   constructor(
     // private userS: ClientsService,
     private route: Router,
@@ -56,30 +56,30 @@ export class AllBpComponent implements OnInit {
     this.initForm();
   }
 
-  search() {
-    // this.Users = [];
-    // this.searchResults = false;
-    // const letter = this.searchForm
-    //   .get('letter')
-    //   .value.toLowerCase()
-    //   .trim();
-    // if (letter === '') {
-    //   this.errorMessage = true;
-    // } else {
-    //   this.userS.getClients().subscribe(data => {
-    //     data.forEach(async user => {
-    //       if (user.type.toLowerCase().includes(letter)) {
-    //         await this.Users.push(user);
-    //         this.searchResults = true;
-    //       }
-    //     });
-    //     if (this.Users.length === 0) {
-    //       this.errorMessage = true;
-    //     }
-    //   });
-    // }
+
+  async search() {
+    this.boiteSearch = [];
+    this.searchResults = false;
+    this.errorMessage = false;
+    const bnumber = await this.searchBoite;
+    if (bnumber.length === 0) {
+      this.errorMessage = true;
+    } else {
+      await this.boites.forEach(async boite => {
+        const boiteNumber = boite.number;
+        if (boiteNumber.includes(bnumber)) {
+          await this.boiteSearch.push(boite);
+          this.searchResults = true;
+        }
+      });
+      if (this.boiteSearch.length === 0) {
+        this.errorMessage = true;
+      }
+    }
   }
   initForm(): void {
+    this.boiteSearch = [];
+    this.searchBoite = '';
     this.searchResults = false;
     this.errorMessage = false;
   }

@@ -4,19 +4,29 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ClientsService {
-url = "http://localhost:3000"
+url = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
 
   getClients() {
-    return this.http.get(this.url +"/clients")
+    return this.http.get(this.url + '/clients');
   }
   getClient(id) {
-    return this.http.get(this.url +"/client/"+ id)
+    return this.http.get(this.url + '/client/' + id);
   }
   getClientType() {
-    return this.http.get(this.url +"/ClientT")
+    return this.http.get(this.url + '/ClientT');
   }
   getClientBoite(id) {
-    return this.http.get(this.url +"/clientBoite/" + id)
+    return this.http.get(this.url + '/clientBoite/' + id);
+  }
+  getForfaits() {
+    return this.http.get(this.url + '/forfaits');
+  }
+  postForfait() {
+
+  }
+  getHistoric(id) {
+    return this.http.get(this.url + '/historicPs/' + id);
+
   }
 }

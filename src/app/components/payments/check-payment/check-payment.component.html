@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12">
+    <ul class="list-group">
+      <li class="list-group-item">Paiement effectué le : {{payment?.createdAt}}</li>
+      <li class="list-group-item">Par : {{payment?.staffs[0].idStaff}}</li>
+      <li class="list-group-item">Pour l'année : {{payment?.date}}</li>
+      <li class="list-group-item"> Liste des forfaits: <span *ngIf="payment?.forfaits.length===0">Aucun forfait</span>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let forfait of payment?.forfaits">{{forfait?.idForfait}}</li>
+        </ul>
+      </li>
+      <li class="list-group-item">Total : {{payment?.total}}</li>
+    </ul>
+  </div>
+</div>

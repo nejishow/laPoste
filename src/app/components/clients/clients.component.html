@@ -3,35 +3,18 @@
     <div class="card">
       <h4 class="card-header">Clients</h4>
       <div class="card-body menuB">
-        <button
-          mat-raised-button
-          class="btn btn-success btn-sm"
-          routerLink="/addClient"
-        >
+        <button mat-raised-button class="btn btn-success btn-sm" routerLink="/addClient">
           Ajouter un client
         </button>
       </div>
       <div class="form-check-inline card-body">
-        <input
-          class="form-control"
-          [(ngModel)]="searchClient"
-          type="text"
-          placeholder="Rechercher un abonné"
-          aria-label="Rechercher"
-        />
-        <button
-          class="btn btn-outline-success"
-          type="submit"
-          [disabled]="searchClient.trim().length == 0"
-          (click)="search()"
-        >
+        <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher un abonné"
+          aria-label="Rechercher" />
+        <button class="btn btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
+          (click)="search()">
           Rechercher
         </button>
-        <button
-          class="btn btn-outline-danger"
-          [disabled]="searchClient.trim().length == 0"
-          (click)="this.initForm()"
-        >
+        <button class="btn btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)="this.initForm()">
           Effacer
         </button>
       </div>
@@ -45,14 +28,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of Users; let i = index">
+            <tr *ngFor="let client of clientSearch; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ user.name }}</td>
+              <td>{{ client?.name }}</td>
               <td>
-                <button
-                  (click)="details(user.idUser)"
-                  class="btn btn-group btn-outline-primary"
-                >
+                <button (click)="details(client._id)" class="btn btn-group btn-outline-primary">
                   Consulter
                 </button>
               </td>
@@ -62,26 +42,32 @@
       </div>
       <div>
         <button class="btn btn-group btn-danger" *ngIf="errorMessage">
-          Cet utilisateur n'existe pas
+          Aucun client à ce nom
         </button>
       </div>
     </div>
   </div>
 </div>
-<div class="row" >
+<div class="row">
   <div class="col-12 col-md-10">
-    <mat-paginator
-    [length]="length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    showFirstLastButtons
-  >
-  </mat-paginator>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+    </mat-paginator>
   </div>
   <div class="col-sm-12 col-md-10" *ngIf="allClients.length>=1">
     <div class="">
       <div class="example-container mat-elevation-z8 card-body">
         <mat-table [dataSource]="datasource" matSort>
+          <!-- status Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Status
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+        <button mat-fab [style]='row.bg'>
+          {{row.status}}
+        </button> </mat-cell>
+          </ng-container>
+
           <!-- ID Column -->
           <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -111,10 +97,7 @@
               Action
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <button
-                (click)="details(row._id)"
-                class="btn btn-group btn-outline-primary"
-              >
+              <button (click)="details(row._id)" class="btn btn-group btn-outline-primary">
                 Consulter
               </button>
             </mat-cell>

@@ -28,7 +28,8 @@ export class NavbarComponent implements OnInit {
     { path: '/addBP', title: 'Ajouter une boite postale' },
     { path: '/notifications', title: 'Notifications' },
     { path: '/profil', title: 'Mon profil' },
-    { path: '/stats', title: 'Statistiques' }
+    { path: '/stats', title: 'Statistiques' },
+    { path: '/checkPayment/', title: 'Paiement' }
   ];
 
   constructor(location: Location, private element: ElementRef, private router: Router) {

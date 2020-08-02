@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { PaymentsService } from './../../services/payments.service';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faUser, faBox, faMoneyBillWave, faExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBox, faMoneyBillWave, faExclamation, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { ClientsService } from 'src/app/services/clients.service';
 import { BoitesService } from 'src/app/services/boites.service';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -17,21 +19,50 @@ export class ClientComponent implements OnInit {
   faBox = faBox;
   faMoney = faMoneyBillWave;
   faExc = faExclamation;
-
-  client ;
+  facheck = faCheck;
+  // tslint:disable-next-line:radix
+  year = parseInt((new Date().getFullYear()).toString());
+  client;
   boites;
-  constructor(private aR: ActivatedRoute,
-    private route: Router,
-    private clientS: ClientsService,
-    private boiteS: BoitesService
+  historics;
+  unpaids = [];
+  constructor(public dialog: MatDialog, private aR: ActivatedRoute,
+              private route: Router,
+              private clientS: ClientsService,
+              private boiteS: BoitesService
   ) {
     this.aR.params.subscribe(async params => {
       this.idUser = params.id;
-      await clientS.getClient(params.id).subscribe((data: any) => {
+      await this.clientS.getClient(params.id).subscribe((data: any) => {
         this.client = data;
       });
-      await clientS.getClientBoite(params.id).subscribe((data: any) => {
-        this.boites = data;
+      await this.clientS.getHistoric(params.id).subscribe(async (data: any) => {
+        this.historics = data;
+        await this.historics.sort((a, b) => {
+          if (a.createdAt < b.createdAt) {
+            return 1;
+          }
+          if (b.createdAt < a.createdAt) {
+            return -1;
+          }
+          return 0;
+        });
+        if (this.historics[0]) {
+          this.getUnpaid(this.historics[0]);
+
+        }
+        this.historics.forEach(historic => {
+          // tslint:disable-next-line:max-line-length
+          historic.createdAt = new Date(historic.createdAt).getDate() + '/' + ( new Date(historic.createdAt).getMonth() + 1) + '/' + new Date(historic.createdAt).getFullYear();
+        });
+
+      });
+      await this.clientS.getClientBoite(params.id).subscribe(async (datas: any) => {
+        await datas.forEach(boite => {
+          boite.createdAt = new Date(boite.createdAt).getFullYear();
+        });
+        this.boites = datas;
+
       });
     });
   }
@@ -42,5 +73,49 @@ export class ClientComponent implements OnInit {
   save(): void {
     //
   }
+  getUnpaid(historic) {
+    const year = new Date().getFullYear();
+    for (let index = 0; index < year - historic.date; index++) {
+      this.unpaids[index] = { idClient: historic.idClient, date: historic.date + index + 1 };
+      if (index === 2) {
+        break;
+      }
+    }
+    this.unpaids.sort((a, b) => {
+      if (a.date > b.date) {
+        return 1;
+      }
+      if (b.date > a.date) {
+        return -1;
+      }
+      return 0;
+    });
+  }
 
+  payDialog(id) {
+    const dialogRef = this.dialog.open(PayingComponent, {
+      data: {
+        id
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }
+@Component({
+  selector: 'app-paying-component',
+  templateUrl: 'payment.html',
+})
+export class PayingComponent {
+  constructor(
+    private payS: PaymentsService,
+    @Inject(MAT_DIALOG_DATA) public data
+  ) {
+    this.payS.getClientForfait(data.id).subscribe((data) => {
+      console.log(data);
+
+    })
+  }
+}
+
