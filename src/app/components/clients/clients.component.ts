@@ -1,3 +1,4 @@
+import { StaffsService } from './../../services/staffs.service';
 import { faTimes, faExclamation, faCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 // import { ClientsService } from './../../services/clients.service';
 import {
@@ -36,7 +37,7 @@ export class ClientsComponent implements OnInit {
   constructor(
     private route: Router,
     private clientS: ClientsService,
-    private boiteS: BoitesService
+    private staffS: StaffsService
   ) {
   }
   async getData() {
@@ -46,7 +47,13 @@ export class ClientsComponent implements OnInit {
       this.length = this.datasource.length;
       this.datasource.sort = this.sort;
       this.datasource.paginator = this.paginator;
-    });
+    },
+      (error) => {
+        if (error.status === 401) {
+          this.staffS.logout();
+        }
+
+      });
 
   }
 
@@ -75,18 +82,20 @@ export class ClientsComponent implements OnInit {
     this.clientSearch = [];
     this.searchResults = false;
     this.errorMessage = false;
-    const name = await this.searchClient.toLowerCase()
-      .trim();
+    const name = await this.searchClient.toLowerCase().trim();
     if (name.length === 0) {
       this.errorMessage = true;
       console.log('name.length === 0');
 
     } else {
       await this.allClients.forEach(async client => {
-        const clientName = client.name.toLowerCase();
-        if (clientName.includes(name)) {
-          await this.clientSearch.push(client);
-          this.searchResults = true;
+        if (client.name === undefined) {
+        } else {
+          const clientName = await client.name.trim().toLowerCase();
+          if (clientName.includes(name)) {
+            await this.clientSearch.push(client);
+            this.searchResults = true;
+          }
         }
       });
       if (this.clientSearch.length === 0) {

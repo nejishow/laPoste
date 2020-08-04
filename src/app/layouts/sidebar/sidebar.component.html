@@ -12,26 +12,26 @@
     </div>
     <div class="col-12">
       <mat-list>
-        <mat-mat-list-item class="nav-item">
+        <mat-mat-list-item class="nav-item" *ngIf="isAuth">
           <a class="d-flex menu align-items-center mb-3">
             <img src="../../../assets/agent.png" width="30" alt="">
-            <span class="agent">Houssein Bodeh</span>
+            <span class="agent">{{staff?.name}} </span>
           </a>
         </mat-mat-list-item>
-        <mat-list-item class="nav-item">
+        <mat-list-item class="nav-item" *ngIf="!isAuth">
           <a routerLink="/login" class="d-flex menu" (click)="close()">
             <fa-icon [icon]="faSignIn" class="mr-2"></fa-icon>
             <p>Se connecter</p>
           </a>
         </mat-list-item>
-        <mat-list-item class="nav-item">
+        <mat-list-item class="nav-item" *ngIf="isAuth">
           <a routerLink="/profil" class="d-flex menu" (click)="close()">
             <fa-icon [icon]="faCog" class="mr-2"></fa-icon>
             <p>Mon profil</p>
           </a>
         </mat-list-item>
-        <mat-list-item class="nav-item">
-          <a class="d-flex text-danger" (click)="close()">
+        <mat-list-item class="nav-item" *ngIf="isAuth">
+          <a class="d-flex text-danger" (click)="logout()">
             <fa-icon [icon]="faSignOut" class="mr-2"></fa-icon>
             <p>Se deconnecter</p>
           </a>
@@ -45,7 +45,7 @@
 
       <mat-list>
         <mat-list-item *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
-          <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()">
+          <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()" *ngIf="isAuth">
             <fa-icon [icon]="menuItem.icon" class="mr-2"></fa-icon>
             <p>{{menuItem.title}}</p>
           </a>

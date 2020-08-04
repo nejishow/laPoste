@@ -1,3 +1,5 @@
+import { StaffsService } from './services/staffs.service';
+import { AuthGuardService as AuthGuard } from './services/guards/auth-guard.service';
 import { AddPaymentComponent } from './components/payments/add-payment/add-payment.component';
 import { CheckPaymentComponent } from './components/payments/check-payment/check-payment.component';
 import { StatistiquesComponent } from './components/statistiques/statistiques.component';
@@ -14,18 +16,52 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { MyProfilComponent } from './components/my-profil/my-profil.component';
 
 export const AppRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'clients', component: ClientsComponent },
-  { path: 'addClient', component: AddClientComponent },
-  { path: 'client/:id', component: ClientComponent },
-  { path: 'allBp', component: AllBpComponent },
-  { path: 'addBP', component: AddBPComponent },
-  { path: 'bp/:id', component: BpComponent },
-  { path: 'stats', component: StatistiquesComponent },
-  { path: 'profil', component: MyProfilComponent },
-  { path: 'checkPayment/:id', component: CheckPaymentComponent },
-  { path: 'addPayment/:id', component: AddPaymentComponent },
+  {
+    path: 'dashboard', component: DashboardComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login', component: LoginComponent  },
+  {
+    path: 'clients', component: ClientsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'addClient', component: AddClientComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'client/:id', component: ClientComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'allBp', component: AllBpComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'addBP', component: AddBPComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'bp/:id', component: BpComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'stats', component: StatistiquesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profil', component: MyProfilComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'checkPayment/:id', component: CheckPaymentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'addPayment/:id', component: AddPaymentComponent,
+    canActivate: [AuthGuard]
+  },
 
   {
     path: '**',

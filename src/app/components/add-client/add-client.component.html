@@ -11,8 +11,6 @@
   </div>
 </div>
 
-
-
 <div class="row" *ngIf="E1">
   <div class="col-md-8">
     <div class="card border-info">
@@ -25,7 +23,8 @@
               <div class="form-group ">
                 <mat-form-field class="form-group">
                   <mat-select matInput formControlName="type" name="type" id="type">
-                    <mat-option *ngFor="let type of clientTypes" :id="type._id" value={{type._id}}>{{type.description}}</mat-option>
+                    <mat-option *ngFor="let type of clientTypes" :id="type._id" value={{type._id}}>{{type.description}}
+                    </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -41,13 +40,6 @@
               <div class="form-group">
                 <mat-form-field class="form-group">
                   <input matInput formControlName="email" placeholder="Addresse email" type="email" />
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <mat-form-field class="form-group">
-                  <input matInput formControlName="cin" placeholder="Numero de carte d'identité/passport" type="text" />
                 </mat-form-field>
               </div>
             </div>
@@ -75,7 +67,8 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn-group btn btn-outline-primary" [disabled]="clientForm.invalid || clientProfil.boiteNumber===''">
+          <button type="submit" class="btn-group btn btn-outline-primary"
+            [disabled]="clientForm.invalid || clientProfil.boiteNumber===''">
             Passer à l'etape 2
           </button>
           <div class="clearfix"></div>
@@ -95,21 +88,76 @@
       <h4 class="card-header">Enregistrer les forfaits</h4>
       <div class="card-body">
         <form [formGroup]="clientForm" (ngSubmit)="onSubmit2()">
-            <div class="form-check" *ngFor="let forfait of forfaitClient">
-              <input type="checkbox" class="form-check-input" value="{{forfait._id}}">
-              <label class="form-check-label" for="exampleCheck1">{{forfait.name}}</label>
-            </div>
+          <div class="form-check" *ngFor="let forfait of forfaitClient">
+            <input type="checkbox" class="form-check-input" (change)="newForfait($event)" value="{{forfait._id}}">
+            <label class="form-check-label" for="exampleCheck1">{{forfait.name}}: {{forfait.price}}</label>
+          </div>
           <div class="col-12 d-flex justify">
-            <button mat-raised-button (click)="step1()" class="btn-group btn-outline-warning">
-              Revenir a l'étape 1
+            <button [disabled]="loading" mat-raised-button (click)="step1()" class="btn-group btn-outline-warning">
+              Revenir en arriere
             </button>
-            <button mat-raised-button type="submit" class="btn-group btn-outline-primary"
+            <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-primary"
               [disabled]="clientForm.invalid">
-              Ajouter un client
+              Confirmer le client
             </button>
           </div>
           <div class="clearfix"></div>
         </form>
+        <p class="text-danger">{{ errorMessage }}</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row" *ngIf="E3">
+  <div class="col-md-8">
+    <div class="card border-info">
+      <h4 class="card-header">Enregistrer le client</h4>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <ul class="list-group">
+              <li class="list-group-item">
+                Nom: {{clientProfil.name}}
+              </li>
+              <li class="list-group-item">
+                Type de client: {{clientProfil.clientType}}
+              </li>
+              <li class="list-group-item">
+                Email: {{clientProfil.email}}
+              </li>
+              <li class="list-group-item">
+                Number: {{clientProfil.number}}
+              </li>
+              <li class="list-group-item">
+                Boite: {{clientProfil.boiteNumber}}
+              </li>
+              <li class="list-group-item">
+                Prix de la boite: {{boitePrice}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-md-6">
+            <h5>Forfaits choisis</h5>
+            <ul class="list-group" *ngIf="choosenForfait.length>0">
+              <li class="list-group-item" *ngFor="let forfait of choosenForfait">
+                Nom: {{forfait.name}} Prix: {{forfait.price}} fdj
+              </li>
+
+            </ul>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <h4>Total: {{total}}</h4>
+        <div class="d-flex justify-content-between">
+          <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-warning" (click)="step2()">
+            Revenir en arriere
+          </button>
+          <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-primary" (click)="confirm()">
+            Nouveau client
+          </button>
+        </div>
         <p class="text-danger">{{ errorMessage }}</p>
       </div>
     </div>

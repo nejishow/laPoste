@@ -10,13 +10,7 @@ import { stringify } from 'querystring';
 })
 export class AppComponent {
   title = 'La Poste';
-  constructor(private clients: ClientsService) {
-    this.saveClients();
+  constructor(private shareS: SharedService) {
   }
 
-  saveClients() {
-    this.clients.getClients().subscribe((data:JSON)=> {
-      localStorage.setItem('clients', JSON.stringify(data));
-    })
-  }
 }

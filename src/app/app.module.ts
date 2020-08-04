@@ -1,3 +1,4 @@
+import { PaymentsService } from './services/payments.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
@@ -70,7 +71,7 @@ import { AddPaymentComponent } from './components/payments/add-payment/add-payme
     StoreModule.forRoot(clientReducers),
     EffectsModule.forRoot([ClientEffect])
   ],
-  providers: [ ClientsService, SharedService],
+  providers: [ ClientsService, SharedService, PaymentsService],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
