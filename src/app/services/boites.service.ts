@@ -20,7 +20,7 @@ export class BoitesService {
 
   attributeBoite(id) {
     this.setHeader();
-    return this.http.post(this.url + '/attributeBoite/' + id, { headers: this.headers });
+    return this.http.post(this.url + '/attributeBoite/' + id, {}, { headers: this.headers });
   }
 
   getAvailableBoite() {

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { StaffsService } from './../../services/staffs.service';
 import { Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients.service';
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
   email: '';
   password: '';
   constructor(
-    private staffS: StaffsService,
+    private authS: AuthService,
     private router: Router
   ) {
 
@@ -23,8 +24,8 @@ export class LoginComponent implements OnInit {
   }
   submit(): void {
     //
-    this.staffS.login(this.email, this.password);
-    this.staffS.erroLogout().subscribe((data) => {
+    this.authS.login(this.email, this.password);
+    this.authS.erroLogout().subscribe((data) => {
       this.error = data;
     });
   }

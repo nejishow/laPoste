@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
 import { StaffsService } from './../../services/staffs.service';
 import { PaymentsService } from './../../services/payments.service';
@@ -5,6 +6,7 @@ import { BoitesService } from './../../services/boites.service';
 import { ClientsService } from 'src/app/services/clients.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ThemeService } from 'ng2-charts';
 
 @Component({
   selector: 'app-add-client',
@@ -28,6 +30,7 @@ export class AddClientComponent implements OnInit {
   total = 0; // premier paiement
   boitePrice = 0; // prix de la boite choisit
   choosenBoite;
+  idNewClient;
   historicPayment = {
     boiteNumber: '',
     forfaits: [],
@@ -65,7 +68,7 @@ export class AddClientComponent implements OnInit {
     private clientS: ClientsService,
     private boiteS: BoitesService,
     private payS: PaymentsService,
-    private staffS: StaffsService,
+    private authS: AuthService,
     private router: Router
 
   ) {
@@ -76,7 +79,7 @@ export class AddClientComponent implements OnInit {
         if (error.status === 401) {
           console.log('ok');
 
-          this.staffS.logout();
+          this.authS.logout();
         }
 
       });
@@ -130,6 +133,7 @@ export class AddClientComponent implements OnInit {
         idStaff: localStorage.getItem('id'),
         enabled: true
       };
+      this.idNewClient = data._id;
     });
     this.step3();
 
@@ -161,10 +165,11 @@ export class AddClientComponent implements OnInit {
 
     await this.payS.postHistoricForfait(this.historiqueForfait).subscribe(async () => {
       await this.payS.postPayment(this.historicPayment).subscribe(async (_data: any) => {
-        await this.boiteS.attributeBoite(this.clientProfil.idBoite).subscribe(() => {
-          this.router.navigate(['/client/', + _data.idClient]);
-
-        })
+        await this.boiteS.attributeBoite(this.clientProfil.idBoite).subscribe(async () => {
+          if (_data) {
+            await this.router.navigate(['/client/', _data.idClient]);
+          }
+        });
       });
 
     });

@@ -43,6 +43,10 @@ export class ClientsService {
     this.setHeader();
     return this.http.get(this.url + '/forfaits', { headers: this.headers});
   }
+  updateClient(id) {
+    this.setHeader();
+    return this.http.post(this.url + '/updateClient/' + id,{}, { headers: this.headers });
+  }
   getForfaitClientT(id) {
     this.setHeader();
     return this.http.get(this.url + '/forfaitClientT/' + id, { headers: this.headers});

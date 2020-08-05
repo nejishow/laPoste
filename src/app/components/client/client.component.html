@@ -114,7 +114,7 @@
             <tr *ngFor="let unpaid of unpaids">
               <td>{{unpaid.date}}</td>
               <td>
-                <button (click)="payDialog(unpaid.idClient)" class="btn btn-group btn-info">Payer</button>
+                <button (click)="pay(unpaid.idClient, unpaid.date)" class="btn btn-group btn-info">Payer</button>
               </td>
             </tr>
           </tbody>

@@ -2,11 +2,13 @@
   <div class="col-12">
     <ul class="list-group">
       <li class="list-group-item">Paiement effectué le : {{payment?.createdAt}}</li>
-      <li class="list-group-item">Par : {{payment?.staffs[0].idStaff}}</li>
+      <li class="list-group-item">Par : {{staff?.name}}</li>
       <li class="list-group-item">Pour l'année : {{payment?.date}}</li>
-      <li class="list-group-item"> Liste des forfaits: <span *ngIf="payment?.forfaits.length===0">Aucun forfait</span>
+      <li class="list-group-item"> Liste des forfaits: <span *ngIf="forfaits.length===0">Aucun forfait</span>
         <ul class="list-group">
-          <li class="list-group-item" *ngFor="let forfait of payment?.forfaits">{{forfait?.idForfait}}</li>
+          <li class="list-group-item" *ngFor="let forfait of forfaits">
+            <span class="mr-5">{{forfait?.name}}</span> <span>{{forfait?.price}}fDJ </span>
+          </li>
         </ul>
       </li>
       <li class="list-group-item">Total : {{payment?.total}}</li>

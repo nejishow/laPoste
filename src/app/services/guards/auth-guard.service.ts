@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { LoginComponent } from './../../components/login/login.component';
 import { Router, CanActivate, CanDeactivate } from '@angular/router';
 import { StaffsService } from './../staffs.service';
@@ -10,14 +11,14 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuardService implements CanActivate {
 
-  constructor(private staffS: StaffsService, private router: Router) { }
+  constructor(private authS: AuthService, private router: Router) { }
   intercept(request: HttpRequest<any>, next: HttpHandler) {
 
     return next.handle(request).subscribe(() => { }, (error: HttpErrorResponse) => {
       if (error.status === 401) {
         // 401 handled in auth.interceptor
         console.log('yes');
-        this.staffS.logout();
+        this.authS.logout();
 
       }
      });
@@ -25,7 +26,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): boolean {
     let state = false;
-    this.staffS.Authenticated().subscribe(data => {
+    this.authS.Authenticated().subscribe(data => {
       state = data;
     });
     if (!state) {

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { StaffsService } from './../../services/staffs.service';
 import { faTimes, faExclamation, faCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 // import { ClientsService } from './../../services/clients.service';
@@ -37,7 +38,7 @@ export class ClientsComponent implements OnInit {
   constructor(
     private route: Router,
     private clientS: ClientsService,
-    private staffS: StaffsService
+    private authS: AuthService
   ) {
   }
   async getData() {
@@ -50,7 +51,7 @@ export class ClientsComponent implements OnInit {
     },
       (error) => {
         if (error.status === 401) {
-          this.staffS.logout();
+          this.authS.logout();
         }
 
       });

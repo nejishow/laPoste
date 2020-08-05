@@ -14,11 +14,11 @@ export class PaymentsService {
   }
   getPayment(id) {
     this.setHeader();
-    return this.http.get(this.url + '/payment/' + id);
+    return this.http.get(this.url + '/payment/' + id, { headers: this.headers });
   }
   getClientForfait(id) { // client
     this.setHeader();
-    return this.http.get(this.url + '/clientForfait/' + id);
+    return this.http.get(this.url + '/clientForfait/' + id, { headers: this.headers });
 
   }
   postHistoricForfait(historic) {

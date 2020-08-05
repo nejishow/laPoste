@@ -27,9 +27,9 @@ export class ClientComponent implements OnInit {
   historics;
   unpaids = [];
   constructor(public dialog: MatDialog, private aR: ActivatedRoute,
-              private route: Router,
-              private clientS: ClientsService,
-              private boiteS: BoitesService
+    private route: Router,
+    private clientS: ClientsService,
+    private boiteS: BoitesService
   ) {
     this.aR.params.subscribe(async params => {
       this.idUser = params.id;
@@ -53,7 +53,7 @@ export class ClientComponent implements OnInit {
         }
         this.historics.forEach(historic => {
           // tslint:disable-next-line:max-line-length
-          historic.createdAt = new Date(historic.createdAt).getDate() + '/' + ( new Date(historic.createdAt).getMonth() + 1) + '/' + new Date(historic.createdAt).getFullYear();
+          historic.createdAt = new Date(historic.createdAt).getDate() + '/' + (new Date(historic.createdAt).getMonth() + 1) + '/' + new Date(historic.createdAt).getFullYear();
         });
 
       });
@@ -92,30 +92,8 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  payDialog(id) {
-    const dialogRef = this.dialog.open(PayingComponent, {
-      data: {
-        id
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  pay(id, date: number) {
+    this.route.navigate(['/addPayment/', id, { queryParams: date }]);
+
   }
 }
-@Component({
-  selector: 'app-paying-component',
-  templateUrl: 'payment.html',
-})
-export class PayingComponent {
-  constructor(
-    private payS: PaymentsService,
-    @Inject(MAT_DIALOG_DATA) public data
-  ) {
-    this.payS.getClientForfait(data.id).subscribe((data) => {
-      console.log(data);
-
-    })
-  }
-}
-

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { SharedService } from './../../shared/shared.service';
 import { Router } from '@angular/router';
 import { StaffsService } from './../../services/staffs.service';
@@ -33,14 +34,14 @@ export class SidebarComponent implements OnInit {
   faCog = faCog;
   staff;
   public menuItems: any[];
-  constructor(private staffS: StaffsService, private router: Router, private shareS: SharedService) {
+  constructor(private staffS: StaffsService, private router: Router, private authS: AuthService) {
   }
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
-    this.staffS.Authenticated().subscribe((data) => {
+    this.authS.Authenticated().subscribe((data) => {
       this.isAuth = data;
     });
-    this.staffS.getStaff().subscribe(data => {
+    this.authS.getStaff().subscribe(data => {
       this.staff = data;
     });
 
@@ -50,7 +51,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    this.staffS.logout();
+    this.authS.logout();
   }
 
 }
