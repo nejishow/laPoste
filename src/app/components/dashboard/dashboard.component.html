@@ -6,12 +6,12 @@
     <div class="top border-warning d-flex justify-content-between card mat-raised-button p-2 mt-4">
       <div class="text text-right d-flex flex-column">
         <span style="opacity: 0.6;">Boites</span>
-        <span class="h3">124</span>
+        <span class="h3">{{inactiveboites.length}}</span>
       </div>
       <mat-divider class="p-2 border-warning"></mat-divider>
       <div class="bottom">
         <span class="h6">
-          Le nombre de boites postales en services.
+          Le nombre de boites postales disponibles.
 
         </span>
       </div>
@@ -26,7 +26,7 @@
      <div class="top border-info d-flex justify-content-between card mat-raised-button p-2 mt-4">
        <div class="text text-right d-flex flex-column">
          <span style="opacity: 0.6;">Clients</span>
-         <span class="h3">6439</span>
+         <span class="h3">{{activeClients.length}}</span>
        </div>
        <mat-divider class="p-2 border-info"></mat-divider>
        <div class="bottom">

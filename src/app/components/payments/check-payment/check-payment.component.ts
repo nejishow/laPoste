@@ -24,7 +24,7 @@ export class CheckPaymentComponent implements OnInit {
       this.id = params.id;
       await this.payS.getPayment(this.id).subscribe((_data:any) => {
         this.payment = _data;
-        this.staffS.getStaff(_data.staffs[0].idStaff).subscribe((data) => {
+        this.staffS.getStaff(_data.idStaff).subscribe((data) => {
           this.staff = data;
         });
         this.clientS.getForfaits().subscribe((data:any) => {

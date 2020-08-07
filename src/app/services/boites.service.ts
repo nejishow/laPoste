@@ -43,4 +43,9 @@ export class BoitesService {
 
     return this.http.get(this.url + '/boiteClient/' + id, { headers: this.headers });
   }
+  getBoiteAllClients(id) {
+    this.setHeader();
+
+    return this.http.get(this.url + '/boiteClients/' + id, { headers: this.headers });
+  }
 }

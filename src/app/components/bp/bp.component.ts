@@ -28,9 +28,12 @@ export class BpComponent implements OnInit {
       this.idBoite = params.id;
       await boiteS.getBoite(params.id).subscribe((data: any) => {
         this.boite = data;
+        console.log(data);
+
       });
       await boiteS.getBoiteClients(params.id).subscribe((data: any) => {
         this.boites = data;
+        console.log(data);
       });
     });
   }

@@ -97,17 +97,13 @@ export class AddPaymentComponent implements OnInit {
       priceBoite: this.boite.price,
       idClient: this.client._id,
       tax: this.tax,
-      staffs: [
-        {
-          idStaff: this.staff.id
-        }],
+      idStaff: this.staff.id,
       date: this.date,
       total: this.total,
     };
-    console.log(newPayment);
     this.payS.postPayment(newPayment).subscribe(() => {
       this.clientS.updateClient(this.client._id).subscribe(async (data) => {
-      await this.router.navigate(['/client/' + this.client._id]);
+        await this.router.navigate(['/client/' + this.client._id]);
       });
     }, (error) => {
       console.log(error.error);

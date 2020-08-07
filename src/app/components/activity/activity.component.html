@@ -88,7 +88,7 @@
     <div class="col-12 col-md-5">
       <div class=" mat-raised-button rounded border border-success p-3" style="display: block;">
         <div class="mb-5">
-          <span class="h6">La répartition des boites payées</span>
+          <span class="h6">La répartition en pourcentage</span>
         </div>
         <canvas *ngIf="filteredPayments.length>0" baseChart [data]="pieChartData2" [labels]="pieChartLabels"
           [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
