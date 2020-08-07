@@ -29,7 +29,8 @@ export class NavbarComponent implements OnInit {
     { path: '/notifications', title: 'Notifications' },
     { path: '/profil', title: 'Mon profil' },
     { path: '/stats', title: 'Statistiques' },
-    { path: '/checkPayment/', title: 'Paiement' }
+    { path: '/checkPayment/', title: 'Paiement' },
+    { path: '/activity', title: 'Les activités enregistrées' }
   ];
 
   constructor(location: Location, private element: ElementRef, private router: Router) {

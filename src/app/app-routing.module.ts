@@ -1,4 +1,4 @@
-import { StaffsService } from './services/staffs.service';
+import { ActivityComponent } from './components/activity/activity.component';
 import { AuthGuardService as AuthGuard } from './services/guards/auth-guard.service';
 import { AddPaymentComponent } from './components/payments/add-payment/add-payment.component';
 import { CheckPaymentComponent } from './components/payments/check-payment/check-payment.component';
@@ -62,10 +62,14 @@ export const AppRoutes: Routes = [
     path: 'addPayment/:id', component: AddPaymentComponent,
     canActivate: [AuthGuard]
   },
+  {
+    path: 'activity', component: ActivityComponent,
+    canActivate: [AuthGuard]
+  },
 
   {
     path: '**',
-    redirectTo: '/login',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   },
 ];

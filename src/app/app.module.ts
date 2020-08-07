@@ -34,6 +34,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ClientEffect } from './store/effects/clients.effect';
 import { CheckPaymentComponent } from './components/payments/check-payment/check-payment.component';
 import { AddPaymentComponent } from './components/payments/add-payment/add-payment.component';
+import { ActivityComponent } from './components/activity/activity.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { AddPaymentComponent } from './components/payments/add-payment/add-payme
     StatistiquesComponent,
     CheckPaymentComponent,
     AddPaymentComponent,
+    ActivityComponent,
 
   ],
   imports: [

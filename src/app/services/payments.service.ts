@@ -16,6 +16,10 @@ export class PaymentsService {
     this.setHeader();
     return this.http.get(this.url + '/payment/' + id, { headers: this.headers });
   }
+  getAllPayment() {
+    this.setHeader();
+    return this.http.get(this.url + '/allPayment', { headers: this.headers });
+  }
   getClientForfait(id) { // client
     this.setHeader();
     return this.http.get(this.url + '/clientForfait/' + id, { headers: this.headers });

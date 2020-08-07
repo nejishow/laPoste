@@ -18,6 +18,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/allBp', title: 'Boites postales', icon: faBox, class: '' },
   { path: '/stats', title: 'Statistiques', icon: faChartLine, class: '' },
   { path: '/notifications', title: 'Notifications', icon: faBell, class: '' },
+  { path: '/activity', title: 'Activités', icon: faBell, class: '' },
 ];
 
 @Component({

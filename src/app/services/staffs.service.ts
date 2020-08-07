@@ -16,4 +16,8 @@ export class StaffsService {
     this.setHeader();
     return this.http.get(this.url + '/staff/' + id, { headers: this.headers });
   }
+  getAllStaff() {
+    this.setHeader();
+    return this.http.get(this.url + '/staffs', { headers: this.headers });
+  }
 }
