@@ -14,8 +14,8 @@ export class DashboardComponent implements OnInit {
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
-  public pieChartLabels: Label[] = ['Grand', 'Moyen', 'Petit', 'Special'];
-  public pieChartData: SingleDataSet = [300, 500, 100, 21];
+  public pieChartLabels: Label[] = ['Grande', 'Moyenne', 'Petite', 'BL'];
+  public pieChartData: SingleDataSet = [];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -45,6 +45,27 @@ export class DashboardComponent implements OnInit {
           await this.inactiveboites.push(boite);
         } else {
           await this.activeboites.push(boite);
+          let G= 0;
+          let M= 0;
+          let P= 0;
+          let BL= 0;
+          this.activeboites.forEach(async boite => {
+            switch (boite.boiteType) {
+              case 'Grande':
+                G++
+                break;
+                case 'Moyenne':
+                M++
+                break;
+                case 'Petite':
+                P++
+                break;
+                case 'BL':
+                BL++
+                break;
+            }
+          });
+          this.pieChartData.push(G,M,P,BL);
 
         }
       });

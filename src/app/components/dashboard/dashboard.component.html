@@ -62,9 +62,9 @@
   <div class="col-12 col-md-5">
     <div class=" mat-raised-button rounded border border-success p-3" style="display: block;">
       <div class="mb-5">
-        <span class="h2">Pourcentage de boites utilisées</span>
+        <span class="h2">Repartition des boites utilisées</span>
       </div>
-      <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+      <canvas *ngIf="pieChartData.length>0" baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
         [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
       </canvas>
     </div>
