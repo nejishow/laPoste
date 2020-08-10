@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { BoitesService } from 'src/app/services/boites.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-all-bp',
@@ -29,7 +30,8 @@ export class AllBpComponent implements OnInit {
   constructor(
     // private userS: ClientsService,
     private route: Router,
-    private boiteS: BoitesService
+    private boiteS: BoitesService,
+    private authS: AuthService
   ) {
     //
     this.boiteS.getBoites().subscribe((data: any) => {
@@ -38,11 +40,14 @@ export class AllBpComponent implements OnInit {
       this.length = this.boites.length;
       this.datasource.sort = this.sort;
       this.datasource.paginator = this.paginator;
-    }, ( error )=> {
-        console.log(error.status);
-        console.log('erreur');
+    },
+    (error) => {
+      if (error.status === 401) {
+        this.authS.logout();
+      }
 
     });
+
   }
   initTab() {}
   showSms() {

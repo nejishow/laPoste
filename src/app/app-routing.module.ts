@@ -14,6 +14,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { ClientsComponent } from './components/clients/clients.component';
 import { MyProfilComponent } from './components/my-profil/my-profil.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export const AppRoutes: Routes = [
   {
@@ -64,6 +65,10 @@ export const AppRoutes: Routes = [
   },
   {
     path: 'activity', component: ActivityComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'notifications', component: NotificationsComponent,
     canActivate: [AuthGuard]
   },
 

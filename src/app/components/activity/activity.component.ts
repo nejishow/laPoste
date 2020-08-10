@@ -87,7 +87,14 @@ export class ActivityComponent implements OnInit {
           });
           await this.getTodayData();
         });
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
+
       });
+
     },
       (error) => {
         if (error.status === 401) {

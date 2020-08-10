@@ -4,6 +4,7 @@ import { ClientsService } from './../../services/clients.service';
 import { Component, OnInit } from '@angular/core';
 import { ChartType, ChartOptions } from 'chart.js';
 import { SingleDataSet, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -24,21 +25,26 @@ export class DashboardComponent implements OnInit {
   inactiveboites = [];
   constructor(
     private clientS: ClientsService,
-    private boiteS: BoitesService, private payS: PaymentsService
+    private boiteS: BoitesService, private authS: AuthService
   ) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
-    this.clientS.getClients().subscribe((data: any) => {
+    this.clientS.getClients().subscribe((data: any) => {      
       data.forEach(async client => {
         if (client.enabled === true) {
           await this.activeClients.push(client);
         }
         if (client.status !== 'A jour' && client.status !== 'En retard') {
-          console.log(client);
-
         }
       });
+    },
+    (error) => {
+      if (error.status === 401) {
+        this.authS.logout();
+      }
+
     });
+
     this.boiteS.getBoites().subscribe((data: any) => {
       data.forEach(async boite => {
         if (boite.enabled === true) {
@@ -64,12 +70,18 @@ export class DashboardComponent implements OnInit {
                 BL++
                 break;
             }
-          });
-          this.pieChartData.push(G,M,P,BL);
-
+          });        
+          this.pieChartData=[G,M,P,BL];
         }
       });
+    },
+    (error) => {
+      if (error.status === 401) {
+        this.authS.logout();
+      }
+
     });
+
   }
 
   ngOnInit(): void {

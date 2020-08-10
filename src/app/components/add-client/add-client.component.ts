@@ -77,8 +77,6 @@ export class AddClientComponent implements OnInit {
     },
       (error) => {
         if (error.status === 401) {
-          console.log('ok');
-
           this.authS.logout();
         }
 

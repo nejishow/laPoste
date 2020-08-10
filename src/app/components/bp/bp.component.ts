@@ -3,6 +3,7 @@ import { faUser, faBox, faMoneyBillWave, faExclamation } from '@fortawesome/free
 import { BoitesService } from 'src/app/services/boites.service';
 import { ActivatedRoute } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -22,19 +23,31 @@ export class BpComponent implements OnInit {
   constructor(
     private boiteS: BoitesService,
     private aR: ActivatedRoute,
-    private clientS: ClientsService
+    private authS: AuthService
   ) {
     this.aR.params.subscribe(async params => {
       this.idBoite = params.id;
       await boiteS.getBoite(params.id).subscribe((data: any) => {
         this.boite = data;
-        console.log(data);
+
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
 
       });
+
       await boiteS.getBoiteClients(params.id).subscribe((data: any) => {
         this.boites = data;
-        console.log(data);
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
+
       });
+
     });
   }
 
