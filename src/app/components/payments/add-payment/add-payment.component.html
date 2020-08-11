@@ -3,7 +3,7 @@
     <ul class="list-group">
       <li class="list-group-item">Pour la periode : {{date}}</li>
       <li class="list-group-item">Paiement crée par : {{staff?.name}}</li>
-      <li class="list-group-item">Pour le client : {{client?.name}}</li>
+      <li class="list-group-item">Pour le client : {{client?.clientName}}</li>
       <li class="list-group-item">Proprietaire de la boite : {{client?.boiteNumber}}</li>
       <li class="list-group-item">Prix de la boite : {{boite?.price}} Fdj</li>
       <li class="list-group-item"> Liste des forfaits: <span *ngIf="forfaits.length===0">Aucun forfait</span>

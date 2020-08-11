@@ -59,8 +59,8 @@
     </h2>
     <div class="card-body">
       <mat-nav-list>
-        <mat-list-item> Numero de la boite: {{ client?.boiteNumber }} </mat-list-item>
-        <mat-list-item> <button [routerLink]="['/bp/'+ client?.idBoite]">Voir</button> </mat-list-item>
+        <mat-list-item> Numero de la boite: {{ currentBoite?.boiteNumber }} </mat-list-item>
+        <mat-list-item> <button [routerLink]="['/bp/'+ currentBoite?.idBoite]">Voir</button> </mat-list-item>
       </mat-nav-list>
       <mat-divider></mat-divider>
       <button *ngIf="client?.status !== 'Resilié'" class="mt-3 btn btn-group btn-danger text-white" width="50"

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUrl: 'https://lapostededjibouti.herokuapp.com'
+  backendUrl: 'http://localhost:3000'
 };

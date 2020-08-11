@@ -62,7 +62,9 @@ export class AddPaymentComponent implements OnInit {
         this.tax = true;
       }
     });
-    this.clientS.getClient(this.idClient).subscribe((data: any) => {
+    this.clientS.getClientBoite(this.idClient).subscribe((data: any) => {
+      console.log(data);
+      
       this.client = data;
       this.boiteS.getBoite(this.client.idBoite).subscribe((data1: any) => {
         this.boite = data1;

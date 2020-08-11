@@ -7,14 +7,15 @@ import { AddBPComponent } from './components/add-bp/add-bp.component';
 import { BpComponent } from './components/bp/bp.component';
 import { AllBpComponent } from './components/all-bp/all-bp.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ClientComponent } from './components/client/client.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
-import { ClientsComponent } from './components/clients/clients.component';
 import { MyProfilComponent } from './components/my-profil/my-profil.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ClientsComponent } from './components/client folder/clients/clients.component';
+import { ClientComponent } from './components/client folder/client/client.component';
+import { RedClientsComponent } from './components/client folder/red-clients/red-clients.component';
 
 export const AppRoutes: Routes = [
   {
@@ -25,6 +26,10 @@ export const AppRoutes: Routes = [
     path: 'login', component: LoginComponent  },
   {
     path: 'clients', component: ClientsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'redClients', component: RedClientsComponent,
     canActivate: [AuthGuard]
   },
   {

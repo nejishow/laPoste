@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ClientsService {
-  url = 'https://lapostededjibouti.herokuapp.com';
+  url = 'http://localhost:3000'; // https://lapostededjibouti.herokuapp.com
   headers = new HttpHeaders().set('Content-Type', 'application/json')
     .set('X-Requested-Width', 'XMLHttpRequest').set('Authorization', localStorage.getItem('token'));
   constructor(private http: HttpClient) {
@@ -16,7 +16,7 @@ export class ClientsService {
   }
   getClients() {
     this.setHeader();
-    return this.http.get(this.url + '/clients', { headers: this.headers });
+    return this.http.get(this.url + '/clientBoites', { headers: this.headers });
   }
   getClient(id) {
     this.setHeader();
@@ -37,7 +37,11 @@ export class ClientsService {
   }
   getClientBoite(id) {
     this.setHeader();
-    return this.http.get(this.url + '/clientBoite/' + id, { headers: this.headers});
+    return this.http.get(this.url + '/clientBoites/' + id, { headers: this.headers});
+  }
+  getRedClients() {
+    this.setHeader();
+    return this.http.get(this.url + '/clientBoiteRED/', { headers: this.headers});
   }
   getForfaits() {
     this.setHeader();

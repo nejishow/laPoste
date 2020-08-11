@@ -45,35 +45,37 @@ export class DashboardComponent implements OnInit {
 
     });
 
-    this.boiteS.getBoites().subscribe((data: any) => {
-      data.forEach(async boite => {
+    this.boiteS.getBoites().subscribe(async (data: any) => {
+      await data.forEach(async boite => {
         if (boite.enabled === true) {
           await this.inactiveboites.push(boite);
         } else {
           await this.activeboites.push(boite);
-          let G= 0;
-          let M= 0;
-          let P= 0;
-          let BL= 0;
-          this.activeboites.forEach(async boite => {
-            switch (boite.boiteType) {
-              case 'Grande':
-                G++
-                break;
-                case 'Moyenne':
-                M++
-                break;
-                case 'Petite':
-                P++
-                break;
-                case 'BL':
-                BL++
-                break;
-            }
-          });        
-          this.pieChartData=[G,M,P,BL];
         }
       });
+      // this.activeboites.forEach(async boite => {
+      //     let G= 0;
+      //     let M= 0;
+      //     let P= 0;
+      //     let BL= 0;
+      //     this.activeboites.forEach(async boite => {
+      //       switch (boite.boiteType) {
+      //         case 'Grande':
+      //           G++
+      //           break;
+      //           case 'Moyenne':
+      //           M++
+      //           break;
+      //           case 'Petite':
+      //           P++
+      //           break;
+      //           case 'BL':
+      //           BL++
+      //           break;
+      //       }
+      //     });        
+      //     this.pieChartData=[G,M,P,BL];
+      // });
     },
     (error) => {
       if (error.status === 401) {

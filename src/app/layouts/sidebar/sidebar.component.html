@@ -46,7 +46,7 @@
       <mat-list>
         <mat-list-item *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
           <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()" *ngIf="isAuth">
-            <fa-icon [icon]="menuItem.icon" class="mr-2"></fa-icon>
+            <fa-icon [icon]="menuItem.icon" class="mr-2 {{menuItem.class}}"></fa-icon>
             <p>{{menuItem.title}}</p>
           </a>
         </mat-list-item>

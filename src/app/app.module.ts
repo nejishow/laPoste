@@ -13,12 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ClientComponent } from './components/client/client.component';
 import { MyProfilComponent } from './components/my-profil/my-profil.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { BpComponent } from './components/bp/bp.component';
 import { AllBpComponent } from './components/all-bp/all-bp.component';
-import { ClientsComponent } from './components/clients/clients.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
@@ -35,6 +33,9 @@ import { ClientEffect } from './store/effects/clients.effect';
 import { CheckPaymentComponent } from './components/payments/check-payment/check-payment.component';
 import { AddPaymentComponent } from './components/payments/add-payment/add-payment.component';
 import { ActivityComponent } from './components/activity/activity.component';
+import { RedClientsComponent } from './components/client folder/red-clients/red-clients.component';
+import { ClientComponent } from './components/client folder/client/client.component';
+import { ClientsComponent } from './components/client folder/clients/clients.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { ActivityComponent } from './components/activity/activity.component';
     CheckPaymentComponent,
     AddPaymentComponent,
     ActivityComponent,
+    RedClientsComponent,
 
   ],
   imports: [

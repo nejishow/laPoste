@@ -1,26 +1,17 @@
-import { AuthService } from './../../services/auth.service';
-import { StaffsService } from './../../services/staffs.service';
-import { faTimes, faExclamation, faCircle, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-// import { ClientsService } from './../../services/clients.service';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-
-} from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients.service';
-import { BoitesService } from 'src/app/services/boites.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.css'],
+  selector: 'app-red-clients',
+  templateUrl: './red-clients.component.html',
+  styleUrls: ['./red-clients.component.css']
 })
-export class ClientsComponent implements OnInit {
+export class RedClientsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   sms = true;
@@ -42,7 +33,7 @@ export class ClientsComponent implements OnInit {
   ) {
   }
   async getData() {
-    await this.clientS.getClients().subscribe(async (clients: any) => {
+    await this.clientS.getRedClients().subscribe(async (clients: any) => {      
       this.allClients = clients;
       this.datasource = await new MatTableDataSource(this.allClients);
       this.length = this.datasource.length;
@@ -90,9 +81,9 @@ export class ClientsComponent implements OnInit {
 
     } else {
       await this.allClients.forEach(async client => {
-        if (client.name === undefined) {
+        if (client.clientName === undefined) {
         } else {
-          const clientName = await client.name.trim().toLowerCase();
+          const clientName = await client.clientName.trim().toLowerCase();
           if (clientName.includes(name)) {
             await this.clientSearch.push(client);
             this.searchResults = true;

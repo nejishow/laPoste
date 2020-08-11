@@ -14,7 +14,8 @@ export interface RouteInfo {
 
 export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'Acceuil', icon: faHome, class: '' },
-  { path: '/clients', title: 'Clients', icon: faUser, class: '' },
+  { path: '/clients', title: 'Clients actifs', icon: faUser, class: '' },
+  { path: '/redClients', title: 'Clients inactifs', icon: faUser, class: 'text-danger' },
   { path: '/allBp', title: 'Boites postales', icon: faBox, class: '' },
   { path: '/stats', title: 'Statistiques', icon: faChartLine, class: '' },
   { path: '/notifications', title: 'Notifications', icon: faBell, class: '' },

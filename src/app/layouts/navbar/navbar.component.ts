@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
     { path: '/clients', title: 'Tous les clients' },
     { path: '/client/', title: 'Profil du client' },
     { path: '/addClient', title: 'Ajouter un client' },
+    { path: '/redClients', title: 'Les clients en attente de resiliation' },
     { path: '/allBp', title: 'Toutes les boites postales' },
     { path: '/bp/', title: 'Informations sur la boite' },
     { path: '/addBP', title: 'Ajouter une boite postale' },

@@ -1,10 +1,11 @@
-import { PaymentsService } from './../../services/payments.service';
+import { PaymentsService } from './../../../services/payments.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faUser, faBox, faMoneyBillWave, faExclamation, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { ClientsService } from 'src/app/services/clients.service';
 import { BoitesService } from 'src/app/services/boites.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { createHostListener } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class ClientComponent implements OnInit {
   year = parseInt((new Date().getFullYear()).toString());
   client;
   boites;
+  currentBoite;
   historics;
   unpaids = [];
   constructor(public dialog: MatDialog, private aR: ActivatedRoute,
@@ -35,6 +37,8 @@ export class ClientComponent implements OnInit {
       this.idUser = params.id;
       await this.clientS.getClient(params.id).subscribe((data: any) => {
         this.client = data;
+        console.log(data);
+        
       });
       await this.clientS.getHistoric(params.id).subscribe(async (data: any) => {
         this.historics = data;
@@ -58,10 +62,9 @@ export class ClientComponent implements OnInit {
 
       });
       await this.clientS.getClientBoite(params.id).subscribe(async (datas: any) => {
-        await datas.forEach(boite => {
-          boite.createdAt = new Date(boite.createdAt).getFullYear();
-        });
         this.boites = datas;
+        this.currentBoite = this.boites;
+        
 
       });
     });
@@ -77,9 +80,7 @@ export class ClientComponent implements OnInit {
     const year = new Date().getFullYear();
     for (let index = 0; index < year - historic.date; index++) {
       this.unpaids[index] = { idClient: historic.idClient, date: historic.date + index + 1 };
-      if (index === 2) {
-        break;
-      }
+
     }
     this.unpaids.sort((a, b) => {
       if (a.date > b.date) {

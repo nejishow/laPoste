@@ -30,9 +30,9 @@
           <tbody>
             <tr *ngFor="let client of clientSearch; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ client?.name }}</td>
+              <td>{{ client?.clientName }}</td>
               <td>
-                <button (click)="details(client._id)" class="btn btn-group btn-outline-primary">
+                <button (click)="details(client.idClient)" class="btn btn-group btn-outline-primary">
                   Consulter
                 </button>
               </td>
@@ -50,7 +50,7 @@
 </div>
 <div class="row">
   <div class="col-12 col-md-10">
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" >
     </mat-paginator>
   </div>
   <div class="col-sm-12 col-md-10" *ngIf="allClients.length>=1">
@@ -63,7 +63,7 @@
               Status
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
-        <button mat-fab [style]='row.bg'>
+        <button mat-fab [style]='row.bg' [class]="row.bg==='background:yellow' ? 'text-danger': ''">
           {{row.status}}
         </button> </mat-cell>
           </ng-container>
@@ -73,7 +73,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Nom
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.clientName }} </mat-cell>
           </ng-container>
 
           <!-- clientType Column -->
@@ -97,7 +97,7 @@
               Action
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <button (click)="details(row._id)" class="btn btn-group btn-outline-primary">
+              <button (click)="details(row.idClient)" class="btn btn-group btn-outline-primary">
                 Consulter
               </button>
             </mat-cell>
