@@ -62,11 +62,9 @@ export class AddPaymentComponent implements OnInit {
         this.tax = true;
       }
     });
-    this.clientS.getClientBoite(this.idClient).subscribe((data: any) => {
-      console.log(data);
-      
+    this.clientS.getClientBoite(this.idClient).subscribe((data: any) => {      
       this.client = data;
-      this.boiteS.getBoite(this.client.idBoite).subscribe((data1: any) => {
+      this.boiteS.getBoiteType(this.client.idBoiteType).subscribe((data1: any) => {
         this.boite = data1;
         this.total += this.boite.price;
 
@@ -94,7 +92,7 @@ export class AddPaymentComponent implements OnInit {
   payment() {
     this.encaisser = true;
     const newPayment = {
-      boiteNumber: this.boite.number,
+      boiteNumber: this.client.boiteNumber,
       idBoite: this.boite._id,
       priceBoite: this.boite.price,
       idClient: this.client._id,
@@ -103,6 +101,8 @@ export class AddPaymentComponent implements OnInit {
       date: this.date,
       total: this.total,
     };
+    console.log(newPayment);
+    
     this.payS.postPayment(newPayment).subscribe(() => {
       this.clientS.updateClient(this.client._id).subscribe(async (data) => {
         await this.router.navigate(['/client/' + this.client._id]);

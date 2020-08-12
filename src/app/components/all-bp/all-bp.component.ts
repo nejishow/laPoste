@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { BoitesService } from 'src/app/services/boites.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ClientsService } from 'src/app/services/clients.service';
 
 @Component({
   selector: 'app-all-bp',
@@ -27,28 +28,37 @@ export class AllBpComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10];
   boites = [];
   boiteSearch = [];
+  clientBoites;
   constructor(
     // private userS: ClientsService,
     private route: Router,
     private boiteS: BoitesService,
+    private clientS: ClientsService,
     private authS: AuthService
   ) {
     //
-    this.boiteS.getBoites().subscribe((data: any) => {
-      this.boites = data;
-      this.datasource = new MatTableDataSource(this.boites);
-      this.length = this.boites.length;
-      this.datasource.sort = this.sort;
-      this.datasource.paginator = this.paginator;
+    this.clientS.getAllClientBoite().subscribe((_data: any) => {
+      this.clientBoites = _data
+      this.boiteS.getBoites().subscribe((data: any) => {
+        this.boites = data;
+        this.datasource = new MatTableDataSource(this.boites);
+        this.length = this.boites.length;
+        this.datasource.sort = this.sort;
+        this.datasource.paginator = this.paginator;
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
+  
+      });
     },
     (error) => {
       if (error.status === 401) {
         this.authS.logout();
       }
-
-    });
-
-  }
+  });
+}
   initTab() {}
   showSms() {
     this.sms = true;

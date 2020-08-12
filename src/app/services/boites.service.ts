@@ -38,6 +38,11 @@ export class BoitesService {
 
     return this.http.get(this.url + '/boiteT', { headers: this.headers });
   }
+  getBoiteType(id) {
+    this.setHeader();
+
+    return this.http.get(this.url + '/oneBoiteT/'+id, { headers: this.headers });
+  }
   getBoiteClients(id) {
     this.setHeader();
 

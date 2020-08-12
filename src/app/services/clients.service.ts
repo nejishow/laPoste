@@ -39,6 +39,10 @@ export class ClientsService {
     this.setHeader();
     return this.http.get(this.url + '/clientBoites/' + id, { headers: this.headers});
   }
+  getAllClientBoite() {
+    this.setHeader();
+    return this.http.get(this.url + '/allClientBoites', { headers: this.headers});
+  }
   getRedClients() {
     this.setHeader();
     return this.http.get(this.url + '/clientBoiteRED/', { headers: this.headers});
