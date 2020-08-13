@@ -17,6 +17,7 @@ export class AddClientComponent implements OnInit {
   errorMessage;
   loading = false;
   clientForm: FormGroup;
+  clientForm2: FormGroup;
   forfaits; // tous les forfaits
   forfaitClient = []; // les forfaits approprié ce type de client
   choosenForfait = []; // les forfaits qu'il a choisit
@@ -29,7 +30,9 @@ export class AddClientComponent implements OnInit {
   };
   total = 0; // premier paiement
   boitePrice = 0; // prix de la boite choisit
-  choosenBoite;
+  availableboites = []; // les numero de boites libres
+  availableBoitetypes = []; // les type de boites pour le type de client choisit
+  boiteTypes = []; // toute les types de boite
   idNewClient;
   historicPayment = {
     boiteNumber: '',
@@ -37,7 +40,7 @@ export class AddClientComponent implements OnInit {
     idBoite: '',
     idClient: '',
     priceBoite: 0,
-    staffs: [],
+    idStaff: '',
     enabled: true,
     date: 0,
     total: 0
@@ -54,14 +57,25 @@ export class AddClientComponent implements OnInit {
     number: '',
     email: '',
     address: '',
+    idClientType: '',
+    enabled: true,
+
+  };
+  clientBoite = {
     boiteNumber: '',
     idBoite: '',
+    boiteType: '',
+    idBoiteType: '',
+    idClient: '',
+    clientName: '',
+    startDate: new Date().getFullYear(),
     clientType: '',
     idClientType: '',
-    enabled: false,
+    enabled: true,
     bg: '',
     idStatus: '',
-    status: ''
+    status: '',
+    NA: true
   };
   constructor(
     private formBuilder: FormBuilder,
@@ -83,9 +97,11 @@ export class AddClientComponent implements OnInit {
       });
     this.clientS.getClientType().subscribe(data => {
       this.clientTypes = data;
+
     });
-    this.boiteS.getAvailableBoite().subscribe(data => {
-      this.boites = data;
+    this.boiteS.getAvailableBoite().subscribe((data: any) => {
+      this.availableboites = data;
+
     });
   }
   ngOnInit() {
@@ -99,6 +115,20 @@ export class AddClientComponent implements OnInit {
       number: ['', Validators.required],
       address: ['', Validators.required],
     });
+    this.clientForm2 = this.formBuilder.group({
+      available: ['', Validators.required],
+      boiteType: ['', Validators.required],
+    });
+  }
+  // les types de boite a afficher pour le type de client
+  async setBoiteType() {
+    await this.clientTypes.forEach(ct => {
+      if (ct._id === this.clientForm.get('type').value) {
+        this.availableBoitetypes = ct.idBoitetypes;
+      }
+
+    });
+
   }
   async onSubmit(): Promise<any> {
     this.loading = true;
@@ -106,40 +136,58 @@ export class AddClientComponent implements OnInit {
       name: this.clientForm.get('name').value,
       number: this.clientForm.get('number').value,
       address: this.clientForm.get('address').value,
-      boiteNumber: this.clientProfil.boiteNumber,
       email: this.clientForm.get('email').value,
       idClientType: this.clientForm.get('type').value,
-      clientType: '',
       enabled: true,
-      idBoite: this.clientProfil.idBoite,
-      bg: 'background:green',
-      status: 'A jour',
-      idStatus: '5f211bafc9518f4404e03c2c'
     };
-    const ct = await this.clientTypes.filter((c) => c._id === this.clientProfil.idClientType);
-    this.clientProfil.clientType = ct[0].name;
+    await this.setBoiteType();
     await this.step2();
 
   }
-  async onSubmit2(): Promise<any> {
-    this.loading = true;
-    this.clientS.postClient(this.clientProfil).subscribe((data: any) => {
-      this.historiqueForfait = {
-        idClient: data._id,
-        forfaits: this.choosenForfait,
-        idBoite: data.idBoite,
-        idStaff: localStorage.getItem('id'),
-        enabled: true
-      };
-      this.idNewClient = data._id;
+  async setBoiteNumber() {
+    await this.availableboites.forEach(bt => {
+      if (bt._id === this.clientForm2.get('available').value) {
+        this.clientBoite.boiteNumber = bt.number;
+      }
     });
+    await this.availableBoitetypes.forEach(bt => {
+      if (bt._id === this.clientForm2.get('boiteType').value) {
+        this.clientBoite.idBoiteType = bt._id;
+        this.clientBoite.boiteType = bt.name;
+      }
+
+    });
+  }
+  async onSubmit2(): Promise<any> {
+    await this.setBoiteNumber();
+    this.loading = true;
+    this.clientBoite = {
+      idBoite: this.clientForm2.get('available').value,
+      idBoiteType: this.clientForm2.get('boiteType').value,
+      idClientType: this.clientForm.get('type').value,
+      clientType: '',
+      boiteType: this.clientBoite.boiteType,
+      idClient: '',
+      clientName: this.clientForm.get('name').value,
+      startDate: this.clientBoite.startDate,
+      enabled: true,
+      boiteNumber: this.clientBoite.boiteNumber,
+      bg: 'background:green',
+      status: 'A jour',
+      idStatus: '5f211bafc9518f4404e03c2c',
+      NA: true
+    };
+    const ct = await this.clientTypes.filter((c) => c._id === this.clientBoite.idClientType);
+    this.clientBoite.clientType = ct[0].name;
+    const ab = await this.availableboites.filter((c) => c._id === this.clientBoite.idBoite);
+    this.clientBoite.clientType = ct[0].name;
+
     this.step3();
 
   }
   async createTotal() {
-    const boite = await this.boites.filter((b) => b._id === this.clientProfil.idBoite);
-    // tslint:disable-next-line: radix
-
+    const boite = await this.availableBoitetypes.filter((b) => b._id === this.clientBoite.idBoiteType);
+    // prend le type de boite choisis , prend le prix et ajoute aux prix des forfaits choisis
     this.boitePrice = boite[0].price;
     this.choosenForfait.forEach(element => {
       // tslint:disable-next-line:radix
@@ -149,44 +197,44 @@ export class AddClientComponent implements OnInit {
   }
   async confirm() {
     this.loading = true;
-    this.historicPayment = {
-      boiteNumber: this.clientProfil.boiteNumber,
-      forfaits: this.choosenForfait,
-      idBoite: this.clientProfil.idBoite,
-      idClient: this.historiqueForfait.idClient,
-      priceBoite: this.boitePrice,
-      staffs: [{ idStaff: localStorage.getItem('id') }],
-      enabled: true,
-      date: new Date().getFullYear(),
-      total: this.total
-    };
+    await this.clientS.postClient(this.clientProfil).subscribe(async (data: any) => {
+      this.historiqueForfait = {
+        idClient: data._id,
+        forfaits: this.choosenForfait,
+        idBoite: this.clientBoite.idBoite,
+        idStaff: localStorage.getItem('id'),
+        enabled: true
+      };
+      this.historicPayment = {
+        boiteNumber: this.clientBoite.boiteNumber,
+        forfaits: this.choosenForfait,
+        idBoite: this.clientBoite.idBoite,
+        idClient: data._id,
+        priceBoite: this.boitePrice,
+        idStaff: localStorage.getItem('id'),
+        enabled: true,
+        date: new Date().getFullYear(),
+        total: this.total
+      };
+      this.clientBoite.idClient = data._id;
+      await this.clientS.postClientBoite(this.clientBoite).subscribe(async result => {
+        await this.payS.postHistoricForfait(this.historiqueForfait).subscribe(async () => {
+          await this.payS.postPayment(this.historicPayment).subscribe(async (_data: any) => {
+            if (_data) {
+              await this.router.navigate(['/client/', _data.idClient]);
+            }
+          });
 
-    await this.payS.postHistoricForfait(this.historiqueForfait).subscribe(async () => {
-      await this.payS.postPayment(this.historicPayment).subscribe(async (_data: any) => {
-        await this.boiteS.attributeBoite(this.clientProfil.idBoite).subscribe(async () => {
-          if (_data) {
-            await this.router.navigate(['/client/', _data.idClient]);
-          }
         });
       });
-
     });
-  }
-  attribuer() { // attribuer une boite aléatoirement
-    this.clientProfil.boiteNumber = this.boites[0].number;
-    this.clientProfil.idBoite = this.boites[0]._id;
   }
   async getForfaits() {
     const ct = this.clientTypes.filter((c) => c._id === this.clientProfil.idClientType);
-    await ct[0].forfaits.forEach(forfait => {
-      this.forfaits.forEach(async element => {
-        if (forfait.idForfait === element._id) {
-          await this.forfaitClient.push(element);
-        }
-      });
-    });
+    this.forfaitClient = ct[0].forfaits;
   }
   newForfait(event) {
+
     if (event.target.checked) {
       this.forfaits.forEach(async element => {
         if (event.target.value === element._id) {

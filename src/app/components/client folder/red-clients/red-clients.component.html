@@ -1,116 +1,109 @@
 <div class="row">
-    <div class="col-sm-12 col-md-8">
-      <div class="card">
-        <h4 class="card-header">Clients</h4>
-        <div class="card-body menuB">
-          <button mat-raised-button class="btn btn-success btn-sm" routerLink="/addClient">
-            Ajouter un client
-          </button>
-        </div>
-        <div class="form-check-inline card-body">
-          <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher un abonné"
-            aria-label="Rechercher" />
-          <button class="btn btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
-            (click)="search()">
-            Rechercher
-          </button>
-          <button class="btn btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)="this.initForm()">
-            Effacer
-          </button>
-        </div>
-        <div *ngIf="searchResults">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let client of clientSearch; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ client?.clientName }}</td>
-                <td>
-                  <button (click)="details(client.idClient)" class="btn btn-group btn-outline-primary">
-                    Consulter
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <button class="btn btn-group btn-danger" *ngIf="errorMessage">
-            Aucun client à ce nom
-          </button>
-        </div>
+  <div class="col-sm-12 col-md-8">
+    <div class="card">
+      <div class="form-check-inline card-body">
+        <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher un abonné"
+          aria-label="Rechercher" />
+        <button class="btn btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
+          (click)="search()">
+          Rechercher
+        </button>
+        <button class="btn btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)="this.initForm()">
+          Effacer
+        </button>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-md-10">
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
-      </mat-paginator>
-    </div>
-    <div class="col-sm-12 col-md-10" *ngIf="allClients.length>=1">
-      <div class="">
-        <div class="example-container mat-elevation-z8 card-body">
-          <mat-table [dataSource]="datasource" matSort>
-            <!-- status Column -->
-            <ng-container matColumnDef="status">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Status
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row">
-          <button mat-fab [style]='row.bg' [class]="row.bg==='background:yellow' ? 'text-danger': ''">
-            {{row.status}}
-          </button> </mat-cell>
-            </ng-container>
-  
-            <!-- ID Column -->
-            <ng-container matColumnDef="name">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Nom
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{ row.clientName }} </mat-cell>
-            </ng-container>
-  
-            <!-- clientType Column -->
-            <ng-container matColumnDef="clientType">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Type de client
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{ row.clientType }} </mat-cell>
-            </ng-container>
-  
-            <ng-container matColumnDef="boiteNumber">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Numero de boite
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row"> {{ row.boiteNumber }} </mat-cell>
-            </ng-container>
-  
-            <!-- Action Column -->
-            <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Action
-              </mat-header-cell>
-              <mat-cell *matCellDef="let row">
-                <button (click)="details(row.idClient)" class="btn btn-group btn-outline-primary">
+      <div *ngIf="searchResults">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of clientSearch; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ client?.clientName }}</td>
+              <td>
+                <button (click)="details(client.idClient)" class="btn btn-group btn-outline-primary">
                   Consulter
                 </button>
-              </mat-cell>
-            </ng-container>
-  
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
-          </mat-table>
-        </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <button class="btn btn-group btn-danger" *ngIf="errorMessage">
+          Aucun client à ce nom
+        </button>
       </div>
     </div>
   </div>
-  <div class="loading" *ngIf="allClients.length<1">
-    <mat-spinner color="warning"></mat-spinner>
+</div>
+<div class="row">
+  <div class="col-12 col-md-10">
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+    </mat-paginator>
   </div>
-  
+  <div class="col-sm-12 col-md-10" *ngIf="allClients.length>=1">
+    <div class="">
+      <div class="example-container mat-elevation-z8 card-body">
+        <mat-table [dataSource]="datasource" matSort>
+          <!-- status Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Status
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button mat-fab [style]='row.bg' [class]="row.bg==='background:yellow' ? 'text-danger': ''">
+                {{row.status}}
+              </button> </mat-cell>
+          </ng-container>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nom
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.clientName }} </mat-cell>
+          </ng-container>
+
+          <!-- clientType Column -->
+          <ng-container matColumnDef="clientType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Type de client
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.clientType }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="boiteNumber">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Numero de boite
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.boiteNumber }} </mat-cell>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Action
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button (click)="details(row.idClient)" class="btn btn-group btn-outline-primary">
+                Consulter
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading" *ngIf="allClients.length<1">
+  <mat-spinner color="warning"></mat-spinner>
+</div>

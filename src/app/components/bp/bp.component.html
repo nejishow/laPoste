@@ -7,29 +7,20 @@
     <div class="card-body">
       <mat-nav-list>
         <mat-list-item> Numero: {{ boite?.number }}</mat-list-item>
-        <mat-list-item> Type: {{ boite?.boiteType }} </mat-list-item>
-        <mat-list-item> Prix: {{ boite?.price }} Fdj</mat-list-item>
-        <mat-list-item *ngIf="boite?.enabled"> Statut: Actif</mat-list-item>
-        <mat-list-item *ngIf="!boite?.enabled"> Statut: Indisponible</mat-list-item>
+        <mat-list-item> Type: {{ boiteclients[0]?.boiteType }} </mat-list-item>
+        <mat-list-item *ngIf="boite?.enabled"> Statut: Active</mat-list-item>
+        <mat-list-item *ngIf="!boite?.enabled"> Statut: Inactive</mat-list-item>
 
       </mat-nav-list>
 
     </div>
   </div>
-  <div class=" col-12 col-md-5 rounded border" *ngIf="modify">
-    <h2>
-      <fa-icon [icon]="faBox"></fa-icon>
-      Modifier la boite
-    </h2>
-    <div class="card-body">
-      <mat-nav-list>
-        <mat-list-item class="card-header text-center">
-          <span>Numero: </span><input type="text" [value]="boite?.number">
-        </mat-list-item>
-        <mat-list-item> Type: <input type="text" [value]="boite?.type"></mat-list-item>
-      </mat-nav-list>
+  <div class=" col-12 col-md-5">
 
-    </div>
+    <button class="btn btn-danger" (click)="libererBoite()"
+      *ngIf="boite?.enabled && boite?.status === 'Resilié'">Liberer
+      la boite et resilier le
+      client</button>
   </div>
 </div>
 <mat-divider class="mt-2 mb-2"></mat-divider>
@@ -47,16 +38,17 @@
             <th scope="col">#</th>
             <th scope="col">Nom</th>
             <th scope="col">Attribuer le</th>
-            <th scope="col">Resilier le</th>
+            <th scope="col">Etat</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let boite of boites">
-            <th scope="row">1</th>
-            <td>{{boite?.clientName}}</td>
-            <td>{{boite?.startDate}}</td>
+          <tr *ngFor="let boite of boiteclients; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td><a [routerLink]="[ '/client/'+ boite.idClient]">{{boite?.clientName}}</a></td>
+            <td>{{boite?.createdAt}}</td>
             <td *ngIf="boite.releaseDate">{{boite?.releaseDate}}</td>
-            <td *ngIf="!boite.releaseDate">Non resilié</td>
+            <td *ngIf="!boite.enabled">Resilié</td>
+            <td *ngIf="boite.enabled">Non resilié</td>
           </tr>
         </tbody>
       </table>

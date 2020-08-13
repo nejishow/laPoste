@@ -42,7 +42,7 @@ export class ClientsComponent implements OnInit {
   ) {
   }
   async getData() {
-    await this.clientS.getClients().subscribe(async (clients: any) => {      
+    await this.clientS.getClients().subscribe(async (clients: any) => {
       this.allClients = clients;
       this.datasource = await new MatTableDataSource(this.allClients);
       this.length = this.datasource.length;

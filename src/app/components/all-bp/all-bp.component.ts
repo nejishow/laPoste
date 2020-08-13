@@ -20,7 +20,7 @@ export class AllBpComponent implements OnInit {
   mail = false;
   searchBoite = '';
   searchResults = false;
-  displayedColumns = ['number', 'type', 'price', 'action'];
+  displayedColumns = ['number', 'type', 'action'];
   errorMessage = false;
   datasource;
   length;
@@ -37,29 +37,21 @@ export class AllBpComponent implements OnInit {
     private authS: AuthService
   ) {
     //
-    this.clientS.getAllClientBoite().subscribe((_data: any) => {
-      this.clientBoites = _data
-      this.boiteS.getBoites().subscribe((data: any) => {
-        this.boites = data;
-        this.datasource = new MatTableDataSource(this.boites);
-        this.length = this.boites.length;
-        this.datasource.sort = this.sort;
-        this.datasource.paginator = this.paginator;
-      },
+    this.boiteS.getAllClientBoites().subscribe((_data: any) => {
+      this.clientBoites = _data;
+      this.boites = _data;
+      this.datasource = new MatTableDataSource(this.boites);
+      this.length = this.boites.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+    },
       (error) => {
         if (error.status === 401) {
           this.authS.logout();
         }
-  
       });
-    },
-    (error) => {
-      if (error.status === 401) {
-        this.authS.logout();
-      }
-  });
-}
-  initTab() {}
+  }
+  initTab() { }
   showSms() {
     this.sms = true;
     this.mail = false;

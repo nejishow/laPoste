@@ -10,8 +10,7 @@
       <div class="form-check-inline card-body">
         <input class="form-control" [(ngModel)]="searchBoite" type="number" placeholder="12345"
           aria-label="Rechercher" />
-        <button class="btn btn-outline-success" type="submit" [disabled]="searchBoite.length == 0"
-          (click)="search()">
+        <button class="btn btn-outline-success" type="submit" [disabled]="searchBoite.length == 0" (click)="search()">
           Rechercher
         </button>
         <button class="btn btn-outline-danger" [disabled]="searchBoite.length == 0" (click)=" this.initForm()">
@@ -48,53 +47,45 @@
     </div>
   </div>
 </div>
-<div class="row" >
+<div class="row">
   <div class="col-12 col-md-10">
-    <mat-paginator  [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
     </mat-paginator>
   </div>
   <div class="col-sm-12 col-md-10" *ngIf="boites.length>=1">
-      <div class="example-container mat-elevation-z8 card-body">
-        <mat-table [dataSource]="datasource" matSort>
-          <!-- Progress Column -->
-          <ng-container matColumnDef="number">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Numero
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.number }} </mat-cell>
-          </ng-container>
+    <div class="example-container mat-elevation-z8 card-body">
+      <mat-table [dataSource]="datasource" matSort>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="number">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Numero
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.boiteNumber }} </mat-cell>
+        </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="type">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Type
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.boiteType }} </mat-cell>
-          </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Type
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.boiteType }} </mat-cell>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Action
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button (click)="details(row.idBoite)" class="btn btn-group btn-outline-primary">
+              Consulter
+            </button>
+          </mat-cell>
+        </ng-container>
 
-          <ng-container matColumnDef="price">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Prix
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.price }} </mat-cell>
-          </ng-container>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Action
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <button (click)="details(row._id)" class="btn btn-group btn-outline-primary">
-                Consulter
-              </button>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
-        </mat-table>
-      </div>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </mat-table>
+    </div>
   </div>
 </div>
 <div class="loading" *ngIf="boites.length<1">

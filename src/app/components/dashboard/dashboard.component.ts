@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   ) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
-    this.clientS.getClients().subscribe((data: any) => {      
+    this.clientS.getClients().subscribe((data: any) => {
       data.forEach(async client => {
         if (client.enabled === true) {
           await this.activeClients.push(client);
@@ -38,16 +38,16 @@ export class DashboardComponent implements OnInit {
         }
       });
     },
-    (error) => {
-      if (error.status === 401) {
-        this.authS.logout();
-      }
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
 
-    });
+      });
 
     this.boiteS.getBoites().subscribe(async (data: any) => {
       await data.forEach(async boite => {
-        if (boite.enabled === true) {
+        if (boite.enabled === false) {
           await this.inactiveboites.push(boite);
         } else {
           await this.activeboites.push(boite);
@@ -73,16 +73,16 @@ export class DashboardComponent implements OnInit {
       //           BL++
       //           break;
       //       }
-      //     });        
+      //     });
       //     this.pieChartData=[G,M,P,BL];
       // });
     },
-    (error) => {
-      if (error.status === 401) {
-        this.authS.logout();
-      }
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
 
-    });
+      });
 
   }
 

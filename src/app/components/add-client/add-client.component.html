@@ -59,16 +59,8 @@
                 </mat-form-field>
               </div>
             </div>
-            <div class="col-md-6">
-              <label>Boite Postale</label>
-              <div class=" d-flex flex-row justify-content-between align-items-baseline">
-                <a class="btn btn-outline-primary" (click)="attribuer()">Attribué</a>
-                <span class="h6" *ngIf="clientProfil.boiteNumber"> boite numéro: {{ clientProfil?.boiteNumber }}</span>
-              </div>
-            </div>
           </div>
-          <button type="submit" class="btn-group btn btn-outline-primary"
-            [disabled]="clientForm.invalid || clientProfil.boiteNumber===''">
+          <button type="submit" class="btn-group btn btn-outline-primary" [disabled]="clientForm.invalid ">
             Passer à l'etape 2
           </button>
           <div class="clearfix"></div>
@@ -87,9 +79,30 @@
     <div class="card border-info">
       <h4 class="card-header">Enregistrer les forfaits</h4>
       <div class="card-body">
-        <form [formGroup]="clientForm" (ngSubmit)="onSubmit2()">
+        <form [formGroup]="clientForm2" (ngSubmit)="onSubmit2()">
+          <div class="col-12 col-md-6" *ngIf="clientProfil.idClientType">
+            <section class="card d-flex flex-wrap">
+              <label class="example-margin">Type de boite</label>
+              <mat-radio-group formControlName="boiteType">
+                <mat-radio-button *ngFor="let item of availableBoitetypes" class="m-2" [value]="item._id">
+                  {{item.name}} | {{item.price}} </mat-radio-button>
+              </mat-radio-group>
+            </section>
+          </div>
+          <div class="col-md-6">
+            <label>Attribuer une boite</label>
+            <div class=" d-flex flex-row justify-content-between align-items-baseline">
+              <mat-form-field class="form-group">
+                <mat-select matInput formControlName="available" name="available" id="available">
+                  <mat-option *ngFor="let boite of availableboites" value={{boite._id}}>
+                    {{boite.number}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
           <div class="form-check" *ngFor="let forfait of forfaitClient">
-            <input type="checkbox" class="form-check-input" (change)="newForfait($event)" value="{{forfait._id}}">
+            <input type="checkbox" class="form-check-input" (change)="newForfait($event)" value="{{forfait.idForfait}}">
             <label class="form-check-label" for="exampleCheck1">{{forfait.name}}: {{forfait.price}}</label>
           </div>
           <div class="col-12 d-flex justify">
@@ -97,7 +110,7 @@
               Revenir en arriere
             </button>
             <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-primary"
-              [disabled]="clientForm.invalid">
+              [disabled]="clientForm2.invalid">
               Confirmer le client
             </button>
           </div>
@@ -119,10 +132,10 @@
           <div class="col-12 col-md-6">
             <ul class="list-group">
               <li class="list-group-item">
-                Nom: {{clientProfil.name}}
+                Nom: {{clientBoite.clientName}}
               </li>
               <li class="list-group-item">
-                Type de client: {{clientProfil.clientType}}
+                Type de client: {{clientBoite.clientType}}
               </li>
               <li class="list-group-item">
                 Email: {{clientProfil.email}}
@@ -131,7 +144,7 @@
                 Number: {{clientProfil.number}}
               </li>
               <li class="list-group-item">
-                Boite: {{clientProfil.boiteNumber}}
+                Boite: {{clientBoite.boiteNumber}}
               </li>
               <li class="list-group-item">
                 Prix de la boite: {{boitePrice}}
@@ -151,10 +164,12 @@
         <mat-divider></mat-divider>
         <h4>Total: {{total}}</h4>
         <div class="d-flex justify-content-between">
-          <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-warning" (click)="step2()">
+          <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-warning"
+            (click)="step2()">
             Revenir en arriere
           </button>
-          <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-primary" (click)="confirm()">
+          <button [disabled]="loading" mat-raised-button type="submit" class="btn-group btn-outline-primary"
+            (click)="confirm()">
             Nouveau client
           </button>
         </div>

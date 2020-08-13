@@ -24,44 +24,53 @@ export class ClientsService {
   }
   postClient(client) {
     this.setHeader();
-    return this.http.post(this.url + '/client', client , { headers: this.headers });
+    return this.http.post(this.url + '/client', client, { headers: this.headers });
+  }
+  postClientBoite(clientBoite) {
+    this.setHeader();
+    return this.http.post(this.url + '/clientBoite', clientBoite, { headers: this.headers });
   }
   getClientType() {
     this.setHeader();
-    return this.http.get(this.url + '/ClientT', { headers: this.headers});
+    return this.http.get(this.url + '/ClientT', { headers: this.headers });
   }
 
   getOneClientType(id) {
     this.setHeader();
-    return this.http.get(this.url + '/ClientT/' + id, { headers: this.headers});
+    return this.http.get(this.url + '/ClientT/' + id, { headers: this.headers });
   }
   getClientBoite(id) {
     this.setHeader();
-    return this.http.get(this.url + '/clientBoites/' + id, { headers: this.headers});
+    return this.http.get(this.url + '/clientBoites/' + id, { headers: this.headers });
   }
   getAllClientBoite() {
     this.setHeader();
-    return this.http.get(this.url + '/allClientBoites', { headers: this.headers});
+    return this.http.get(this.url + '/allClientBoites', { headers: this.headers });
   }
   getRedClients() {
     this.setHeader();
-    return this.http.get(this.url + '/clientBoiteRED/', { headers: this.headers});
+    return this.http.get(this.url + '/clientBoiteRED/', { headers: this.headers });
   }
   getForfaits() {
     this.setHeader();
-    return this.http.get(this.url + '/forfaits', { headers: this.headers});
+    return this.http.get(this.url + '/forfaits', { headers: this.headers });
   }
   updateClient(id) {
     this.setHeader();
-    return this.http.post(this.url + '/updateClient/' + id,{}, { headers: this.headers });
+    return this.http.post(this.url + '/updateClient/' + id, {}, { headers: this.headers });
   }
   getForfaitClientT(id) {
     this.setHeader();
-    return this.http.get(this.url + '/forfaitClientT/' + id, { headers: this.headers});
+    return this.http.get(this.url + '/forfaitClientT/' + id, { headers: this.headers });
   }
   getHistoric(id) {
     this.setHeader();
-    return this.http.get(this.url + '/historicPs/' + id, { headers: this.headers});
+    return this.http.get(this.url + '/historicPs/' + id, { headers: this.headers });
+
+  }
+  deleteClient(id) {
+    this.setHeader();
+    return this.http.delete(this.url + '/deleteClient/' + id, { headers: this.headers });
 
   }
 }

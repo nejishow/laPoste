@@ -20,7 +20,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   imports: [CommonModule],
   exports: [
     MatBadgeModule,
+    MatRadioModule,
     MatSidenavModule,
     MatIconModule,
     MatTabsModule,

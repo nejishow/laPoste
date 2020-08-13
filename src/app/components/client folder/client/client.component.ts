@@ -24,6 +24,7 @@ export class ClientComponent implements OnInit {
   // tslint:disable-next-line:radix
   year = parseInt((new Date().getFullYear()).toString());
   client;
+  clientBoite;
   boites;
   currentBoite;
   historics;
@@ -35,10 +36,13 @@ export class ClientComponent implements OnInit {
   ) {
     this.aR.params.subscribe(async params => {
       this.idUser = params.id;
-      await this.clientS.getClient(params.id).subscribe((data: any) => {
+      await this.clientS.getClient(params.id).subscribe(async (data: any) => {
         this.client = data;
-        console.log(data);
-        
+        await this.clientS.getClientBoite(params.id).subscribe((_data) => {
+          this.clientBoite = _data;
+
+        });
+
       });
       await this.clientS.getHistoric(params.id).subscribe(async (data: any) => {
         this.historics = data;
@@ -64,7 +68,7 @@ export class ClientComponent implements OnInit {
       await this.clientS.getClientBoite(params.id).subscribe(async (datas: any) => {
         this.boites = datas;
         this.currentBoite = this.boites;
-        
+
 
       });
     });

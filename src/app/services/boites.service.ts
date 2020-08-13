@@ -18,7 +18,7 @@ export class BoitesService {
     return this.http.get(this.url + '/boites', { headers: this.headers });
   }
 
-  attributeBoite(id) {
+  libererBoite(id) {
     this.setHeader();
     return this.http.post(this.url + '/attributeBoite/' + id, {}, { headers: this.headers });
   }
@@ -41,7 +41,7 @@ export class BoitesService {
   getBoiteType(id) {
     this.setHeader();
 
-    return this.http.get(this.url + '/oneBoiteT/'+id, { headers: this.headers });
+    return this.http.get(this.url + '/oneBoiteT/' + id, { headers: this.headers });
   }
   getBoiteClients(id) {
     this.setHeader();
@@ -52,5 +52,10 @@ export class BoitesService {
     this.setHeader();
 
     return this.http.get(this.url + '/boiteClients/' + id, { headers: this.headers });
+  }
+  getAllClientBoites() {
+    this.setHeader();
+
+    return this.http.get(this.url + '/allClientBoites', { headers: this.headers });
   }
 }
