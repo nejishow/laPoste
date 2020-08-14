@@ -29,9 +29,9 @@
           <tbody>
             <tr *ngFor="let boite of boiteSearch; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ boite.number }}</td>
+              <td>{{ boite.boiteNumber }}</td>
               <td>
-                <button (click)="details(boite._id)" class="btn btn-group btn-outline-primary">
+                <button (click)="details(boite.idBoite)" class="btn btn-group btn-outline-primary">
                   Consulter
                 </button>
               </td>

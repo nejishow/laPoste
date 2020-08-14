@@ -69,16 +69,17 @@ export class AllBpComponent implements OnInit {
 
 
   async search() {
+    console.log(this.searchBoite);
+
     this.boiteSearch = [];
     this.searchResults = false;
     this.errorMessage = false;
-    const bnumber = await this.searchBoite;
-    if (bnumber.length === 0) {
+    if (this.searchBoite.length < 0) {
       this.errorMessage = true;
     } else {
       await this.boites.forEach(async boite => {
-        const boiteNumber = boite.number;
-        if (boiteNumber.includes(bnumber)) {
+        const boiteNumber = boite.boiteNumber;
+        if (boiteNumber.includes(this.searchBoite)) {
           await this.boiteSearch.push(boite);
           this.searchResults = true;
         }

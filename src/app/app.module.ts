@@ -1,3 +1,4 @@
+import { OperationService } from './services/operation.service';
 import { PaymentsService } from './services/payments.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -36,6 +37,10 @@ import { ActivityComponent } from './components/activity/activity.component';
 import { RedClientsComponent } from './components/client folder/red-clients/red-clients.component';
 import { ClientComponent } from './components/client folder/client/client.component';
 import { ClientsComponent } from './components/client folder/clients/clients.component';
+import { BoitesService } from './services/boites.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OpeationsComponent } from './components/opeations/opeations.component';
+import { ReceiptComponent } from './components/receipt/receipt.component';
 
 
 @NgModule({
@@ -60,7 +65,8 @@ import { ClientsComponent } from './components/client folder/clients/clients.com
     AddPaymentComponent,
     ActivityComponent,
     RedClientsComponent,
-
+    OpeationsComponent,
+    ReceiptComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,12 +79,13 @@ import { ClientsComponent } from './components/client folder/clients/clients.com
     ChartsModule,
     HttpClientModule,
     StoreModule.forRoot(clientReducers),
-    EffectsModule.forRoot([ClientEffect])
+    EffectsModule.forRoot([ClientEffect]),
+    NgbModule
   ],
-  providers: [ ClientsService, SharedService, PaymentsService],
+  providers: [ClientsService, SharedService, PaymentsService, BoitesService, OperationService],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class AppModule {}
+export class AppModule { }

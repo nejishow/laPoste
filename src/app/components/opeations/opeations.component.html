@@ -1,0 +1,39 @@
+<div class="row d-flex justify-content-around" *ngIf="!isReceipt">
+  <div class="col-12 col-md-3">
+    <h3>Enregistrer une operation</h3>
+    <div class="modal-body">
+      <mat-radio-group aria-label="Enregistrer" (change)="saveOperation($event)">
+        <mat-radio-button *ngFor="let operation of operations" [value]="operation._id">
+          {{operation.name}} :
+          {{operation.price}} Fdj</mat-radio-button>
+      </mat-radio-group>
+      <div class="d-flex justify-content-between">
+        <button class=" btn-success mt-3 small" *ngIf="newOperation"><a class="text-light" target="_blank"
+            [routerLink]="[ '/receipt' ]">Afficher
+            le recu</a></button>
+        <button class=" btn-danger mt-3 small" *ngIf="newOperation">Encaisser</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <table class="table" *ngIf="myoperations.length>0">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Operation</th>
+          <th scope="col">Date</th>
+          <th scope="col">Agent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operation of myoperations; let i=index ">
+          <th scope="row">{{i+1}}</th>
+          <td>{{operation.nameOperation}}</td>
+          <td>{{operation.createdAt}}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

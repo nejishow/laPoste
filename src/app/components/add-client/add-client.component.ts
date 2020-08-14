@@ -43,7 +43,9 @@ export class AddClientComponent implements OnInit {
     idStaff: '',
     enabled: true,
     date: 0,
-    total: 0
+    total: 0,
+    clientName: '',
+    boiteType: ''
   };
   clientTypes; // tous les types de client
   boites; // toutes les boites "disponibles"
@@ -154,6 +156,7 @@ export class AddClientComponent implements OnInit {
       if (bt._id === this.clientForm2.get('boiteType').value) {
         this.clientBoite.idBoiteType = bt._id;
         this.clientBoite.boiteType = bt.name;
+        this.historicPayment.boiteType = bt.name;
       }
 
     });
@@ -210,12 +213,15 @@ export class AddClientComponent implements OnInit {
         forfaits: this.choosenForfait,
         idBoite: this.clientBoite.idBoite,
         idClient: data._id,
+        clientName: this.clientForm.get('name').value,
         priceBoite: this.boitePrice,
         idStaff: localStorage.getItem('id'),
         enabled: true,
         date: new Date().getFullYear(),
-        total: this.total
+        total: this.total,
+        boiteType: this.historicPayment.boiteType
       };
+      console.log(this.historicPayment);
       this.clientBoite.idClient = data._id;
       await this.clientS.postClientBoite(this.clientBoite).subscribe(async result => {
         await this.payS.postHistoricForfait(this.historiqueForfait).subscribe(async () => {

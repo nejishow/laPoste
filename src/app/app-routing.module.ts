@@ -1,3 +1,5 @@
+import { ReceiptComponent } from './components/receipt/receipt.component';
+import { OpeationsComponent } from './components/opeations/opeations.component';
 import { ActivityComponent } from './components/activity/activity.component';
 import { AuthGuardService as AuthGuard } from './services/guards/auth-guard.service';
 import { AddPaymentComponent } from './components/payments/add-payment/add-payment.component';
@@ -23,7 +25,8 @@ export const AppRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'login', component: LoginComponent  },
+    path: 'login', component: LoginComponent
+  },
   {
     path: 'clients', component: ClientsComponent,
     canActivate: [AuthGuard]
@@ -70,6 +73,14 @@ export const AppRoutes: Routes = [
   },
   {
     path: 'activity', component: ActivityComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'operation/:id', component: OpeationsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'receipt', component: ReceiptComponent,
     canActivate: [AuthGuard]
   },
   {

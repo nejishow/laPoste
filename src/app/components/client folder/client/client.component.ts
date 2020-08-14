@@ -1,11 +1,9 @@
-import { PaymentsService } from './../../../services/payments.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { OperationService } from './../../../services/operation.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faUser, faBox, faMoneyBillWave, faExclamation, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { ClientsService } from 'src/app/services/clients.service';
-import { BoitesService } from 'src/app/services/boites.service';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { createHostListener } from '@angular/compiler/src/core';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -14,7 +12,7 @@ import { createHostListener } from '@angular/compiler/src/core';
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements OnInit {
-  idUser;
+  public idUser;
   modify = false;
   faUser = faUser;
   faBox = faBox;
@@ -25,23 +23,31 @@ export class ClientComponent implements OnInit {
   year = parseInt((new Date().getFullYear()).toString());
   client;
   clientBoite;
+  operations = []; // les operations disponibles
+  myoperations = []; // mes operations
   boites;
   currentBoite;
   historics;
   unpaids = [];
-  constructor(public dialog: MatDialog, private aR: ActivatedRoute,
+  constructor(private aR: ActivatedRoute,
     private route: Router,
     private clientS: ClientsService,
-    private boiteS: BoitesService
+    private operationS: OperationService, private modalService: NgbModal
   ) {
     this.aR.params.subscribe(async params => {
       this.idUser = params.id;
       await this.clientS.getClient(params.id).subscribe(async (data: any) => {
         this.client = data;
-        await this.clientS.getClientBoite(params.id).subscribe((_data) => {
+        await this.clientS.getClientBoite(params.id).subscribe(async (_data: any) => {
           this.clientBoite = _data;
+          await this.clientS.getOneClientType(data.idClientType).subscribe((result: any) => {
+            this.operations = result.operations;
+          });
 
         });
+        await this.operationS.getOperations(params.id).subscribe((operations: any) => {
+          this.myoperations = operations;
+        })
 
       });
       await this.clientS.getHistoric(params.id).subscribe(async (data: any) => {
@@ -95,6 +101,9 @@ export class ClientComponent implements OnInit {
       }
       return 0;
     });
+  }
+  goOperation() {
+    this.route.navigate(['/operation/', this.idUser]);
   }
 
   pay(id, date: number) {
