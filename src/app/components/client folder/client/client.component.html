@@ -20,7 +20,7 @@
             <h4>{{ client?.name }}</h4>
           </mat-list-item>
           <mat-list-item> Telephone: {{ client?.number }} </mat-list-item>
-          <mat-list-item> Type de client: {{ client?.clientType }} </mat-list-item>
+          <mat-list-item> Type de client: {{ clientBoite?.clientType }} </mat-list-item>
           <mat-list-item> Addresse: {{ client?.address }}</mat-list-item>
           <mat-list-item> Email: {{ client?.email }} </mat-list-item>
         </mat-nav-list>
@@ -79,13 +79,13 @@
       Historique des operations
     </h2>
     <div class="d-flex justify-content-between">
-      <span *ngIf="myoperations.length<1">Aucune operation à ce jour</span>
+      <span *ngIf="!myoperations">Aucune operation à ce jour</span>
       <a class="btn btn-group btn-info" [routerLink]="[ '/operation/' + idUser ]" target="_blank">Effectuer une
         operation</a>
     </div>
-    <ul class=" list-group">
-      <li class="list-group-item" *ngFor="let operation of myoperations">{{operation.nameOpeation}} :
-        {{operation.price}} Fdj pour la boite {{operation.boiteNumber}}</li>
+    <ul class=" list-group" *ngFor="let operations of myoperations">
+      <li class="list-group-item" *ngFor="let operation of operations.operations">{{operation.name}} :
+        {{operation.price}} Fdj pour la boite {{operations.boiteNumber}} le {{operations.createdAt}}</li>
     </ul>
 
   </div>

@@ -18,8 +18,8 @@ export class NavbarComponent implements OnInit {
   @ViewChild('app-navbar', { static: false }) button;
   @Output() toggled = new EventEmitter<boolean>();
   ROUTES = [
-    { path: '/dashboard', title: 'Acceuil'},
-    { path: '/login', title: 'Se connecter'},
+    { path: '/dashboard', title: 'Acceuil' },
+    { path: '/login', title: 'Se connecter' },
     { path: '/clients', title: 'Tous les clients' },
     { path: '/client/', title: 'Profil du client' },
     { path: '/addClient', title: 'Ajouter un client' },
@@ -31,7 +31,8 @@ export class NavbarComponent implements OnInit {
     { path: '/profil', title: 'Mon profil' },
     { path: '/stats', title: 'Statistiques' },
     { path: '/checkPayment/', title: 'Paiement' },
-    { path: '/activity', title: 'Les activités enregistrées' }
+    { path: '/activity', title: 'Les activités enregistrées' },
+    { path: '/operation', title: 'Operations' }
   ];
 
   constructor(location: Location, private element: ElementRef, private router: Router) {

@@ -107,3 +107,45 @@
 
   </div>
 </div>
+
+<div class="row mt-5 mb-5">
+  <div class="col-12 mb-5">
+    <h2 class="m-5">Les operations enregistrées</h2>
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination [collectionSize]="operationTab?.length" [(page)]="currentPage" [pageSize]="pageSize2"
+        (pageChange)="refreshOperations()">
+      </ngb-pagination>
+
+      <select class="custom-select border-warning" style="width: auto" [(ngModel)]="pageSize2"
+        (ngModelChange)="refreshOperations()">
+        <option [ngValue]="2">2 opérations par page</option>
+        <option [ngValue]="4">4 opérations par page</option>
+        <option [ngValue]="6">6 opérations par page</option>
+      </select>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Libellé</th>
+          <th scope="col">Client</th>
+          <th scope="col">Prix</th>
+          <th scope="col">Agent</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let operations of operationTab">
+        <tr *ngFor="let operation of operations.operations; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            {{ operation.name }}
+          </td>
+          <td>{{ operations.clientName}}</td>
+          <td>{{ operation.price }}</td>
+          <td>{{ operations.staffName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+</div>

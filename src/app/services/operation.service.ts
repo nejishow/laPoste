@@ -17,8 +17,19 @@ export class OperationService {
     this.setHeader();
     return this.http.get(this.url + '/operations/' + id, { headers: this.headers });
   }
+  getAllOperations() {
+    this.setHeader();
+    return this.http.get(this.url + '/allOperations', { headers: this.headers });
+  }
   getOperation(id) {
     this.setHeader();
     return this.http.get(this.url + '/operation/' + id, { headers: this.headers });
   }
+
+  postOperation(operation) {
+    this.setHeader();
+    return this.http.post(this.url + '/historicOperation', operation, { headers: this.headers });
+  }
+
+
 }

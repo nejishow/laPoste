@@ -9,3 +9,7 @@ td {
 .name {
   font-size: large;
 }
+
+.space {
+  border: none;
+}

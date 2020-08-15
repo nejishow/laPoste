@@ -47,7 +47,7 @@ export class ClientComponent implements OnInit {
         });
         await this.operationS.getOperations(params.id).subscribe((operations: any) => {
           this.myoperations = operations;
-        })
+        });
 
       });
       await this.clientS.getHistoric(params.id).subscribe(async (data: any) => {

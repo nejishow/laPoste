@@ -26,12 +26,17 @@ export class ReceiptComponent implements OnInit {
       this.id = result.id;
       if (result.isOperation) {
         this.isOperation = true;
-        await this.opS.getOperation(result.id).subscribe(async (data: any) => {
-          this.newOperation = data;
-          await this.clientS.getClientBoite(data.idClient).subscribe((cb) => {
-            this.clientBoite = cb;
-          });
+        await this.clientS.getClientBoite(result.id).subscribe((cb) => {
+          this.clientBoite = cb;
         });
+        // await this.opS.getOperation(result.id).subscribe(async (data: any) => {
+        //   this.newOperation = data;
+        //   await this.clientS.getClientBoite(data.idClient).subscribe((cb) => {
+        //     this.clientBoite = cb;
+        //   });
+        // });
+        this.newOperation = history.state.operation;
+
       } else {
         this.isPayment = true;
         await this.payS.getPayment(result.id).subscribe(async (data: any) => {

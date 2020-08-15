@@ -14,8 +14,17 @@ export class OpeationsComponent {
   client: any;
   clientBoite: any = [];
   operations: any = [];
-  myoperations: any = [];
-  newOperation;
+  myoperations: Array<any> = [];
+  newOperation = {
+    idClient: '',
+    clientName: '',
+    operations: [],
+    idBoite: '',
+    boiteNumber: '',
+    idStaff: '',
+    staffName: '',
+    total: 0
+  };
 
   constructor(private aR: ActivatedRoute,
     private router: Router,
@@ -30,6 +39,12 @@ export class OpeationsComponent {
           this.clientBoite = _data;
           await this.clientS.getOneClientType(data.idClientType).subscribe((result: any) => {
             this.operations = result.operations;
+            this.newOperation.idClient = this.idUser;
+            this.newOperation.clientName = this.clientBoite.clientName;
+            this.newOperation.idBoite = this.clientBoite.idBoite;
+            this.newOperation.boiteNumber = this.clientBoite.boiteNumber;
+            this.newOperation.idStaff = localStorage.getItem('id');
+            this.newOperation.staffName = localStorage.getItem('name');
           });
 
         });
@@ -42,17 +57,27 @@ export class OpeationsComponent {
   }
 
   saveOperation(event) {
-
-    if (event.value) {
+    if (event.target.checked) {
       this.operations.forEach(async element => {
-        if (event.value === element._id) {
-          this.newOperation = { idOperation: event.value, name: element.name, price: element.price };
-          this.operationS.operation = this.newOperation;
-
+        if (event.target.value === element._id) {
+          this.newOperation.total += element.price;
+          await this.newOperation.operations.push({ idOperation: event.target.value, name: element.name, price: element.price });
         }
+      });
+    } else {
+      this.newOperation.total = 0;
+      this.newOperation.operations = this.newOperation.operations.filter((element) => element.idOperation !== event.target.value);
+      this.newOperation.operations.forEach(element => {
+        this.newOperation.total += element.price;
       });
     }
 
+  }
+
+  encaisser() {
+    this.operationS.postOperation(this.newOperation).subscribe(async (data: any) => {
+      await this.router.navigate(['/client/' + data.idClient]);
+    })
   }
 
 }

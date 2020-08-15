@@ -1,3 +1,4 @@
+import { OperationService } from 'src/app/services/operation.service';
 import { StaffsService } from './../../services/staffs.service';
 import { BoitesService } from './../../services/boites.service';
 import { PaymentsService } from './../../services/payments.service';
@@ -22,6 +23,7 @@ export class ActivityComponent implements OnInit {
   displayedColumns = ['na', 'client', 'boiteNumber', 'boiteType', 'total', 'staff'];
   errorMessage = false;
   datasource;
+  datasource2;
   date; // date filtré
   maxDate;
   allPayments: Array<{
@@ -34,7 +36,14 @@ export class ActivityComponent implements OnInit {
     total: number, staffName: string, createdAt: Date, time: string,
     idStaff: string, idClient: string, NA: boolean
   }> = [];
+
+  allOperations = []; // toutes les operations
+  filteredOperations = [];
+  operationTab;
   length;
+  length2;
+  currentPage = 1; // pour le tableau des operations
+  pageSize2 = 4; // pour le tableau des operations
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 15, 25];
 
@@ -49,7 +58,7 @@ export class ActivityComponent implements OnInit {
   public pieChartPlugins = [];
   constructor(
     private route: Router,
-    private boiteS: BoitesService,
+    private ops: OperationService,
     private staffS: StaffsService,
     private clientS: ClientsService,
     private payS: PaymentsService,
@@ -91,12 +100,37 @@ export class ActivityComponent implements OnInit {
       });
 
   }
+  async getOperations() {
+    await this.ops.getAllOperations().subscribe(async (operations: any) => {
+      this.allOperations = operations;
+
+      await this.getTodayData();
+
+
+    },
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
+
+      });
+
+  }
+
+  refreshOperations() {
+    this.operationTab = this.filteredOperations
+      .map((country, i) => ({ id: i + 1, ...country }))
+      .slice((this.currentPage - 1) * this.pageSize, (this.currentPage - 1) * this.pageSize + this.pageSize);
+  }
   async getTodayData() {
     this.filteredPayments = await this.allPayments.filter((pay) => this.today(pay.createdAt));
     this.datasource = await new MatTableDataSource(this.filteredPayments);
     this.length = this.datasource.length;
     this.datasource.sort = this.sort;
     this.datasource.paginator = this.paginator;
+
+    this.filteredOperations = await this.allOperations.filter((ops) => this.today(ops.createdAt));
+    this.operationTab = this.filteredOperations;
     this.boiteStats();
     this.newBoiteStats();
 
@@ -107,6 +141,9 @@ export class ActivityComponent implements OnInit {
     this.length = this.datasource.length;
     this.datasource.sort = this.sort;
     this.datasource.paginator = this.paginator;
+
+    this.filteredOperations = await this.allOperations.filter((ops) => this.filterDate(ops.createdAt, this.date));
+    this.operationTab = this.filteredOperations;
     await this.boiteStats();
     await this.newBoiteStats();
 
@@ -192,6 +229,7 @@ export class ActivityComponent implements OnInit {
 
   async ngOnInit() {
     this.getData();
+    this.getOperations();
 
     //
   }

@@ -55,9 +55,25 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let operation of newOperation">
+          <tr *ngFor="let operation of newOperation?.operations">
             <td>{{operation?.name}}</td>
             <td>{{operation?.price}}</td>
+          </tr>
+          <tr class="mt-5 space">
+            <td class="mt-5"></td>
+            <td class="mt-5"></td>
+          </tr>
+          <tr class="mt-5 space">
+            <td class="mt-5"></td>
+            <td class="mt-5"></td>
+          </tr>
+          <tr class="mt-5 space">
+            <td class="mt-5"></td>
+            <td class="mt-5"></td>
+          </tr>
+          <tr class="mt-5">
+            <td class="mt-5"> <em>TOTAL</em></td>
+            <td class="mt-5">{{newOperation?.total}}</td>
           </tr>
         </tbody>
       </table>
