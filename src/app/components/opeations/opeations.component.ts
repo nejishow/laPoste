@@ -18,7 +18,7 @@ export class OpeationsComponent {
   newOperation;
 
   constructor(private aR: ActivatedRoute,
-    private route: Router,
+    private router: Router,
     private clientS: ClientsService,
     private operationS: OperationService,
   ) {
@@ -46,7 +46,9 @@ export class OpeationsComponent {
     if (event.value) {
       this.operations.forEach(async element => {
         if (event.value === element._id) {
-          this.newOperation = { idForfait: event.value, name: element.name, price: element.price };
+          this.newOperation = { idOperation: event.value, name: element.name, price: element.price };
+          this.operationS.operation = this.newOperation;
+
         }
       });
     }

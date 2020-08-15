@@ -25,6 +25,11 @@ export class PaymentsService {
     return this.http.get(this.url + '/clientForfait/' + id, { headers: this.headers });
 
   }
+  getForfaits() { // client
+    this.setHeader();
+    return this.http.get(this.url + '/forfaits', { headers: this.headers });
+
+  }
   postHistoricForfait(historic) {
     this.setHeader();
     return this.http.post(this.url + '/historicForfait', historic, { headers: this.headers });

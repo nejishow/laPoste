@@ -8,9 +8,9 @@
           {{operation.price}} Fdj</mat-radio-button>
       </mat-radio-group>
       <div class="d-flex justify-content-between">
-        <button class=" btn-success mt-3 small" *ngIf="newOperation"><a class="text-light" target="_blank"
-            [routerLink]="[ '/receipt' ]">Afficher
-            le recu</a></button>
+        <button class=" btn-success mt-3 small" *ngIf="newOperation"
+          [routerLink]="[ '/receipt/' + idUser, {isOperation: true}]" [state]="{ operation: newOperation }">Afficher
+          le recu</button>
         <button class=" btn-danger mt-3 small" *ngIf="newOperation">Encaisser</button>
 
       </div>

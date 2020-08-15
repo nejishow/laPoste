@@ -30,28 +30,42 @@
     <div class="col-6 text-left">
       <ul class="list-group">
         <li class="list-group-item font-weight-bold">
-          Ashraf Mohamed Aden
+          {{clientBoite?.clientName}}
         </li>
         <li class="list-group-item font-weight-bold">
-          5
+          {{clientBoite?.boiteNumber}}
         </li>
       </ul>
     </div>
     <div class="col-4 text-right">
       <ul class="list-group">
         <li class="list-group-item font-weight-bold">
-          Djibouti, le 10 Aout 2020
-        </li>
-        <li class="list-group-item font-weight-bold">
-          Reçu N° 234567
+          Djibouti, le {{date}}
         </li>
       </ul>
     </div>
   </div>
-
-  <div class="row">
+  <div class="row" *ngIf="isOperation && !isPayment">
     <div class="col-9">
-      <table class="table">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="col-9">Designation</th>
+            <th scope="col">Montant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let operation of newOperation">
+            <td>{{operation?.name}}</td>
+            <td>{{operation?.price}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row" *ngIf="isPayment && !isOperation">
+    <div class="col-9">
+      <table class="table table-bordered">
         <thead class="thead-dark">
           <tr>
             <th scope="col" class="col-9">Designation</th>
@@ -60,11 +74,25 @@
         </thead>
         <tbody>
           <tr>
-            <td>Redeveance 2020</td>
-            <td>10000</td>
+            <td>Redevance boite (2020)</td>
+            <td>{{newPayment?.priceBoite}}</td>
+          </tr>
+          <tr *ngFor="let payment of newPayment?.forfaits">
+            <td>{{payment?.name}}</td>
+            <td>{{payment?.price}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>{{newPayment?.total}}</td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="row m-5">
+    <div class="col-12 text-center mt-5">
+      <span class="h3 mt-5">Service Commercial</span>
     </div>
   </div>
 </div>

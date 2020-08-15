@@ -80,7 +80,7 @@ export const AppRoutes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'receipt', component: ReceiptComponent,
+    path: 'receipt/:id', component: ReceiptComponent,
     canActivate: [AuthGuard]
   },
   {

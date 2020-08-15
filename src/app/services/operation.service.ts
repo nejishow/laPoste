@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class OperationService {
   url = 'http://localhost:3000';
   headers;
+  public operation;
   constructor(private http: HttpClient) { }
   setHeader() {
     this.headers = new HttpHeaders().set('Content-Type', 'application/json')
@@ -15,5 +16,9 @@ export class OperationService {
   getOperations(id) {
     this.setHeader();
     return this.http.get(this.url + '/operations/' + id, { headers: this.headers });
+  }
+  getOperation(id) {
+    this.setHeader();
+    return this.http.get(this.url + '/operation/' + id, { headers: this.headers });
   }
 }

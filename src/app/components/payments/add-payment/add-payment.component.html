@@ -14,13 +14,17 @@
         </ul>
       </li>
       <li class="list-group-item">Penalité :<button *ngIf="tax" disabled class="btn-danger">Oui</button>
-      <button *ngIf="!tax" disabled class="btn-success">Non</button></li>
+        <button *ngIf="!tax" disabled class="btn-success">Non</button></li>
       <li class="list-group-item">Total : {{total}} Fdj</li>
     </ul>
   </div>
+  <div class="col-4 d-flex justify-content-between">
     <button class="mt-5 align-content-center" [disabled]="encaisser" (click)="payment()">Encaisser</button>
+    <button class="mt-5 align-content-center" *ngIf="encaisser" [routerLink]="[ '/receipt/' + idPayment]">Recu</button>
 
+  </div>
 </div>
 <div class="row" *ngIf="error">
-  Si ce message apparait veuillez appeller le développeur, cela veut dire que vous voulez enregistrer un paiement pour une date anormale
+  Si ce message apparait veuillez appeller le développeur, cela veut dire que vous voulez enregistrer un paiement pour
+  une date anormale
 </div>

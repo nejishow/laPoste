@@ -80,8 +80,8 @@
     </h2>
     <div class="d-flex justify-content-between">
       <span *ngIf="myoperations.length<1">Aucune operation à ce jour</span>
-      <button class="btn btn-group btn-info" (click)="goOperation()">Effectuer une
-        operation</button>
+      <a class="btn btn-group btn-info" [routerLink]="[ '/operation/' + idUser ]" target="_blank">Effectuer une
+        operation</a>
     </div>
     <ul class=" list-group">
       <li class="list-group-item" *ngFor="let operation of myoperations">{{operation.nameOpeation}} :

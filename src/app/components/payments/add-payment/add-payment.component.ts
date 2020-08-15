@@ -15,6 +15,8 @@ import { last } from 'rxjs/operators';
 export class AddPaymentComponent implements OnInit {
   idClient;
   client;
+  newPayment;
+  idPayment;
   date;
   boite;
   tax = false;
@@ -49,6 +51,10 @@ export class AddPaymentComponent implements OnInit {
           this.error = true;
         }
 
+        if (lastPayment.toString() === params.queryParams.toString()) {
+          this.encaisser = true;
+        }
+
         if ((parseInt(this.date) - lastPayment) > 1) { // verifie si il a depassé 3ans
           this.error = true;
         }
@@ -62,7 +68,7 @@ export class AddPaymentComponent implements OnInit {
         this.tax = true;
       }
     });
-    this.clientS.getClientBoite(this.idClient).subscribe((data: any) => {      
+    this.clientS.getClientBoite(this.idClient).subscribe((data: any) => {
       this.client = data;
       this.boiteS.getBoiteType(this.client.idBoiteType).subscribe((data1: any) => {
         this.boite = data1;
@@ -71,41 +77,45 @@ export class AddPaymentComponent implements OnInit {
       });
     });
     this.payS.getClientForfait(this.idClient).subscribe((data: any) => {
-      this.forfaits = data;
+      this.payS.getForfaits().subscribe(async (forfaits: any) => {
+        await data.forfaits.forEach(async forfait => {
+          await forfaits.forEach(async element => {
+            if (forfait.idForfait === element._id) {
+              await this.forfaits.push({ idForfait: element._id, name: element.name, price: element.price });
+            }
+          });
+          this.forfaits.forEach(element => {
+            this.total = this.total + parseInt(element.price);
+          });
+
+        });
+      });
     });
     this.authS.getStaff().subscribe((data) => {
       this.staff = data;
     });
-    // tslint:disable-next-line:prefer-for-of
-    for (let index = 0; index < this.forfaits.length; index++) {
-      if (this.forfaits[index]) {
-        this.total += this.forfaits[index].price;
-      }
-
-    }
     if (this.tax) {
       this.total += 3000;
     }
 
   }
 
-  payment() {
+  async payment() {
     this.encaisser = true;
-    const newPayment = {
+    this.newPayment = {
       boiteNumber: this.client.boiteNumber,
       idBoite: this.boite._id,
       priceBoite: this.boite.price,
-      idClient: this.client._id,
+      idClient: this.idClient,
       tax: this.tax,
+      forfaits: this.forfaits,
       idStaff: this.staff.id,
       date: this.date,
       total: this.total,
     };
-    console.log(newPayment);
-    
-    this.payS.postPayment(newPayment).subscribe(() => {
-      this.clientS.updateClient(this.client._id).subscribe(async (data) => {
-        await this.router.navigate(['/client/' + this.client._id]);
+    await this.payS.postPayment(this.newPayment).subscribe(async (result: any) => {
+      this.clientS.updateClient(this.idClient).subscribe(async (data: any) => {
+        this.idPayment = result._id;
       });
     }, (error) => {
       console.log(error.error);

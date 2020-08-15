@@ -102,9 +102,6 @@ export class ClientComponent implements OnInit {
       return 0;
     });
   }
-  goOperation() {
-    this.route.navigate(['/operation/', this.idUser]);
-  }
 
   pay(id, date: number) {
     this.route.navigate(['/addPayment/', id, { queryParams: date }]);
