@@ -40,6 +40,7 @@ export class ActivityComponent implements OnInit {
   allOperations = []; // toutes les operations
   filteredOperations = [];
   operationTab;
+  loading = true;
   length;
   length2;
   currentPage = 1; // pour le tableau des operations
@@ -71,7 +72,7 @@ export class ActivityComponent implements OnInit {
   async getData() {
     await this.payS.getAllPayment().subscribe(async (payments: any) => {
       this.allPayments = payments;
-
+      this.loading = false;
       await this.staffS.getAllStaff().subscribe(async (staffs: any) => {
         await this.allPayments.forEach(async pay => {
           await staffs.forEach(staff => {

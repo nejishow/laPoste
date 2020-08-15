@@ -8,7 +8,7 @@
     </mat-form-field>
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="!loading">
   <div class="col-12 col-md-10">
     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
     </mat-paginator>
@@ -79,7 +79,7 @@
       </div>
     </div>
     <div class="loading">
-      <mat-spinner color="warning" *ngIf="allPayments.length===0"></mat-spinner>
+      <mat-spinner color="warning" *ngIf="loading"></mat-spinner>
     </div>
   </div>
 </div>
