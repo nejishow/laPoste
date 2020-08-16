@@ -84,7 +84,11 @@ export class ActivityComponent implements OnInit {
         await this.clientS.getAllClientBoite().subscribe(async (cbs: any) => {
           await this.allPayments.forEach(async pay => {
             await cbs.forEach(cb => {
-              pay.NA = cb.NA;
+              if (pay.idClient === cb.idClient) {
+                pay.NA = cb.NA;
+                pay.clientName = cb.clientName;
+                pay.boiteType = cb.boiteType;
+              }
             });
           });
         });
@@ -134,7 +138,8 @@ export class ActivityComponent implements OnInit {
     this.operationTab = this.filteredOperations;
     this.boiteStats();
     this.newBoiteStats();
-
+    console.log(this.filteredPayments);
+    
   }
   async checkDate() {
     this.filteredPayments = await this.allPayments.filter((pay) => this.filterDate(pay.createdAt, this.date));
