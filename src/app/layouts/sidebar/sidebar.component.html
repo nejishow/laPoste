@@ -41,12 +41,20 @@
     <div class="col-12">
       <mat-divider class="divider"></mat-divider>
     </div>
-    <div class="col-12">
+    <div class="col-12" *ngIf="isAuth">
 
       <mat-list>
+        <mat-list-item *ngFor="let menuItem of standard" class="{{menuItem.class}}">
+          <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()">
+            <fa-icon [icon]=" menuItem.icon" class="mr-2 {{menuItem.class}}"></fa-icon>
+            <p>{{menuItem.title}}</p>
+          </a>
+        </mat-list-item>
+
         <mat-list-item *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
-          <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()" *ngIf="isAuth">
-            <fa-icon [icon]="menuItem.icon" class="mr-2 {{menuItem.class}}"></fa-icon>
+          <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()"
+            *ngIf="hasPower === menuItem.hasPower || isSuperviseur === menuItem.isSuperviseur">
+            <fa-icon [icon]=" menuItem.icon" class="mr-2 {{menuItem.class}}"></fa-icon>
             <p>{{menuItem.title}}</p>
           </a>
         </mat-list-item>

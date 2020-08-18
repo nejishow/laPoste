@@ -73,4 +73,10 @@ export class ClientsService {
     return this.http.delete(this.url + '/deleteClient/' + id, { headers: this.headers });
 
   }
+
+  modifiyClient(id, client) {
+    this.setHeader();
+    return this.http.post(this.url + '/modifyClient/' + id, client, { headers: this.headers });
+  }
+
 }

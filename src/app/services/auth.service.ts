@@ -13,11 +13,15 @@ export class AuthService {
   public isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public error: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public staff: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public isSuperviseur = false;
+  public hasPower = false;
 
   constructor(private http: HttpClient, private router: Router) { }
   Authenticated() {
     if (localStorage.getItem('id') && localStorage.getItem('token')) {
       this.isAuth.next(true);
+      this.SetStaffType(localStorage.getItem('idST'));
+
     } else {
       this.isAuth.next(false);
     }
@@ -25,6 +29,26 @@ export class AuthService {
 
   }
 
+  SetStaffType(id) {
+    switch (id) {
+      case '5f2005ac07a53d4f38f95e08':
+        this.isSuperviseur = true;
+        this.hasPower = true;
+        break;
+      case '5f3b678b01539006e48af129':
+        this.isSuperviseur = false;
+        this.hasPower = false;
+        break;
+      case '5f3b67fc01539006e48af12a':
+        this.isSuperviseur = false;
+        this.hasPower = true;
+        break;
+      case '5f3b685201539006e48af12b':
+        this.isSuperviseur = true;
+        this.hasPower = false;
+        break;
+    }
+  }
   canActivate(): boolean {
     let state = false;
 
@@ -49,6 +73,7 @@ export class AuthService {
       await localStorage.setItem('idST', data.staff.idStaffType);
       await localStorage.setItem('name', data.staff.name);
       await localStorage.setItem('token', data.token);
+      this.SetStaffType(data.staff.idStaffType);
       this.error.next('');
       this.staff.next(data.staff);
       await this.Authenticated();

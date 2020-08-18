@@ -58,4 +58,10 @@ export class BoitesService {
 
     return this.http.get(this.url + '/allClientBoites', { headers: this.headers });
   }
+
+
+  changeBoiteType(idClient, idBoiteType) {
+    this.setHeader();
+    return this.http.post(this.url + '/newBoiteType', { idClient, idBoiteType }, { headers: this.headers });
+  }
 }

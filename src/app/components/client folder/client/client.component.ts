@@ -1,3 +1,6 @@
+import { BoitesService } from './../../../services/boites.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 import { OperationService } from './../../../services/operation.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +16,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ClientComponent implements OnInit {
   public idUser;
+  clientType: FormGroup;
   modify = false;
   faUser = faUser;
   faBox = faBox;
@@ -23,25 +27,35 @@ export class ClientComponent implements OnInit {
   year = parseInt((new Date().getFullYear()).toString());
   client;
   clientBoite;
+  allClientType = [];
   operations = []; // les operations disponibles
   myoperations = []; // mes operations
   boites;
   currentBoite;
   historics;
   unpaids = [];
+  isSuperviseur = false;
+  hasPower = false;
+  isNewBoite = false;
+  newBoiteType: FormGroup;
+  boiteTypes = [];
   constructor(private aR: ActivatedRoute,
-    private route: Router,
-    private clientS: ClientsService,
-    private operationS: OperationService, private modalService: NgbModal
+    private route: Router, private formBuilder: FormBuilder,
+    private clientS: ClientsService, private boiteS: BoitesService,
+    private operationS: OperationService, private authS: AuthService
   ) {
+    this.isSuperviseur = this.authS.isSuperviseur;
+    this.hasPower = this.authS.hasPower;
     this.aR.params.subscribe(async params => {
       this.idUser = params.id;
       await this.clientS.getClient(params.id).subscribe(async (data: any) => {
         this.client = data;
         await this.clientS.getClientBoite(params.id).subscribe(async (_data: any) => {
           this.clientBoite = _data;
+          this.initModifyClientForm();
           await this.clientS.getOneClientType(data.idClientType).subscribe((result: any) => {
             this.operations = result.operations;
+            this.boiteTypes = result.idBoitetypes;
           });
 
         });
@@ -74,17 +88,51 @@ export class ClientComponent implements OnInit {
       await this.clientS.getClientBoite(params.id).subscribe(async (datas: any) => {
         this.boites = datas;
         this.currentBoite = this.boites;
-
-
       });
+    });
+    this.clientS.getClientType().subscribe((ct: any) => {
+      this.allClientType = ct;
+    });
+  }
+  newBoiteT() {
+    this.boiteS.changeBoiteType(this.idUser, this.newBoiteType.get('newBoite').value).subscribe(async (data) => {
+      this.clientBoite = data;
+      this.isNewBoite = false;
+    });
+  }
+  ngOnInit(): void {
+    this.newBoiteType = this.formBuilder.group({
+      newBoite: ['', Validators.required],
     });
   }
 
-  ngOnInit(): void {
+  initModifyClientForm() {
+    this.clientType = this.formBuilder.group({
+      ctype: ['', Validators.required],
+      name: [this.client.name, Validators.required],
+      address: [this.client.address, Validators.required],
+      email: [this.client.email, Validators.required],
+      number: [this.client.number, Validators.required],
+
+    });
   }
 
   save(): void {
     //
+    const client = {
+      name: this.clientType.get('name').value,
+      number: this.clientType.get('number').value,
+      address: this.clientType.get('address').value,
+      email: this.clientType.get('email').value,
+      idClientType: this.clientType.get('ctype').value
+    };
+    this.clientS.modifiyClient(this.idUser, client).subscribe((data: any) => {
+      this.clientBoite = data.cb;
+      this.client = data.client;
+      this.modify = false;
+
+    });
+
   }
   getUnpaid(historic) {
     const year = new Date().getFullYear();

@@ -14,4 +14,8 @@
       <li class="list-group-item">Total : {{payment?.total}}</li>
     </ul>
   </div>
+  <div class="col-12 mt-5">
+    <button class="btn btn-group btn-danger" (click)="cancelPayment()" *ngIf="isSuperviseur && hasPower">Annuler le
+      paiement</button>
+  </div>
 </div>

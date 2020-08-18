@@ -1,6 +1,6 @@
 import { ClientsService } from './../../../services/clients.service';
 import { StaffsService } from './../../../services/staffs.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentsService } from './../../../services/payments.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,28 +15,32 @@ export class CheckPaymentComponent implements OnInit {
   payment;
   staff;
   forfaits = [];
+  isSuperviseur;
+  hasPower;
   constructor(
     private payS: PaymentsService,
     private staffS: StaffsService,
     private clientS: ClientsService,
     private aR: ActivatedRoute,
-    private authS: AuthService
+    private authS: AuthService, private router: Router
   ) {
+    this.isSuperviseur = this.authS.isSuperviseur;
+    this.hasPower = this.authS.hasPower;
     this.aR.params.subscribe(async params => {
       this.id = params.id;
-      await this.payS.getPayment(this.id).subscribe((_data:any) => {
+      await this.payS.getPayment(this.id).subscribe((_data: any) => {
         this.payment = _data;
         this.staffS.getStaff(_data.idStaff).subscribe((data) => {
           this.staff = data;
         },
-        (error) => {
-          if (error.status === 401) {
-            this.authS.logout();
-          }
-  
-        });
-  
-        this.clientS.getForfaits().subscribe((data:any) => {
+          (error) => {
+            if (error.status === 401) {
+              this.authS.logout();
+            }
+
+          });
+
+        this.clientS.getForfaits().subscribe((data: any) => {
           this.payment.forfaits.forEach(forfait => {
             data.forEach(element => {
               if (forfait.idForfait === element._id) {
@@ -46,12 +50,12 @@ export class CheckPaymentComponent implements OnInit {
           });
         })
       },
-      (error) => {
-        if (error.status === 401) {
-          this.authS.logout();
-        }
+        (error) => {
+          if (error.status === 401) {
+            this.authS.logout();
+          }
 
-      });
+        });
 
     });
   }
@@ -59,4 +63,9 @@ export class CheckPaymentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  cancelPayment() {
+    this.payS.removePayment(this.payment._id).subscribe(() => {
+      this.router.navigate(['/client/', this.payment.idClient]);
+    });
+  }
 }

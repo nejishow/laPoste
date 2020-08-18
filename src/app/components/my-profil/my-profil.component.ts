@@ -1,3 +1,4 @@
+import { StaffsService } from 'src/app/services/staffs.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyProfilComponent implements OnInit {
 
-  constructor() { }
+  staff;
+  constructor(private staffS: StaffsService) {
+    this.staffS.getStaff(localStorage.getItem('id')).subscribe((staff) => {
+      this.staff = staff;
+    })
+  }
 
   ngOnInit(): void {
   }

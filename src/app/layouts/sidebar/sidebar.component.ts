@@ -3,7 +3,17 @@ import { SharedService } from './../../shared/shared.service';
 import { Router } from '@angular/router';
 import { StaffsService } from './../../services/staffs.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { faTimes, faHome, faSignOutAlt, faSignInAlt, faUser, faBox, faChartLine, faBell, faCog } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTimes,
+  faHome,
+  faSignOutAlt,
+  faSignInAlt,
+  faUser,
+  faBox,
+  faChartLine,
+  faBell,
+  faCog,
+} from '@fortawesome/free-solid-svg-icons';
 
 export interface RouteInfo {
   path: string;
@@ -13,21 +23,120 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-  { path: '/dashboard', title: 'Acceuil', icon: faHome, class: '' },
-  { path: '/clients', title: 'Clients actifs', icon: faUser, class: '' },
-  { path: '/redClients', title: 'Clients inactifs', icon: faUser, class: 'text-danger' },
-  { path: '/allBp', title: 'Boites postales', icon: faBox, class: '' },
-  { path: '/stats', title: 'Statistiques', icon: faChartLine, class: '' },
-  { path: '/notifications', title: 'Notifications', icon: faBell, class: '' },
-  { path: '/activity', title: 'Activités', icon: faBell, class: '' },
+  {
+    path: '/dashboard',
+    title: 'Acceuil',
+    icon: faHome,
+    class: '',
+  },
+  {
+    path: '/clients',
+    title: 'Clients actifs',
+    icon: faUser,
+    class: '',
+  },
+  {
+    path: '/redClients',
+    title: 'Clients inactifs',
+    icon: faUser,
+    class: 'text-danger',
+  },
+  {
+    path: '/allBp',
+    title: 'Boites postales',
+    icon: faBox,
+    class: '',
+  },
+  {
+    path: '/stats',
+    title: 'Statistiques',
+    icon: faChartLine,
+    class: '',
+  },
+  {
+    path: '/notifications',
+    title: 'Notifications',
+    icon: faBell,
+    class: '',
+  },
+  {
+    path: '/activity',
+    title: 'Activités',
+    icon: faBell,
+    class: '',
+  },
 ];
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  styleUrls: ['./sidebar.component.css'],
 })
 export class SidebarComponent implements OnInit {
+
+  isSuperviseur;
+  hasPower;
+
+  MENU = [
+
+    {
+      path: '/allBp',
+      title: 'Boites postales',
+      hasPower: true,
+      isSuperviseur: true,
+      icon: faBox,
+      class: '',
+    },
+    {
+      path: '/stats',
+      title: 'Statistiques',
+      hasPower: true,
+      isSuperviseur: true,
+      icon: faChartLine,
+      class: '',
+    },
+    {
+      path: '/notifications',
+      title: 'Notifications',
+      hasPower: true,
+      isSuperviseur: true,
+      icon: faBell,
+      class: '',
+    },
+    {
+      path: '/activity',
+      title: 'Activités',
+      hasPower: true,
+      isSuperviseur: true,
+      icon: faBell,
+      class: '',
+    },
+  ];
+  standard = [
+    {
+      path: '/dashboard',
+      title: 'Acceuil',
+      hasPower: false,
+      isSuperviseur: false, icon: faHome,
+      class: '',
+    },
+    {
+      path: '/clients',
+      title: 'Clients actifs',
+      hasPower: false,
+      isSuperviseur: false, icon: faUser,
+      class: '',
+    },
+    {
+      path: '/redClients',
+      title: 'Clients inactifs',
+      hasPower: false,
+      isSuperviseur: false,
+      icon: faUser,
+      class: 'text-danger',
+    },
+  ]
+
   @Output() closed = new EventEmitter<boolean>();
   isAuth; // auth status
   faTimes = faTimes;
@@ -36,17 +145,23 @@ export class SidebarComponent implements OnInit {
   faCog = faCog;
   staff;
   public menuItems: any[];
-  constructor(private staffS: StaffsService, private router: Router, private authS: AuthService) {
-  }
+  constructor(
+    private staffS: StaffsService,
+    private router: Router,
+    private authS: AuthService
+  ) { }
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menuItems = this.MENU.filter((menuItem) => menuItem);
     this.authS.Authenticated().subscribe((data) => {
       this.isAuth = data;
+      this.isSuperviseur = this.authS.isSuperviseur;
+      this.hasPower = this.authS.hasPower;
     });
-    this.authS.getStaff().subscribe(data => {
+    this.authS.getStaff().subscribe((data) => {
       this.staff = data;
+      this.isSuperviseur = this.authS.isSuperviseur;
+      this.hasPower = this.authS.hasPower;
     });
-
   }
   close(): any {
     this.closed.emit();
@@ -55,5 +170,4 @@ export class SidebarComponent implements OnInit {
   logout() {
     this.authS.logout();
   }
-
 }

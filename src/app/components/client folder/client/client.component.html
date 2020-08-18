@@ -1,17 +1,19 @@
 <div class="row d-flex justify-content-between">
-  <div class=" col-12 col-md-3" *ngIf="!modify">
+  <div class="col-12 col-md-3" *ngIf="!modify">
     <h2>
       <fa-icon [icon]="faUser"></fa-icon>
       Profil du client
     </h2>
     <div class="card p-2">
       <div class="card-avatar mt-2 d-flex justify-content-between">
-        <button mat-fab [style]='clientBoite?.bg'>
-          {{clientBoite?.status}}
+        <button mat-fab [style]="clientBoite?.bg">
+          {{ clientBoite?.status }}
         </button>
         <div class="">
-          <button class="btn btn-group btn-outline-info" width="50" height="20"
-            (click)="modify = true">Modifier</button>
+          <button class="btn btn-group btn-outline-info" width="50" height="20" (click)="modify = true"
+            *ngIf="hasPower">
+            Modifier
+          </button>
         </div>
       </div>
       <div>
@@ -20,40 +22,52 @@
             <h4>{{ client?.name }}</h4>
           </mat-list-item>
           <mat-list-item> Telephone: {{ client?.number }} </mat-list-item>
-          <mat-list-item> Type de client: {{ clientBoite?.clientType }} </mat-list-item>
+          <mat-list-item>
+            Type de client: {{ clientBoite?.clientType }}
+          </mat-list-item>
           <mat-list-item> Addresse: {{ client?.address }}</mat-list-item>
           <mat-list-item> Email: {{ client?.email }} </mat-list-item>
         </mat-nav-list>
-
       </div>
     </div>
   </div>
-  <div class=" col-12 col-md-3 " *ngIf="modify">
+  <div class="col-12 col-md-3" *ngIf="modify">
     <h2>
       <fa-icon [icon]="faUser"></fa-icon>
       Modifier le client
     </h2>
-    <div class="card-avatar rounded border d-flex justify-content-between">
-      <img class="img img-thumbnail" width="100" [src]="client?.photo" />
-      <div class="">
-        <button class="btn btn-group btn-outline-danger" width="50" height="20"
-          (click)="modify = false">Annuler</button>
-        <button class="btn btn-group btn-outline-success" width="50" height="20" (click)="save()">Sauvegarder</button>
+    <form [formGroup]="clientType">
+      <div class="card-avatar rounded border d-flex justify-content-between">
+        <button class="btn btn-group btn-outline-danger" width="50" height="20" (click)="modify = false">
+          Annuler
+        </button>
+        <button [disabled]="clientType.invalid" class="btn btn-group btn-outline-success" width="50" height="20"
+          (click)="save()">
+          Sauvegarder
+        </button>
       </div>
+      <div class="card-body form-group">
+        <ul class="list-group">
+          <li>
+            <span>Nom: </span><input formControlName="name" type="text" [value]="client.name" />
+          </li>
+          <li>Telephone: <input type="text" formControlName="number" [value]="client?.number" /></li>
+          <li>Addresse: <input type="text" formControlName="address" [value]="client?.address" /></li>
+          <li>Email: <input type="text" formControlName="email" [value]="client?.email" /></li>
+          <li>
+            Type de client: <br />
 
-    </div>
-    <div class="card-body">
-      <mat-nav-list>
-        <mat-list-item class="card-header text-center">
-          <span>Nom: </span><input type="text" [value]="client?.name">
-        </mat-list-item>
-        <mat-list-item> Telephone: <input type="text" [value]="client?.tel"></mat-list-item>
-        <mat-list-item> Type de client: <input type="text" [value]="client?.clientType"></mat-list-item>
-        <mat-list-item> Addresse: <input type="text" [value]="client?.address"></mat-list-item>
-        <mat-list-item> Email: <input type="text" [value]="client?.email"></mat-list-item>
-      </mat-nav-list>
-
-    </div>
+            <mat-form-field class="form-group">
+              <mat-select matInput formControlName="ctype" name="ctype">
+                <mat-option *ngFor="let ct of allClientType" value="{{ ct._id }}">
+                  {{ ct.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </li>
+        </ul>
+      </div>
+    </form>
   </div>
   <div class="col-12 col-md-3">
     <h2>
@@ -62,16 +76,42 @@
     </h2>
     <div class="card">
       <mat-nav-list>
-        <mat-list-item> Numero de la boite: {{ currentBoite?.boiteNumber }} </mat-list-item>
-        <mat-list-item> <button [routerLink]="['/bp/'+ currentBoite?.idBoite]">Voir</button> </mat-list-item>
+        <mat-list-item>
+          Numero de la boite: {{ currentBoite?.boiteNumber }}
+        </mat-list-item>
+        <mat-list-item *ngIf="isSuperviseur || hasPower">
+          <button [routerLink]="['/bp/' + currentBoite?.idBoite]">Voir</button>
+        </mat-list-item>
       </mat-nav-list>
-      <div class="mt-5 mr-auto ml-auto mb-2">
-        <button class="mt-5" *ngIf="clientBoite?.status !== 'Resilié'" class="mt-3 btn btn-group btn-danger text-white"
-          width="50" height="20">Resilier</button>
+      <div class="mt-5 mr-auto ml-auto mb-2 d-flex justify-content-around">
+        <button class="mt-5" *ngIf="clientBoite?.status !== 'Resilié' && hasPower && isSuperviseur"
+          class="mt-3 btn btn-group btn-danger text-white" width="50" height="20">
+          Resilier
+        </button>
+
+        <button class="mt-5" *ngIf="clientBoite?.status !== 'Resilié' && hasPower" class="mt-3 btn-success text-white"
+          width="50" height="20" (click)="isNewBoite = true">
+          Changement de type de boite
+        </button>
       </div>
-
+      <div class="mt-5" *ngIf="isNewBoite">
+        <form [formGroup]="newBoiteType" (ngSubmit)="newBoiteT()">
+          <mat-form-field class="form-group">
+            <mat-select matInput formControlName="newBoite" name="newBoite">
+              <mat-option *ngFor="let boite of boiteTypes" value="{{ boite.idBoiteType }}">
+                {{ boite.name }} : {{ boite.price }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="d-flex">
+            <button class="mt-3" type="submit" [disabled]="newBoiteType.invalid">
+              Sauvegarder
+            </button>
+            <button class="mt-3" (click)="isNewBoite = false">Annuler</button>
+          </div>
+        </form>
+      </div>
     </div>
-
   </div>
   <div class="col-12 col-md-6 rounded border">
     <h2>
@@ -80,14 +120,15 @@
     </h2>
     <div class="d-flex justify-content-between">
       <span *ngIf="!myoperations">Aucune operation à ce jour</span>
-      <a class="btn btn-group btn-info" [routerLink]="[ '/operation/' + idUser ]" target="_blank">Effectuer une
+      <a class="btn btn-group btn-info" [routerLink]="['/operation/' + idUser]" target="_blank">Effectuer une
         operation</a>
     </div>
-    <ul class=" list-group" *ngFor="let operations of myoperations">
-      <li class="list-group-item" *ngFor="let operation of operations.operations">{{operation.name}} :
-        {{operation.price}} Fdj pour la boite {{operations.boiteNumber}} le {{operations.createdAt}}</li>
+    <ul class="list-group" *ngFor="let operations of myoperations">
+      <li class="list-group-item" *ngFor="let operation of operations.operations">
+        {{ operation.name }} : {{ operation.price }} Fdj pour la boite
+        {{ operations.boiteNumber }} le {{ operations.createdAt }}
+      </li>
     </ul>
-
   </div>
 </div>
 
@@ -110,9 +151,13 @@
         </thead>
         <tbody>
           <tr *ngFor="let historic of historics">
-            <td>{{historic?.date}}</td>
-            <td>{{historic?.createdAt}}</td>
-            <td><button [routerLink]="['/checkPayment/'+ historic?._id]">Voir</button></td>
+            <td>{{ historic?.date }}</td>
+            <td>{{ historic?.createdAt }}</td>
+            <td>
+              <button [routerLink]="['/checkPayment/' + historic?._id]">
+                Voir
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -133,9 +178,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let unpaid of unpaids">
-            <td>{{unpaid.date}}</td>
+            <td>{{ unpaid.date }}</td>
             <td>
-              <button (click)="pay(unpaid.idClient, unpaid.date)" class="btn btn-group btn-info">Payer</button>
+              <button (click)="pay(unpaid.idClient, unpaid.date)" class="btn btn-group btn-info">
+                Payer
+              </button>
             </td>
           </tr>
         </tbody>
