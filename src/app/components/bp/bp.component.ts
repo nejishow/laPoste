@@ -22,11 +22,19 @@ export class BpComponent implements OnInit {
   idBoite;
   message;
   showMessage = false;
+  isSuperviseur = false;
+  hasPower = false;
+  isAgent = false;
+  isVisiteur = false;
   constructor(
     private boiteS: BoitesService,
     private aR: ActivatedRoute,
     private authS: AuthService
   ) {
+    this.isSuperviseur = this.authS.isSuperviseur;
+    this.hasPower = this.authS.hasPower;
+    this.isVisiteur = this.authS.isVisiteur;
+    this.isAgent = this.authS.isAgent;
     this.aR.params.subscribe(async params => {
       this.idBoite = params.id;
 

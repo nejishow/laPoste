@@ -2,7 +2,7 @@
   <div class="col-sm-12 col-md-8" *ngIf="boites.length>=1">
     <div class="card">
       <h4 class="card-header">Boites postales</h4>
-      <div class="card-body menuB">
+      <div class="card-body menuB" *ngIf="isAgent || isSuperviseur || hasPower">
         <button mat-raised-button class="btn btn-success btn-sm " routerLink="/addBP">
           Ajouter une boite postale
         </button>

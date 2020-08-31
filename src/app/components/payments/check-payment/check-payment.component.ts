@@ -17,6 +17,8 @@ export class CheckPaymentComponent implements OnInit {
   forfaits = [];
   isSuperviseur;
   hasPower;
+  isAgent = false;
+  isVisiteur = false;
   constructor(
     private payS: PaymentsService,
     private staffS: StaffsService,
@@ -26,6 +28,8 @@ export class CheckPaymentComponent implements OnInit {
   ) {
     this.isSuperviseur = this.authS.isSuperviseur;
     this.hasPower = this.authS.hasPower;
+    this.isVisiteur = this.authS.isVisiteur;
+    this.isAgent = this.authS.isAgent;
     this.aR.params.subscribe(async params => {
       this.id = params.id;
       await this.payS.getPayment(this.id).subscribe((_data: any) => {

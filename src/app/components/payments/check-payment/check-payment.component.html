@@ -15,7 +15,7 @@
     </ul>
   </div>
   <div class="col-12 mt-5 d-flex justify-content-around">
-    <button class="btn btn-group btn-danger" (click)="cancelPayment()" *ngIf="isSuperviseur && hasPower">Annuler le
+    <button class="btn btn-group btn-danger" (click)="cancelPayment()" *ngIf="isSuperviseur || hasPower">Annuler le
       paiement</button>
       <button class="mt-5 align-content-center" [routerLink]="[ '/receipt/' + id]">Recu</button>
   </div>

@@ -35,11 +35,19 @@ export class ClientsComponent implements OnInit {
   length;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 15, 25];
+  isSuperviseur = false;
+  hasPower = false;
+  isAgent = false;
+  isVisiteur = false;
   constructor(
     private route: Router,
     private clientS: ClientsService,
     private authS: AuthService
   ) {
+    this.isSuperviseur = this.authS.isSuperviseur;
+    this.hasPower = this.authS.hasPower;
+    this.isVisiteur = this.authS.isVisiteur;
+    this.isAgent = this.authS.isAgent;
   }
   async getData() {
     await this.clientS.getClients().subscribe(async (clients: any) => {

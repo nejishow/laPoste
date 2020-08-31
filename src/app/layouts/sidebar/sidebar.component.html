@@ -53,7 +53,7 @@
 
         <mat-list-item *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
           <a [routerLink]="[menuItem.path]" class="d-flex menu" (click)="close()"
-            *ngIf="hasPower === menuItem.hasPower || isSuperviseur === menuItem.isSuperviseur">
+            *ngIf="hasPower === menuItem.hasPower || isSuperviseur === menuItem.isSuperviseur || isVisiteur === menuItem.isVisiteur">
             <fa-icon [icon]=" menuItem.icon" class="mr-2 {{menuItem.class}}"></fa-icon>
             <p>{{menuItem.title}}</p>
           </a>

@@ -76,6 +76,8 @@ export class SidebarComponent implements OnInit {
 
   isSuperviseur;
   hasPower;
+  isVisiteur;
+  isAgent;
 
   MENU = [
 
@@ -84,6 +86,7 @@ export class SidebarComponent implements OnInit {
       title: 'Boites postales',
       hasPower: true,
       isSuperviseur: true,
+      isVisiteur: true,
       icon: faBox,
       class: '',
     },
@@ -92,6 +95,7 @@ export class SidebarComponent implements OnInit {
       title: 'Statistiques',
       hasPower: true,
       isSuperviseur: true,
+      isVisiteur: true,
       icon: faChartLine,
       class: '',
     },
@@ -100,6 +104,7 @@ export class SidebarComponent implements OnInit {
       title: 'Notifications',
       hasPower: true,
       isSuperviseur: true,
+      isVisiteur: true,
       icon: faBell,
       class: '',
     },
@@ -108,6 +113,8 @@ export class SidebarComponent implements OnInit {
       title: 'Activités',
       hasPower: true,
       isSuperviseur: true,
+      isVisiteur: true,
+      isAgent: true,
       icon: faBell,
       class: '',
     },
@@ -156,6 +163,8 @@ export class SidebarComponent implements OnInit {
       this.isAuth = data;
       this.isSuperviseur = this.authS.isSuperviseur;
       this.hasPower = this.authS.hasPower;
+      this.isVisiteur = this.authS.isVisiteur;
+      this.isAgent = this.authS.isAgent;
     });
     this.authS.getStaff().subscribe((data) => {
       this.staff = data;

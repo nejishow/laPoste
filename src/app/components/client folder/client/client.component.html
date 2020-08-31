@@ -11,7 +11,7 @@
         </button>
         <div class="">
           <button class="btn btn-group btn-outline-info" width="50" height="20" (click)="modify = true"
-            *ngIf="hasPower">
+            *ngIf="hasPower || isSuperviseur">
             Modifier
           </button>
         </div>
@@ -84,12 +84,12 @@
         </mat-list-item>
       </mat-nav-list>
       <div class="mt-5 mr-auto ml-auto mb-2 d-flex justify-content-around">
-        <button class="mt-5" *ngIf="clientBoite?.status !== 'Resilié' && hasPower && isSuperviseur"
+        <button class="mt-5" *ngIf="clientBoite?.status !== 'Resilié' &&  isSuperviseur"
           class="mt-3 btn btn-group btn-danger text-white" width="50" height="20">
           Resilier
         </button>
 
-        <button class="mt-5" *ngIf="clientBoite?.status !== 'Resilié' && hasPower" class="mt-3 btn-success text-white"
+        <button class="mt-5" *ngIf="clientBoite?.status !== 'Resilié' &&( hasPower || isSuperviseur)" class="mt-3 btn-success text-white"
           width="50" height="20" (click)="isNewBoite = true">
           Changement de type de boite
         </button>
@@ -120,7 +120,7 @@
     </h2>
     <div class="d-flex justify-content-between">
       <span *ngIf="!myoperations">Aucune operation à ce jour</span>
-      <a class="btn btn-group btn-info" [routerLink]="['/operation/' + idUser]" target="_blank">Effectuer une
+      <a class="btn btn-group btn-info" *ngIf="hasPower || isSuperviseur || isAgent" [routerLink]="['/operation/' + idUser]" target="_blank">Effectuer une
         operation</a>
     </div>
     <ul class="list-group" *ngFor="let operations of myoperations">
@@ -180,7 +180,7 @@
           <tr *ngFor="let unpaid of unpaids">
             <td>{{ unpaid.date }}</td>
             <td>
-              <button (click)="pay(unpaid.idClient, unpaid.date)" class="btn btn-group btn-info">
+              <button *ngIf="isAgent || hasPower || isSuperviseur" (click)="pay(unpaid.idClient, unpaid.date)" class="btn btn-group btn-info">
                 Payer
               </button>
             </td>

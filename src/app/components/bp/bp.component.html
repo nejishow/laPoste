@@ -15,7 +15,7 @@
 
     </div>
   </div>
-  <div class=" col-12 col-md-5">
+  <div class=" col-12 col-md-5" *ngIf="hasPower || isSuperviseur">
 
     <button class="btn btn-danger" (click)="libererBoite()"
       *ngIf="boiteclients[0]?.enabled && boiteclients[0]?.status === 'Resilié'">Liberer

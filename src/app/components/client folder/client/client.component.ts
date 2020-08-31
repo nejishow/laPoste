@@ -36,6 +36,8 @@ export class ClientComponent implements OnInit {
   unpaids = [];
   isSuperviseur = false;
   hasPower = false;
+  isAgent = false;
+  isVisiteur = false;
   isNewBoite = false;
   newBoiteType: FormGroup;
   boiteTypes = [];
@@ -46,6 +48,8 @@ export class ClientComponent implements OnInit {
   ) {
     this.isSuperviseur = this.authS.isSuperviseur;
     this.hasPower = this.authS.hasPower;
+    this.isVisiteur = this.authS.isVisiteur;
+    this.isAgent = this.authS.isAgent;
     this.aR.params.subscribe(async params => {
       this.idUser = params.id;
       await this.clientS.getClient(params.id).subscribe(async (data: any) => {

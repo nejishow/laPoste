@@ -29,6 +29,10 @@ export class AllBpComponent implements OnInit {
   boites = [];
   boiteSearch = [];
   clientBoites;
+  isSuperviseur = false;
+  hasPower = false;
+  isAgent = false;
+  isVisiteur = false;
   constructor(
     // private userS: ClientsService,
     private route: Router,
@@ -36,7 +40,10 @@ export class AllBpComponent implements OnInit {
     private clientS: ClientsService,
     private authS: AuthService
   ) {
-    //
+    this.isSuperviseur = this.authS.isSuperviseur;
+    this.hasPower = this.authS.hasPower;
+    this.isVisiteur = this.authS.isVisiteur;
+    this.isAgent = this.authS.isAgent;
     this.boiteS.getAllClientBoites().subscribe((_data: any) => {
       this.clientBoites = _data;
       this.boites = _data;
