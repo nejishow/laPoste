@@ -189,6 +189,7 @@ export class AddClientComponent implements OnInit {
 
   }
   async createTotal() {
+    this.total = 0
     const boite = await this.availableBoitetypes.filter((b) => b._id === this.clientBoite.idBoiteType);
     // prend le type de boite choisis , prend le prix et ajoute aux prix des forfaits choisis
     this.boitePrice = boite[0].price;
@@ -258,6 +259,7 @@ export class AddClientComponent implements OnInit {
   step2() {
     this.loading = false;
     this.getForfaits().then(() => {
+      this.choosenForfait = [];
       this.E1 = false;
       this.E2 = true;
       this.E3 = false;
