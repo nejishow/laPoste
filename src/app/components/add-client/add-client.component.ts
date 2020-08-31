@@ -221,13 +221,12 @@ export class AddClientComponent implements OnInit {
         total: this.total,
         boiteType: this.historicPayment.boiteType
       };
-      console.log(this.historicPayment);
       this.clientBoite.idClient = data._id;
       await this.clientS.postClientBoite(this.clientBoite).subscribe(async result => {
         await this.payS.postHistoricForfait(this.historiqueForfait).subscribe(async () => {
           await this.payS.postPayment(this.historicPayment).subscribe(async (_data: any) => {
             if (_data) {
-              await this.router.navigate(['/client/', _data.idClient]);
+              await this.router.navigate(['/receipt/', _data._id]);
             }
           });
 

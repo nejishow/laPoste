@@ -17,7 +17,6 @@ export class AuthGuardService implements CanActivate {
     return next.handle(request).subscribe(() => { }, (error: HttpErrorResponse) => {
       if (error.status === 401) {
         // 401 handled in auth.interceptor
-        console.log('yes');
         this.authS.logout();
 
       }

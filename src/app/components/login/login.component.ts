@@ -13,6 +13,7 @@ export class LoginComponent {
   error;
   email: '';
   password: '';
+  isLoading = false;
   constructor(
     private authS: AuthService,
     private router: Router
@@ -21,9 +22,13 @@ export class LoginComponent {
 
   submit(): void {
     //
+    this.isLoading = true
     this.authS.login(this.email, this.password);
     this.authS.erroLogout().subscribe((data) => {
-      this.error = data;
+      if (data !== '') {
+        this.error = data;
+        this.isLoading = false
+      }
     });
   }
 

@@ -8,11 +8,11 @@
       </div>
 
       <div class="d-flex justify-content-between">
-        <button class=" btn-success mt-3 small" *ngIf="newOperation.operations.length>0"
-          [routerLink]="[ '/receipt/' + idUser, {isOperation: true}]" [state]="{ operation: newOperation }">Afficher
+        <button class=" btn-success mt-3 small" *ngIf="isPaid"
+          [routerLink]="[ '/receipt/' + idNewOperation, {isOperation: true}]" [state]="{ operation: newOperation }">Afficher
           le recu</button>
         <button (click)="encaisser()" class=" btn-danger mt-3 small"
-          *ngIf="newOperation.operations.length>0">Encaisser</button>
+          *ngIf="newOperation.operations.length>0 && !isPaid">Encaisser</button>
 
       </div>
     </div>

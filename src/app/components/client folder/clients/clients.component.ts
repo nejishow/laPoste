@@ -86,7 +86,6 @@ export class ClientsComponent implements OnInit {
     const name = await this.searchClient.toLowerCase().trim();
     if (name.length === 0) {
       this.errorMessage = true;
-      console.log('name.length === 0');
 
     } else {
       await this.allClients.forEach(async client => {

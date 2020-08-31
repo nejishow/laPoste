@@ -117,9 +117,7 @@ export class AddPaymentComponent implements OnInit {
       this.clientS.updateClient(this.idClient).subscribe(async (data: any) => {
         this.idPayment = result._id;
       });
-    }, (error) => {
-      console.log(error.error);
-
+    }, () => {
     });
   }
   ngOnInit(): void {

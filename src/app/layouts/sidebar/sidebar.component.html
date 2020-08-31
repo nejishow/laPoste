@@ -31,7 +31,7 @@
           </a>
         </mat-list-item>
         <mat-list-item class="nav-item" *ngIf="isAuth">
-          <a class="d-flex text-danger" (click)="logout()">
+          <a class="d-flex text-danger" style="cursor: pointer;" (click)="logout()">
             <fa-icon [icon]="faSignOut" class="mr-2"></fa-icon>
             <p>Se deconnecter</p>
           </a>

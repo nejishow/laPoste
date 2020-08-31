@@ -72,7 +72,6 @@ export class ActivityComponent implements OnInit {
   async getData() {
     await this.payS.getAllPayment().subscribe(async (payments: any) => {
       this.allPayments = payments;
-      this.loading = false;
       await this.staffS.getAllStaff().subscribe(async (staffs: any) => {
         await this.allPayments.forEach(async pay => {
           await staffs.forEach(staff => {
@@ -93,6 +92,11 @@ export class ActivityComponent implements OnInit {
           });
         });
         await this.getTodayData();
+      },(error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
+
       });
 
 
@@ -138,7 +142,6 @@ export class ActivityComponent implements OnInit {
     this.operationTab = this.filteredOperations;
     this.boiteStats();
     this.newBoiteStats();
-    console.log(this.filteredPayments);
     
   }
   async checkDate() {
@@ -234,8 +237,10 @@ export class ActivityComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.getData();
-    this.getOperations();
+    await this.getData();
+    await this.getOperations();
+    this.loading = false;
+
 
     //
   }

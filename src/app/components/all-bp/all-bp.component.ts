@@ -69,8 +69,6 @@ export class AllBpComponent implements OnInit {
 
 
   async search() {
-    console.log(this.searchBoite);
-
     this.boiteSearch = [];
     this.searchResults = false;
     this.errorMessage = false;

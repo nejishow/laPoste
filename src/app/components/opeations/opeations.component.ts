@@ -10,6 +10,8 @@ import { OperationService } from 'src/app/services/operation.service';
 })
 export class OpeationsComponent {
   idUser;
+  idNewOperation;
+  isPaid = false;
   isReceipt = false;
   client: any;
   clientBoite: any = [];
@@ -75,8 +77,9 @@ export class OpeationsComponent {
   }
 
   encaisser() {
-    this.operationS.postOperation(this.newOperation).subscribe(async (data: any) => {
-      await this.router.navigate(['/client/' + data.idClient]);
+    this.operationS.postOperation(this.newOperation).subscribe( (data: any) => {
+      this.idNewOperation = data._id;
+      this.isPaid = true
     })
   }
 
