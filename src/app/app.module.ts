@@ -1,3 +1,4 @@
+import { ExcelService } from './services/excel.service';
 import { OperationService } from './services/operation.service';
 import { PaymentsService } from './services/payments.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -82,7 +83,7 @@ import { ReceiptComponent } from './components/receipt/receipt.component';
     EffectsModule.forRoot([ClientEffect]),
     NgbModule
   ],
-  providers: [ClientsService, SharedService, PaymentsService, BoitesService, OperationService],
+  providers: [ClientsService, SharedService, PaymentsService, BoitesService, OperationService, ExcelService],
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

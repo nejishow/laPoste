@@ -1,3 +1,5 @@
+import { element } from 'protractor';
+import { ExcelService } from './../../services/excel.service';
 import { OperationService } from 'src/app/services/operation.service';
 import { StaffsService } from './../../services/staffs.service';
 import { BoitesService } from './../../services/boites.service';
@@ -23,7 +25,6 @@ export class ActivityComponent implements OnInit {
   displayedColumns = ['na', 'client', 'boiteNumber', 'boiteType', 'total', 'staff'];
   errorMessage = false;
   datasource;
-  datasource2;
   date; // date filtré
   maxDate;
   allPayments: Array<{
@@ -63,7 +64,8 @@ export class ActivityComponent implements OnInit {
     private staffS: StaffsService,
     private clientS: ClientsService,
     private payS: PaymentsService,
-    private authS: AuthService
+    private authS: AuthService,
+    private excelService: ExcelService
   ) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
@@ -92,7 +94,7 @@ export class ActivityComponent implements OnInit {
           });
         });
         await this.getTodayData();
-      },(error) => {
+      }, (error) => {
         if (error.status === 401) {
           this.authS.logout();
         }
@@ -140,9 +142,10 @@ export class ActivityComponent implements OnInit {
 
     this.filteredOperations = await this.allOperations.filter((ops) => this.today(ops.createdAt));
     this.operationTab = this.filteredOperations;
+
     this.boiteStats();
     this.newBoiteStats();
-    
+
   }
   async checkDate() {
     this.filteredPayments = await this.allPayments.filter((pay) => this.filterDate(pay.createdAt, this.date));
@@ -239,10 +242,70 @@ export class ActivityComponent implements OnInit {
   async ngOnInit() {
     await this.getData();
     await this.getOperations();
-    this.loading = false;
-
-
     //
   }
 
+  async exportAsXLSX() {
+    const rapport = [];
+    await this.filteredPayments.forEach(async element => {
+      if (element.NA) {
+        await rapport.push({
+          NA: 'Oui',
+          Client: element.clientName,
+          'Numero boite': element.boiteNumber,
+          'Type de boite': element.boiteType,
+          Montant: element.total,
+          Agent: element.staffName,
+          Date: new Date(element.createdAt).getDate() + '/' + (new Date(element.createdAt).getMonth() + 1) + '/' + new Date(element.createdAt).getFullYear()
+        });
+      } else {
+        await rapport.push({
+          NA: '',
+          Client: element.clientName,
+          'Numero boite': element.boiteNumber,
+          'Type de boite': element.boiteType,
+          Montant: element.total,
+          Agent: element.staffName,
+          Date: new Date(element.createdAt).getDate() + '/' + (new Date(element.createdAt).getMonth() + 1) + '/' + new Date(element.createdAt).getFullYear()
+        });
+      }
+
+    });
+    if (this.date === undefined) {
+      const date = new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear();
+      this.excelService.exportAsExcelFile(rapport, "Redevance payé le " + date);
+    } else {
+      const date = new Date(this.date).getDate() + '/' + (new Date(this.date).getMonth() + 1) + '/' + new Date(this.date).getFullYear();
+      this.excelService.exportAsExcelFile(rapport, "Redevance payé le " + date);
+
+    }
+
+
+  }
+  async exportAsXLSX_OP() {
+    const rapport = [];
+    await this.filteredOperations.forEach(async element => {
+      await element.operations.forEach(async op => {
+        await rapport.push({
+          Libellé: op.name,
+          'Client': element.clientName,
+          'Boite': element.boiteNumber,
+          'Prix': op.price,
+          'Agent': element.staffName,
+          Date: new Date(element.createdAt).getDate() + '/' + (new Date(element.createdAt).getMonth() + 1) + '/' + new Date(element.createdAt).getFullYear()
+        });
+      });
+
+    });
+    if (this.date === undefined) {
+      const date = new Date().getDate() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getFullYear();
+      this.excelService.exportAsExcelFile(rapport, 'Autre paiements du ' + date); // le json et le titre du fichier
+    } else {
+      const date = new Date(this.date).getDate() + '/' + (new Date(this.date).getMonth() + 1) + '/' + new Date(this.date).getFullYear();
+      this.excelService.exportAsExcelFile(rapport, 'Autre paiements du ' + date);
+
+    }
+
+
+  }
 }

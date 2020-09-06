@@ -91,24 +91,6 @@ export class SidebarComponent implements OnInit {
       class: '',
     },
     {
-      path: '/stats',
-      title: 'Statistiques',
-      hasPower: true,
-      isSuperviseur: true,
-      isVisiteur: true,
-      icon: faChartLine,
-      class: '',
-    },
-    {
-      path: '/notifications',
-      title: 'Notifications',
-      hasPower: true,
-      isSuperviseur: true,
-      isVisiteur: true,
-      icon: faBell,
-      class: '',
-    },
-    {
       path: '/activity',
       title: 'Activités',
       hasPower: true,
@@ -142,7 +124,7 @@ export class SidebarComponent implements OnInit {
       icon: faUser,
       class: 'text-danger',
     },
-  ]
+  ];
 
   @Output() closed = new EventEmitter<boolean>();
   isAuth; // auth status

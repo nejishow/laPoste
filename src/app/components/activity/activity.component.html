@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-12">
+  <div class="col-12" *ngIf="allPayments.length>0">
     <mat-form-field appearance="fill">
       <mat-label>Filtrer par date</mat-label>
       <input [max]="maxDate" matInput [matDatepicker]="picker" readonly [(ngModel)]="date" (dateInput)="checkDate()">
@@ -8,16 +8,17 @@
     </mat-form-field>
   </div>
 </div>
-<div class="row" *ngIf="!loading">
+<div class="row" *ngIf="allPayments.length>0">
   <div class="col-12">
     <h1>Paiement des redevances</h1>
+    <button *ngIf="filteredPayments.length>0" (click)="exportAsXLSX()">Telecharger</button>
   </div>
   <div class="col-12 col-md-10">
     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
     </mat-paginator>
   </div>
   <div class="col-sm-12 col-md-10">
-    <div class="card" *ngIf="allPayments.length>0">
+    <div class="card" *ngIf="filteredPayments.length>0">
       <div class="example-container mat-elevation-z8 card-body">
         <mat-table [dataSource]="datasource" matSort>
           <!-- status Column -->
@@ -81,12 +82,16 @@
         </mat-table>
       </div>
     </div>
-    <div class="loading" *ngIf="loading">
-      <mat-spinner color="warning"></mat-spinner>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="loading" *ngIf="allPayments.length<1">
+      <mat-spinner color="warning" diameter="100"></mat-spinner>
     </div>
   </div>
 </div>
-<div class="row mt-5">
+<div class="row mt-5" *ngIf="allPayments.length>0">
   <div class="col-12 col-md-5">
     <div class=" mat-raised-button rounded border border-success p-3" style="display: block;">
       <div class="mb-5">
@@ -114,6 +119,8 @@
 <div class="row mt-5 mb-5">
   <div class="col-12 mb-5">
     <h1 class="mt-5">Autres paiements</h1>
+    <button *ngIf="filteredOperations.length>0" (click)="exportAsXLSX_OP()">Telecharger</button>
+
     <div class="d-flex justify-content-between p-2">
       <ngb-pagination [collectionSize]="operationTab?.length" [(page)]="currentPage" [pageSize]="pageSize2"
         (pageChange)="refreshOperations()">
