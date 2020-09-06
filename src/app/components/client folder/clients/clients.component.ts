@@ -26,6 +26,7 @@ export class ClientsComponent implements OnInit {
   sms = true;
   mail = false;
   searchClient = ''; // l'input de la recherche
+  searchBoite = ''; // l'input de la recherche
   searchResults = false; // si il y'a un resultat de la recherche ou non
   displayedColumns = ['status', 'name', 'clientType', 'boiteNumber', 'action'];
   errorMessage = false;
@@ -111,9 +112,34 @@ export class ClientsComponent implements OnInit {
       }
     }
   }
+  async searchB() {
+    this.clientSearch = [];
+    this.searchResults = false;
+    this.errorMessage = false;
+    const boite = await this.searchBoite.toLowerCase().trim();
+    if (boite.length === 0) {
+      this.errorMessage = true;
+
+    } else {
+      await this.allClients.forEach(async client => {
+        if (client.boiteNumber === undefined) {
+        } else {
+          const boiteNumber = await client.boiteNumber.trim().toLowerCase();
+          if (boiteNumber === boite) {
+            await this.clientSearch.push(client);
+            this.searchResults = true;
+          }
+        }
+      });
+      if (this.clientSearch.length === 0) {
+        this.errorMessage = true;
+      }
+    }
+  }
   initForm(): void {
     this.clientSearch = [];
     this.searchClient = '';
+    this.searchBoite = '';
     this.searchResults = false;
     this.errorMessage = false;
   }

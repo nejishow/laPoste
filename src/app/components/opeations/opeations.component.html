@@ -9,7 +9,7 @@
 
       <div class="d-flex justify-content-between">
         <button class=" btn-success mt-3 small" *ngIf="isPaid"
-          [routerLink]="[ '/receipt/' + idNewOperation, {isOperation: true}]" [state]="{ operation: newOperation }">Afficher
+          [routerLink]="[ '/receipt/' + idNewOperation, {isOperation: true}]">Afficher
           le recu</button>
         <button (click)="encaisser()" class=" btn-danger mt-3 small"
           *ngIf="newOperation.operations.length>0 && !isPaid">Encaisser</button>
@@ -33,6 +33,11 @@
           <td>{{operation?.name}}</td>
           <td>{{operations?.createdAt}}</td>
           <td>{{operations?.staffName}}</td>
+        </tr>
+        <tr>
+          <td colspan="4"> <button class=" btn-success mt-3 small"
+              [routerLink]="[ '/receipt/' + operations._id, {isOperation: true}]">Afficher
+              le recu</button></td>
         </tr>
       </tbody>
     </table>

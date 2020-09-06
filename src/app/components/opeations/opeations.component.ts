@@ -77,10 +77,14 @@ export class OpeationsComponent {
   }
 
   encaisser() {
-    this.operationS.postOperation(this.newOperation).subscribe( (data: any) => {
+    this.operationS.postOperation(this.newOperation).subscribe((data: any) => {
       this.idNewOperation = data._id;
       this.isPaid = true
     })
+  }
+  show(op) {
+    console.log(op);
+
   }
 
 }

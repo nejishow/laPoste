@@ -9,6 +9,9 @@
   </div>
 </div>
 <div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <h1>Paiement des redevances</h1>
+  </div>
   <div class="col-12 col-md-10">
     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
     </mat-paginator>
@@ -78,7 +81,7 @@
         </mat-table>
       </div>
     </div>
-    <div class="loading"  *ngIf="loading">
+    <div class="loading" *ngIf="loading">
       <mat-spinner color="warning"></mat-spinner>
     </div>
   </div>
@@ -110,7 +113,7 @@
 
 <div class="row mt-5 mb-5">
   <div class="col-12 mb-5">
-    <h2 class="m-5">Les operations enregistrées</h2>
+    <h1 class="mt-5">Autres paiements</h1>
     <div class="d-flex justify-content-between p-2">
       <ngb-pagination [collectionSize]="operationTab?.length" [(page)]="currentPage" [pageSize]="pageSize2"
         (pageChange)="refreshOperations()">

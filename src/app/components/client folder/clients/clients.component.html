@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-12 col-md-8">
+  <div class="col-12">
     <div class="card">
       <h4 class="card-header">Clients</h4>
       <div class="card-body menuB" *ngIf="isAgent || isSuperviseur || hasPower">
@@ -7,16 +7,30 @@
           Ajouter un client
         </button>
       </div>
-      <div class="form-check-inline card-body">
-        <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher un abonné"
-          aria-label="Rechercher" />
-        <button class="btn btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
-          (click)="search()">
-          Rechercher
-        </button>
-        <button class="btn btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)="this.initForm()">
-          Effacer
-        </button>
+      <div class="row">
+        <div class="col-12 col-md-6 form-check-inline card-body">
+          <input class="form-control" [(ngModel)]="searchClient" type="text" placeholder="Rechercher un abonné"
+            aria-label="Rechercher" />
+          <button class="btn-outline-success" type="submit" [disabled]="searchClient.trim().length == 0"
+            (click)="search()">
+            Rechercher
+          </button>
+          <button class="btn-outline-danger" [disabled]="searchClient.trim().length == 0" (click)="this.initForm()">
+            Effacer
+          </button>
+        </div>
+        <div class="col-md-4 col-12 form-check-inline card-body">
+          <input class="form-control" [(ngModel)]="searchBoite" type="text" placeholder="Numero boite"
+            aria-label="Rechercher" />
+          <button class="small btn-outline-success" type="submit" [disabled]="searchBoite.trim().length == 0"
+            (click)="searchB()">
+            Rechercher
+          </button>
+          <button class=" small btn-outline-danger" [disabled]="searchBoite.trim().length == 0"
+            (click)="this.initForm()">
+            Effacer
+          </button>
+        </div>
       </div>
       <div *ngIf="searchResults">
         <table class="table table-striped">
@@ -50,7 +64,7 @@
 </div>
 <div class="row">
   <div class="col-12 col-md-10">
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" >
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
     </mat-paginator>
   </div>
   <div class="col-sm-12 col-md-10" *ngIf="allClients.length>=1">
@@ -63,9 +77,9 @@
               Status
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
-        <button mat-fab [style]='row.bg' [class]="row.bg==='background:yellow' ? 'text-danger': ''">
-          {{row.status}}
-        </button> </mat-cell>
+              <button mat-fab [style]='row.bg' [class]="row.bg==='background:yellow' ? 'text-danger': ''">
+                {{row.status}}
+              </button> </mat-cell>
           </ng-container>
 
           <!-- ID Column -->
