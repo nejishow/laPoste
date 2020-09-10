@@ -1,77 +1,122 @@
 <div class="row d-flex justify-content-around" *ngIf="!isdeleting">
-    <div class="col-12 col-md-4">
-      <h3>Ajouter un nouveau forfait</h3>
-      <div class="modal-body">
-        <div class="form-check" *ngFor="let forfait of forfaitClient">
-          <input type="checkbox" class="form-check-input" (change)="newForfait($event)" value="{{forfait.idForfait}}">
-          <label class="form-check-label" for="exampleCheck1">{{forfait.name}}: {{forfait.price}}</label>
-        </div>
-  
-        <div class="d-flex justify-content-between">
-          <button class=" btn-success mt-3 small" *ngIf="isPaid"
-            [routerLink]="[ '/receipt/' + idNewOperation, {isOperation: true}]">Afficher
-            le recu</button>
-          <button (click)="encaisser()" class=" btn-danger mt-3 small"
-            *ngIf="newOperation.operations.length>0 && !isPaid">Encaisser</button>
-  
-        </div>
+  <div class="col-12 col-md-4">
+    <h3>Ajouter un nouveau forfait</h3>
+    <div class="modal-body">
+      <div class="form-check" *ngFor="let forfait of forfaitClient">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          (change)="newForfait($event)"
+          value="{{ forfait.idForfait }}"
+        />
+        <label class="form-check-label" for="exampleCheck1"
+          >{{ forfait.name }}: {{ forfait.price }}</label
+        >
       </div>
-    </div>
-    <div class=" col-12 col-md-6">
-      <table class="table" *ngIf="myForfaits.length>0">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Forfaits</th>
-            <th scope="col">Supprimer</th>
-          </tr>
-        </thead>
-        <tbody  class="border-bottom border-info">
-          <tr *ngFor="let forfait of myForfaits; let i=index ">
-            <th scope="row">{{i+1}}</th>
-            <td>{{forfait?.name}}</td>
-            <td>      <button class="btn-danger"(click)="delete(forfait._id)" ><fa-icon [icon]="fatimes"></fa-icon></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class=" col-12 col-md-6">
-      <table class="table" *ngIf="myoperations.length>0">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Forfaits</th>
-            <th scope="col">Date</th>
-            <th scope="col">Agent</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let operations of myoperations" class="border-bottom border-info">
-          <tr *ngFor="let operation of operations.operations; let i=index ">
-            <th scope="row">{{i+1}}</th>
-            <td>{{operation?.name}}</td>
-            <td>{{operations?.createdAt}}</td>
-            <td>{{operations?.staffName}}</td>
-          </tr>
-          <tr>
-            <td colspan="4"> <button class=" btn-success mt-3 small"
-                [routerLink]="[ '/receipt/' + operations._id, {isOperation: true}]">Afficher
-                le recu</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="row" *ngIf="isdeleting">
-    <div class="col delete">
-      <div class="delete_box card">
-        <h3>Commentaire</h3>
-        <textarea name="" id="" cols="30" rows="3" [(ngModel)]="commentaires" ></textarea>
-        <div class=" box-button flex">
-          <button class="btn-warning" (click)="isdeleting = false">Annuler</button>
-        <button [disabled]="commentaires.length===0" class="btn-danger" (click)="deleteForfait(deletingForfait)">Supprimer</button>
-        </div>
+
+      <div class="d-flex justify-content-between">
+        <button
+          class="btn-success mt-3 small"
+          *ngIf="isPaid"
+          [routerLink]="['/receipt/' + idNewOperation, { isOperation: true }]"
+        >
+          Afficher le recu
+        </button>
+        <button
+          (click)="encaisser()"
+          class="btn-danger mt-3 small"
+          *ngIf="newOperation.operations.length > 0 && !isPaid"
+        >
+          Encaisser
+        </button>
       </div>
     </div>
   </div>
-  
+  <div class="col-12 col-md-6">
+    <table class="table" *ngIf="myForfaits.length > 0">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Forfaits</th>
+          <th scope="col">Supprimer</th>
+        </tr>
+      </thead>
+      <tbody class="border-bottom border-info">
+        <tr *ngFor="let forfait of myForfaits; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ forfait?.name }}</td>
+          <td>
+            <button
+              class="btn-danger"
+              (click)="delete(forfait._id, forfait.name, forfait.price)"
+            >
+              <fa-icon [icon]="fatimes"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-12 col-md-6">
+    <table class="table" *ngIf="myoperations.length > 0">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Forfaits</th>
+          <th scope="col">Date</th>
+          <th scope="col">Agent</th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="let operations of myoperations"
+        class="border-bottom border-info"
+      >
+        <tr *ngFor="let operation of operations.operations; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ operation?.name }}</td>
+          <td>{{ operations?.createdAt }}</td>
+          <td>{{ operations?.staffName }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">
+            <button
+              class="btn-success mt-3 small"
+              [routerLink]="[
+                '/receipt/' + operations._id,
+                { isOperation: true }
+              ]"
+            >
+              Afficher le recu
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row" *ngIf="isdeleting">
+  <div class="col delete">
+    <div class="delete_box card">
+      <h3>Commentaire</h3>
+      <textarea
+        name=""
+        id=""
+        cols="30"
+        rows="3"
+        [(ngModel)]="commentaires"
+      ></textarea>
+      <div class="box-button flex">
+        <button class="btn-warning" (click)="isdeleting = false">
+          Annuler
+        </button>
+        <button
+          [disabled]="commentaires.length === 0"
+          class="btn-danger"
+          (click)="deleteForfait(deletingForfait)"
+        >
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

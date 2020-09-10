@@ -13,7 +13,7 @@ export class OperationService {
     this.headers = new HttpHeaders().set('Content-Type', 'application/json')
       .set('X-Requested-Width', 'XMLHttpRequest').set('Authorization', localStorage.getItem('token'));
   }
-  getOperations(id) {
+  getOperations(id) { // les operations d'une persone
     this.setHeader();
     return this.http.get(this.url + '/operations/' + id, { headers: this.headers });
   }
@@ -21,7 +21,7 @@ export class OperationService {
     this.setHeader();
     return this.http.get(this.url + '/allOperations', { headers: this.headers });
   }
-  getOperation(id) {
+  getOperation(id) { // operation precise
     this.setHeader();
     return this.http.get(this.url + '/operation/' + id, { headers: this.headers });
   }
@@ -29,6 +29,25 @@ export class OperationService {
   postOperation(operation) {
     this.setHeader();
     return this.http.post(this.url + '/historicOperation', operation, { headers: this.headers });
+  }
+///////////////////////////////
+
+getDeletions(id) { // les operations d'une persone
+    this.setHeader();
+    return this.http.get(this.url + '/deletions/' + id, { headers: this.headers });
+  }
+  getAllDeletions() {
+    this.setHeader();
+    return this.http.get(this.url + '/alldeletions', { headers: this.headers });
+  }
+  getDeletion(id) { // operation precise
+    this.setHeader();
+    return this.http.get(this.url + '/deletion/' + id, { headers: this.headers });
+  }
+
+  postDeletion(deletion) {
+    this.setHeader();
+    return this.http.post(this.url + '/deletion', deletion, { headers: this.headers });
   }
 
 
