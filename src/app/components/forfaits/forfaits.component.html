@@ -64,9 +64,13 @@
   </div>
   <div class="row" *ngIf="isdeleting">
     <div class="col delete">
-      <div class="delete_box">
-        <button class="btn-warning" (click)="isdeleting = false">Annuler</button>
-        <button (click)="deleteForfait(deletingForfait)"></button>
+      <div class="delete_box card">
+        <h3>Commentaire</h3>
+        <textarea name="" id="" cols="30" rows="3" [(ngModel)]="commentaires" ></textarea>
+        <div class=" box-button flex">
+          <button class="btn-warning" (click)="isdeleting = false">Annuler</button>
+        <button [disabled]="commentaires.length===0" class="btn-danger" (click)="deleteForfait(deletingForfait)">Supprimer</button>
+        </div>
       </div>
     </div>
   </div>

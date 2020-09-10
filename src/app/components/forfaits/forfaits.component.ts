@@ -33,6 +33,7 @@ export class ForfaitsComponent {
     total: 0,
   };
   deletingForfait = "";
+  commentaires = "";
 
   constructor(
     private aR: ActivatedRoute,
