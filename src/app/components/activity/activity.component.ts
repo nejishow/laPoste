@@ -37,7 +37,7 @@ export class ActivityComponent implements OnInit {
     total: number, staffName: string, createdAt: Date, time: string,
     idStaff: string, idClient: string, NA: boolean
   }> = [];
-
+  summary=[];
   allOperations = []; // toutes les operations
   filteredOperations = [];
   operationTab;
@@ -48,6 +48,17 @@ export class ActivityComponent implements OnInit {
   pageSize2 = 4; // pour le tableau des operations
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 15, 25];
+  total=0; // le total des redevances
+  redevance=0; // le total des redevances
+  operations={
+    "Livraison à domicile":0,
+    "Collecte":0,
+    "Achat clé":0,
+    "Changement de nom":0,
+    "Sous couvert S/C":0,
+    "Changement de statut":0
+  }
+
 
   public pieChartOptions: ChartOptions = {
     responsive: true,
@@ -143,6 +154,7 @@ export class ActivityComponent implements OnInit {
     this.filteredOperations = await this.allOperations.filter((ops) => this.today(ops.createdAt));
     this.operationTab = this.filteredOperations;
 
+
     this.boiteStats();
     this.newBoiteStats();
 
@@ -158,6 +170,27 @@ export class ActivityComponent implements OnInit {
     this.operationTab = this.filteredOperations;
     await this.boiteStats();
     await this.newBoiteStats();
+    let total =0;
+    this.filteredPayments.forEach(payment => {
+      total+=payment.total;
+    });
+    this.redevance = total;
+    this.filteredOperations.forEach(operation => {
+      total+=operation.total;
+    });
+    const op = Object.keys(this.operations)
+    this.filteredOperations.forEach(operation => {
+      operation.operations.forEach(op => {
+        op.forEach(element => {
+          // if (element === op.) {
+            
+          // }
+        });
+      });
+    });
+    this.total = total;
+    console.log(this.filteredPayments);
+    console.log(this.filteredOperations);
 
   }
   today(d1) {

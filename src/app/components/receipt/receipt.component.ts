@@ -40,8 +40,7 @@ export class ReceiptComponent implements OnInit {
       } else {
         this.isPayment = true;
         await this.payS.getPayment(result.id).subscribe(async (data: any) => {
-          this.newPayment = data;         
-
+          this.newPayment = data;               
           await this.clientS.getClientBoite(data.idClient).subscribe((cb) => {
             this.clientBoite = cb;
           });

@@ -18,6 +18,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { ClientsComponent } from './components/client folder/clients/clients.component';
 import { ClientComponent } from './components/client folder/client/client.component';
 import { RedClientsComponent } from './components/client folder/red-clients/red-clients.component';
+import { ForfaitsComponent } from './components/forfaits/forfaits.component';
 
 export const AppRoutes: Routes = [
   {
@@ -77,6 +78,10 @@ export const AppRoutes: Routes = [
   },
   {
     path: 'operation/:id', component: OpeationsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'forfait/:id', component: ForfaitsComponent,
     canActivate: [AuthGuard]
   },
   {

@@ -113,22 +113,22 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-md-6 rounded border">
+  <div class="col-12 col-md-6 ">
     <h2>
       <fa-icon [icon]="faBox"></fa-icon>
       Historique des operations
     </h2>
-    <div class="d-flex justify-content-between">
-      <span *ngIf="!myoperations">Aucune operation à ce jour</span>
+    <div class="d-flex justify-content-between rounded border p-5">
       <a class="btn btn-group btn-info" *ngIf="hasPower || isSuperviseur || isAgent" [routerLink]="['/operation/' + idUser]" target="_blank">Effectuer une
         operation</a>
+        <a class="btn btn-group btn-danger" *ngIf="hasPower || isSuperviseur || isAgent" [routerLink]="['/forfait/' + idUser]" target="_blank">Ajouter un forfait</a>
     </div>
-    <ul class="list-group" *ngFor="let operations of myoperations">
+    <!-- <ul class="list-group" *ngFor="let operations of myoperations">
       <li class="list-group-item" *ngFor="let operation of operations.operations">
         {{ operation.name }} : {{ operation.price }} Fdj pour la boite
         {{ operations.boiteNumber }} le {{ operations.createdAt }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </div>
 

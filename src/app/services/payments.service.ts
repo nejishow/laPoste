@@ -39,6 +39,11 @@ export class PaymentsService {
     return this.http.post(this.url + '/historicForfait', historic, { headers: this.headers });
 
   }
+  postClientForfait(historic, id) {
+    this.setHeader();
+    return this.http.post(this.url + '/clientForfait/' +id, historic, { headers: this.headers });
+
+  }
   postPayment(payment) {
     this.setHeader();
     return this.http.post(this.url + '/historicP', payment, { headers: this.headers });

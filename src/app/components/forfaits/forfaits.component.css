@@ -1,0 +1,8 @@
+.delete{
+    height: 100vh;
+    background-color: black;
+    opacity: 9;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

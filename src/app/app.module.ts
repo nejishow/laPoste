@@ -42,6 +42,7 @@ import { BoitesService } from './services/boites.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OpeationsComponent } from './components/opeations/opeations.component';
 import { ReceiptComponent } from './components/receipt/receipt.component';
+import { ForfaitsComponent } from './components/forfaits/forfaits.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { ReceiptComponent } from './components/receipt/receipt.component';
     RedClientsComponent,
     OpeationsComponent,
     ReceiptComponent,
+    ForfaitsComponent,
   ],
   imports: [
     BrowserModule,
