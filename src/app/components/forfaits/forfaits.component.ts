@@ -23,6 +23,7 @@ export class ForfaitsComponent {
   myForfaits = []; // ses forfaits
   myoperations: Array<any> = [];
   newOperation = {
+    isForfait: true,
     idClient: "",
     clientName: "",
     operations: [],
@@ -35,16 +36,16 @@ export class ForfaitsComponent {
   deletingForfait = "";
   commentaires = "";
   deletionObject = {
-    idClient:"",
+    idClient: "",
     clientName: "",
-    idOperation: "",
-    price: "",
-    name: "",
+    global_idOperation: "",
+    operations: [{ price: "", name: "" }],
     comments: "",
     idBoite: "",
     boiteNumber: "",
     idStaff: "",
     staffName: "",
+    isForfait: true,
   };
 
   constructor(
@@ -66,10 +67,10 @@ export class ForfaitsComponent {
           this.newOperation.boiteNumber = this.clientBoite.boiteNumber;
           this.newOperation.idStaff = localStorage.getItem("id");
           this.newOperation.staffName = localStorage.getItem("name");
-          this.deletionObject.idClient = this.idUser
-          this.deletionObject.clientName = this.clientBoite.clientName
-          this.deletionObject.idBoite = this.clientBoite.idBoite
-          this.deletionObject.boiteNumber = this.clientBoite.boiteNumber
+          this.deletionObject.idClient = this.idUser;
+          this.deletionObject.clientName = this.clientBoite.clientName;
+          this.deletionObject.idBoite = this.clientBoite.idBoite;
+          this.deletionObject.boiteNumber = this.clientBoite.boiteNumber;
           this.deletionObject.idStaff = localStorage.getItem("id");
           this.deletionObject.staffName = localStorage.getItem("name");
         });
@@ -84,18 +85,29 @@ export class ForfaitsComponent {
           );
           this.forfaitClient = clientType[0].forfaits;
         });
-        await this.payS
-          .getClientForfait(params.id)
-          .subscribe(async (_data: any) => {
-            return _data.forEach((element) => {
-              this.forfaits.forEach((c) => {
-                if (element.idForfait === c._id) {
-                  this.myForfaits.push(c);
-                  this.choosenForfait.push({ idForfait: c._id });
-                }
-              });
+        await this.operationS
+          .getOperations(params.id)
+          .subscribe((operations: any) => {
+            console.log(operations);
+
+            this.myForfaits = operations.filter((op) => {
+              return op.isForfait === true;
             });
           });
+        // await this.payS
+        //   .getClientForfait(params.id)
+        //   .subscribe(async (_data: any) => {
+        //     return _data.forEach((element) => {
+        //       this.forfaits.forEach((c) => {
+        //         if (element.idForfait === c._id) {
+        //           this.myForfaits.push(c);
+        //           this.choosenForfait.push({ idForfait: c._id });
+        //           console.log(this.myForfaits);
+
+        //         }
+        //       });
+        //     });
+        //   });
       });
     });
   }
@@ -135,10 +147,12 @@ export class ForfaitsComponent {
     this.payS
       .postClientForfait(this.choosenForfait, this.idUser)
       .subscribe((data: any) => {
-        this.operationS.postOperation(this.newOperation).subscribe((data: any) => {
-          this.idNewOperation = data._id;
-          this.isPaid = true
-        })
+        this.operationS
+          .postOperation(this.newOperation)
+          .subscribe((data: any) => {
+            this.idNewOperation = data._id;
+            this.isPaid = true;
+          });
       });
   }
   deleteForfait(id) {
@@ -149,30 +163,26 @@ export class ForfaitsComponent {
 
     this.myForfaits = this.myForfaits.filter((element) => element._id !== id);
     this.payS
-    .postClientForfait(this.choosenForfait, this.idUser)
-    .subscribe((data: any) => {
-           data.forfaits.forEach((element) => {
-        this.forfaits.forEach((c) => {
-          if (element.idForfait === c._id) {
-            this.myForfaits.push(c);
-            this.choosenForfait.push({ idForfait: c._id });
-          }
+      .postClientForfait(this.choosenForfait, this.idUser)
+      .subscribe((data: any) => {
+        data.forfaits.forEach((element) => {
+          this.forfaits.forEach((c) => {
+            if (element.idForfait === c._id) {
+              this.myForfaits.push(c);
+              this.choosenForfait.push({ idForfait: c._id });
+            }
+          });
+        });
+
+        this.operationS.postDeletion(this.deletionObject).subscribe(() => {
+          this.isdeleting = false;
         });
       });
-
-        this.operationS.postDeletion(this.deletionObject).subscribe(()=>{
-          this.isdeleting = false;
-        })
-    });
-
-
   }
   delete(id, name, price) {
     this.isdeleting = true;
     this.deletingForfait = id;
-    this.deletionObject.idOperation =id
-    this.deletionObject.price =price
-    this.deletionObject.name =name
-
+    this.deletionObject.global_idOperation = id;
+    this.deletionObject.operations = [{price, name}];
   }
 }

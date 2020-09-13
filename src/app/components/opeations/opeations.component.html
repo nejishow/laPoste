@@ -1,4 +1,4 @@
-<div class="row d-flex justify-content-around" *ngIf="!isReceipt">
+<div class="row d-flex justify-content-around" *ngIf="!isdeleting">
   <div class="col-12 col-md-3">
     <h3>Enregistrer une operation</h3>
     <div class="modal-body">
@@ -35,11 +35,43 @@
           <td>{{operations?.staffName}}</td>
         </tr>
         <tr>
-          <td colspan="4"> <button class=" btn-success mt-3 small"
+          <td colspan="3"> <button class=" btn-success mt-3 small"
               [routerLink]="[ '/receipt/' + operations._id, {isOperation: true}]">Afficher
               le recu</button></td>
+              <td> <button
+                class="btn-danger"
+                (click)="delete(operations)"
+              >
+                <fa-icon [icon]="fatimes"></fa-icon>
+              </button></td>
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
+<div class="row" *ngIf="isdeleting">
+  <div class="col delete">
+    <div class="delete_box card">
+      <h3>Commentaire</h3>
+      <textarea
+        name=""
+        id=""
+        cols="30"
+        rows="3"
+        [(ngModel)]="commentaires"
+      ></textarea>
+      <div class="box-button flex">
+        <button class="btn-warning" (click)="isdeleting = false">
+          Annuler
+        </button>
+        <button
+          [disabled]="commentaires.length === 0"
+          class="btn-danger"
+          (click)="deleteOperation(deletingOperation)"
+        >
+          Supprimer
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'src/app/services/clients.service';
 import { OperationService } from 'src/app/services/operation.service';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-opeations',
@@ -10,9 +11,11 @@ import { OperationService } from 'src/app/services/operation.service';
 })
 export class OpeationsComponent {
   idUser;
+  fatimes= faTimes
   idNewOperation;
   isPaid = false;
-  isReceipt = false;
+  deletingOperation = "";
+  commentaires = "";
   client: any;
   clientBoite: any = [];
   operations: any = [];
@@ -27,6 +30,21 @@ export class OpeationsComponent {
     staffName: '',
     total: 0
   };
+  deletionObject = {
+    idClient:"",
+    clientName: "",
+    global_idOperation: "",
+    operations:[
+      {    price: "",
+      name: "",}
+    ],
+    comments: "",
+    idBoite: "",
+    boiteNumber: "",
+    idStaff: "",
+    staffName: "",
+  };
+  isdeleting= false;
 
   constructor(private aR: ActivatedRoute,
     private router: Router,
@@ -47,11 +65,19 @@ export class OpeationsComponent {
             this.newOperation.boiteNumber = this.clientBoite.boiteNumber;
             this.newOperation.idStaff = localStorage.getItem('id');
             this.newOperation.staffName = localStorage.getItem('name');
+            this.deletionObject.idClient = this.idUser;
+            this.deletionObject.clientName = this.clientBoite.clientName;
+            this.deletionObject.idBoite = this.clientBoite.idBoite;
+            this.deletionObject.boiteNumber = this.clientBoite.boiteNumber;
+            this.deletionObject.idStaff = localStorage.getItem("id");
+            this.deletionObject.staffName = localStorage.getItem("name");
           });
 
         });
         await this.operationS.getOperations(params.id).subscribe((operations: any) => {
-          this.myoperations = operations;
+          this.myoperations = operations.filter((op)=>{
+            return op.isForfait === false
+          });
         });
 
       });
@@ -82,8 +108,20 @@ export class OpeationsComponent {
       this.isPaid = true
     })
   }
-  show(op) {
-    console.log(op);
+  deleteOperation(id) {
+    this.operationS.deleteOperation(id).subscribe(()=>{
+ 
+    })
+        this.operationS.postDeletion(this.deletionObject).subscribe(()=>{
+          this.isdeleting = false;
+        });
+    }
+  delete(operation) {
+    this.isdeleting = true;
+    this.deletingOperation = operation._id;
+    this.deletionObject.global_idOperation=  operation._id;
+    this.deletionObject.operations = operation.operations
+    
 
   }
 

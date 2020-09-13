@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class OperationService {
-  url = 'http://localhost:3000';
+  url = 'https://lapostededjibouti.herokuapp.com';
   headers;
   public operation;
   constructor(private http: HttpClient) { }
@@ -29,6 +29,10 @@ export class OperationService {
   postOperation(operation) {
     this.setHeader();
     return this.http.post(this.url + '/historicOperation', operation, { headers: this.headers });
+  }
+  deleteOperation(id) {
+    this.setHeader();
+    return this.http.post(this.url + '/deleteOp/'+id,{}, { headers: this.headers });
   }
 ///////////////////////////////
 

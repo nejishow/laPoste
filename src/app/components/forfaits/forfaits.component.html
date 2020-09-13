@@ -41,14 +41,14 @@
           <th scope="col">Supprimer</th>
         </tr>
       </thead>
-      <tbody class="border-bottom border-info">
-        <tr *ngFor="let forfait of myForfaits; let i = index">
+      <tbody class="border-bottom border-info" *ngFor="let operations of myForfaits">
+        <tr *ngFor="let forfait of operations.operations; let i = index">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ forfait?.name }}</td>
           <td>
             <button
               class="btn-danger"
-              (click)="delete(forfait._id, forfait.name, forfait.price)"
+              (click)="delete(operations._id, forfait.name, forfait.price)"
             >
               <fa-icon [icon]="fatimes"></fa-icon>
             </button>
