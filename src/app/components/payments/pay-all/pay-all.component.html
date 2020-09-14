@@ -2,12 +2,20 @@
   <div class="col-12">
     <ul class="list-group">
       <li class="list-group-item">
-        Pour la periode : {{ lastPayment }}-----{{ currentYear }}
+        <label for="">Pour la periode :</label> 
+        <div class="w-50 d-flex justify-content-between">
+          <span>{{ lastPayment }}</span><mat-select (valueChange)="getData($event)" matInput [(ngModel)]="currentYear" name="type" id="type">
+            <mat-option [value]="year" *ngFor="let year of allyear">----{{year}}</mat-option>
+          </mat-select>
+        </div>
       </li>
       <li class="list-group-item">Paiement crée par : {{ staff?.name }}</li>
       <li class="list-group-item">Pour le client : {{ client?.clientName }}</li>
       <li class="list-group-item">Type de boite : {{ client?.boiteType }}</li>
-      <li class="list-group-item">Prix de la boite : {{ boite?.price }} Fdj</li>
+      <li class="list-group-item"><div class="d-flex justify-content-between">
+        <div>Prix de la boite : {{ boite?.price }} Fdj</div>
+        <div><input (change)="changeBoitePrice()" *ngIf="boite?.price" type="text" [(ngModel)]="boite.price"></div>
+      </div></li>
       <li class="list-group-item">
         Liste des forfaits:
         <span *ngIf="forfaits.length === 0">Aucun forfait</span>

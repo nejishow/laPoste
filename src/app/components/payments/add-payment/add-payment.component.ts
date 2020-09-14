@@ -96,7 +96,11 @@ export class AddPaymentComponent implements OnInit {
       this.staff = data;
     });
     if (this.tax) {
-      this.total += 3000;
+      if (parseInt(this.date) > 2015) {
+        this.total = this.total + 3000;
+      } else {
+        this.total = this.total + 6000;
+      }
     }
 
   }
@@ -126,6 +130,11 @@ export class AddPaymentComponent implements OnInit {
 
   removeTax(){
     this.tax = false;
-    this.total = this.total-3000;
+    if (parseInt(this.date) > 2015) {
+      this.total = this.total - 3000;
+    } else {
+      this.total = this.total - 6000;
+    }
+    
   }
 }
