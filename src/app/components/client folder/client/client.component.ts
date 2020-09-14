@@ -67,14 +67,21 @@ export class ClientComponent implements OnInit {
           this.myoperations = operations;
         });
 
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
+
       });
       await this.clientS.getHistoric(params.id).subscribe(async (data: any) => {
         this.historics = data;
+       
         await this.historics.sort((a, b) => {
-          if (a.createdAt < b.createdAt) {
+          if (a.date < b.date) {
             return 1;
           }
-          if (b.createdAt < a.createdAt) {
+          if (b.date < a.date) {
             return -1;
           }
           return 0;
@@ -88,6 +95,12 @@ export class ClientComponent implements OnInit {
           historic.createdAt = new Date(historic.createdAt).getDate() + '/' + (new Date(historic.createdAt).getMonth() + 1) + '/' + new Date(historic.createdAt).getFullYear();
         });
 
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
+
       });
       await this.clientS.getClientBoite(params.id).subscribe(async (datas: any) => {
         this.boites = datas;
@@ -96,6 +109,12 @@ export class ClientComponent implements OnInit {
     });
     this.clientS.getClientType().subscribe((ct: any) => {
       this.allClientType = ct;
+    },
+    (error) => {
+      if (error.status === 401) {
+        this.authS.logout();
+      }
+
     });
   }
   newBoiteT() {

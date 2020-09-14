@@ -2,10 +2,8 @@ import { AuthService } from './../../../services/auth.service';
 import { BoitesService } from './../../../services/boites.service';
 import { Component, OnInit } from '@angular/core';
 import { PaymentsService } from 'src/app/services/payments.service';
-import { StaffsService } from 'src/app/services/staffs.service';
 import { ClientsService } from 'src/app/services/clients.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { last } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-payment',
@@ -77,19 +75,22 @@ export class AddPaymentComponent implements OnInit {
       });
     });
     this.payS.getClientForfait(this.idClient).subscribe((data: any) => {
-      this.payS.getForfaits().subscribe(async (forfaits: any) => {
-        await data.forfaits.forEach(async forfait => {
-          await forfaits.forEach(async element => {
-            if (forfait.idForfait === element._id) {
-              await this.forfaits.push({ idForfait: element._id, name: element.name, price: element.price });
-            }
+      if (data.forfaits !== undefined && data.forfaits !== null && data.forfaits.length>0) {
+        this.payS.getForfaits().subscribe(async (forfaits: any) => {
+          await data.forfaits.forEach(async forfait => {
+            await forfaits.forEach(async element => {
+              if (forfait.idForfait === element._id) {
+                await this.forfaits.push({ idForfait: element._id, name: element.name, price: element.price });
+              }
+            });
+            this.forfaits.forEach(element => {
+              this.total = this.total + parseInt(element.price);
+            });
+  
           });
-          this.forfaits.forEach(element => {
-            this.total = this.total + parseInt(element.price);
-          });
-
         });
-      });
+      }
+
     });
     this.authS.getStaff().subscribe((data) => {
       this.staff = data;
@@ -123,4 +124,8 @@ export class AddPaymentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  removeTax(){
+    this.tax = false;
+    this.total = this.total-3000;
+  }
 }

@@ -13,7 +13,7 @@
           </li>
         </ul>
       </li>
-      <li class="list-group-item">Penalité :<button *ngIf="tax" disabled class="btn-danger">Oui</button>
+      <li class="list-group-item">Penalité :<button *ngIf="tax" (click)="removeTax()" class="btn-danger">Oui</button>
         <button *ngIf="!tax" disabled class="btn-success">Non</button></li>
       <li class="list-group-item">Total : {{total}} Fdj</li>
     </ul>

@@ -1,0 +1,56 @@
+<div class="row" *ngIf="!error">
+  <div class="col-12">
+    <ul class="list-group">
+      <li class="list-group-item">
+        Pour la periode : {{ lastPayment }}-----{{ currentYear }}
+      </li>
+      <li class="list-group-item">Paiement crée par : {{ staff?.name }}</li>
+      <li class="list-group-item">Pour le client : {{ client?.clientName }}</li>
+      <li class="list-group-item">Type de boite : {{ client?.boiteType }}</li>
+      <li class="list-group-item">Prix de la boite : {{ boite?.price }} Fdj</li>
+      <li class="list-group-item">
+        Liste des forfaits:
+        <span *ngIf="forfaits.length === 0">Aucun forfait</span>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let forfait of forfaits">
+            <span class="mr-5">{{ forfait?.name }}</span>
+            <span>{{ forfait?.price }}fDJ </span>
+          </li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        Penalité :<button *ngIf="tax" (click)="removeTax()" class="btn-danger">
+          Oui
+        </button>
+        <button *ngIf="!tax" disabled class="btn-success">Non</button>
+      </li>
+      <li class="list-group-item">Total : {{ allTotal }} Fdj</li>
+    </ul>
+  </div>
+  <div class="col-4 d-flex justify-content-between">
+    <button
+      class="mt-5 align-content-center"
+      [disabled]="encaisser"
+      (click)="payment()"
+    >
+      Encaisser
+    </button>
+    <button
+      class="mt-5 align-content-center"
+      *ngIf="encaisser"
+      [routerLink]="[
+        '/receipt/' + 00,
+        { array: idPayments, isAllOperation: true }
+      ]"
+    >
+      Recu
+    </button>
+  </div>
+</div>
+<div class="row" *ngIf="error">
+  Si ce message apparait veuillez appeller le développeur, cela veut dire que
+  vous voulez enregistrer un paiement pour une date anormale
+</div>
+<div class="loading" *ngIf="loading">
+  <mat-spinner color="warning" diameter="100"></mat-spinner>
+</div>

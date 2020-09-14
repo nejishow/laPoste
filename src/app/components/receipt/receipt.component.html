@@ -42,7 +42,7 @@
       </ul>
     </div>
   </div>
-  <div class="row" *ngIf="isOperation && !isPayment">
+  <div class="row" *ngIf="isOperation && !isPayment && !isAllOperation">
     <div class="col-9">
       <table class="table table-bordered">
         <thead class="thead-dark">
@@ -76,7 +76,7 @@
       </table>
     </div>
   </div>
-  <div class="row" *ngIf="isPayment && !isOperation">
+  <div class="row" *ngIf="isPayment && !isOperation && !isAllOperation">
     <div class="col-9">
       <table class="table table-bordered">
         <thead class="thead-dark">
@@ -101,6 +101,38 @@
           <tr>
             <td></td>
             <td>{{newPayment?.total}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row" *ngIf="!isPayment && !isOperation && isAllOperation">
+    <div class="col-9">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="col-9">Designation</th>
+            <th scope="col">Montant</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let newPayment of allPayment">
+          <tr>
+            <td>Redevance boite ({{newPayment?.date}})</td>
+            <td>{{newPayment?.priceBoite}}</td>
+          </tr>
+          <tr *ngFor="let payment of newPayment?.forfaits">
+            <td>{{payment?.name}}</td>
+            <td>{{payment?.price}}</td>
+          </tr>
+          <tr *ngIf="newPayment?.tax">
+            <td>Penalité ({{newPayment?.date}})</td>
+            <td>3000</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td>Total</td>
+            <td>{{total}}</td>
           </tr>
         </tbody>
       </table>

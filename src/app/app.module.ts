@@ -43,6 +43,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OpeationsComponent } from './components/opeations/opeations.component';
 import { ReceiptComponent } from './components/receipt/receipt.component';
 import { ForfaitsComponent } from './components/forfaits/forfaits.component';
+import { PayAllComponent } from './components/payments/pay-all/pay-all.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { ForfaitsComponent } from './components/forfaits/forfaits.component';
     OpeationsComponent,
     ReceiptComponent,
     ForfaitsComponent,
+    PayAllComponent,
   ],
   imports: [
     BrowserModule,

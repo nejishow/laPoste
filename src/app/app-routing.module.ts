@@ -19,6 +19,7 @@ import { ClientsComponent } from './components/client folder/clients/clients.com
 import { ClientComponent } from './components/client folder/client/client.component';
 import { RedClientsComponent } from './components/client folder/red-clients/red-clients.component';
 import { ForfaitsComponent } from './components/forfaits/forfaits.component';
+import { PayAllComponent } from './components/payments/pay-all/pay-all.component';
 
 export const AppRoutes: Routes = [
   {
@@ -66,6 +67,10 @@ export const AppRoutes: Routes = [
   },
   {
     path: 'checkPayment/:id', component: CheckPaymentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'payAll/:id', component: PayAllComponent,
     canActivate: [AuthGuard]
   },
   {
