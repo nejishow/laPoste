@@ -61,20 +61,34 @@ export class PayAllComponent implements OnInit {
       });
     });
   }
-
-  changeBoitePrice(){
-    this.total = 0
-    this.allTotal = 0
-    this.total += this.boite.price;
+  inputValue(){
+    console.log(this.boite.price);
+    
+    if (this.boite.price === undefined || this.boite.price === null) {
+      this.boite.price = 0
+    }
+  }
+  changeBoitePrice() {
+    if (this.boite.price === undefined || this.boite.price === null) {
+      this.boite.price = 0
+    }
+    this.total = 0;
+    this.allTotal = 0;
+    if (parseInt(this.currentYear) > 2014) {
+      this.total = this.total + 3000;
+    } else {
+      this.total = this.total + 6000;
+    }
+    this.total += parseInt(this.boite.price);
     this.allTotal = this.total * this.numberofYear;
   }
   getData(event) {
-    this.total= 0
-    this.allTotal = 0
-    this.currentYear = event
+    this.total = 0;
+    this.allTotal = 0;
+    this.currentYear = event;
     this.numberofYear = parseInt(event) - parseInt(this.lastPayment);
 
-    if (parseInt(event) > 2015) {
+    if (parseInt(event) > 2014) {
       this.total = this.total + 3000;
     } else {
       this.total = this.total + 6000;
@@ -154,7 +168,12 @@ export class PayAllComponent implements OnInit {
   ngOnInit(): void {}
   removeTax() {
     this.tax = false;
-    this.total = this.total - 3000;
-    this.allTotal = this.total * this.numberofYear;
+    if (parseInt(this.currentYear) > 2014) {
+      this.total = this.total - 3000;
+      this.allTotal = this.total * this.numberofYear;
+    } else {
+      this.total = this.total - 6000;
+      this.allTotal = this.total * this.numberofYear;
+    }
   }
 }

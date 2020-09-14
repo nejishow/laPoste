@@ -5,8 +5,10 @@
       <li class="list-group-item">Paiement crée par : {{staff?.name}}</li>
       <li class="list-group-item">Pour le client : {{client?.clientName}}</li>
       <li class="list-group-item">Type de boite : {{client?.boiteType}}</li>
-      <li class="list-group-item">Prix de la boite : {{boite?.price}} Fdj</li>
-      <li class="list-group-item"> Liste des forfaits: <span *ngIf="forfaits.length===0">Aucun forfait</span>
+      <li class="list-group-item"><div class="d-flex justify-content-between">
+        <div>Prix de la boite : {{ boite?.price }} Fdj</div>
+        <div><input (change)="changeBoitePrice()" *ngIf="boite?.price" type="text" placeholder="0" [(ngModel)]="boite.price"></div>
+      </div></li>      <li class="list-group-item"> Liste des forfaits: <span *ngIf="forfaits.length===0">Aucun forfait</span>
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let forfait of forfaits">
             <span class="mr-5">{{forfait?.name}}</span> <span>{{forfait?.price}}fDJ </span>

@@ -14,7 +14,7 @@
       <li class="list-group-item">Type de boite : {{ client?.boiteType }}</li>
       <li class="list-group-item"><div class="d-flex justify-content-between">
         <div>Prix de la boite : {{ boite?.price }} Fdj</div>
-        <div><input (change)="changeBoitePrice()" *ngIf="boite?.price" type="text" [(ngModel)]="boite.price"></div>
+        <div><input (change)="changeBoitePrice()" *ngIf="boite?.price" type="text" placeholder="0" [(ngModel)]="boite.price"></div>
       </div></li>
       <li class="list-group-item">
         Liste des forfaits:

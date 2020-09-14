@@ -96,7 +96,7 @@ export class AddPaymentComponent implements OnInit {
       this.staff = data;
     });
     if (this.tax) {
-      if (parseInt(this.date) > 2015) {
+      if (parseInt(this.date) > 2014) {
         this.total = this.total + 3000;
       } else {
         this.total = this.total + 6000;
@@ -104,7 +104,18 @@ export class AddPaymentComponent implements OnInit {
     }
 
   }
-
+  changeBoitePrice() {
+    if (this.boite.price === undefined || this.boite.price === null) {
+      this.boite.price = 0
+    }
+    this.total = 0;
+    if (parseInt(this.date) > 2014) {
+      this.total = this.total + 3000;
+    } else {
+      this.total = this.total + 6000;
+    }
+    this.total += parseInt(this.boite.price);
+  }
   async payment() {
     this.encaisser = true;
     this.newPayment = {
@@ -130,7 +141,7 @@ export class AddPaymentComponent implements OnInit {
 
   removeTax(){
     this.tax = false;
-    if (parseInt(this.date) > 2015) {
+    if (parseInt(this.date) > 2014) {
       this.total = this.total - 3000;
     } else {
       this.total = this.total - 6000;
