@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PaymentsService {
   url = 'https://lapostededjibouti.herokuapp.com'; //
-  //url = 'http://localhost:3000'; //
+  //  url = 'http://localhost:3000';
   headers;
   constructor(private http: HttpClient) { }
   setHeader() {
@@ -42,7 +42,7 @@ export class PaymentsService {
   }
   postClientForfait(historic, id) {
     this.setHeader();
-    return this.http.post(this.url + '/clientForfait/' +id, historic, { headers: this.headers });
+    return this.http.post(this.url + '/clientForfait/' + id, historic, { headers: this.headers });
 
   }
   postPayment(payment) {

@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ClientsService {
   url = 'https://lapostededjibouti.herokuapp.com'; //
-  //url = 'http://localhost:3000'; //
+  //  url = 'http://localhost:3000';
   headers = new HttpHeaders().set('Content-Type', 'application/json')
     .set('X-Requested-Width', 'XMLHttpRequest').set('Authorization', localStorage.getItem('token'));
   constructor(private http: HttpClient) {

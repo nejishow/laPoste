@@ -68,15 +68,15 @@ export class ClientComponent implements OnInit {
         });
 
       },
-      (error) => {
-        if (error.status === 401) {
-          this.authS.logout();
-        }
+        (error) => {
+          if (error.status === 401) {
+            this.authS.logout();
+          }
 
-      });
+        });
       await this.clientS.getHistoric(params.id).subscribe(async (data: any) => {
         this.historics = data;
-       
+
         await this.historics.sort((a, b) => {
           if (a.date < b.date) {
             return 1;
@@ -96,12 +96,12 @@ export class ClientComponent implements OnInit {
         });
 
       },
-      (error) => {
-        if (error.status === 401) {
-          this.authS.logout();
-        }
+        (error) => {
+          if (error.status === 401) {
+            this.authS.logout();
+          }
 
-      });
+        });
       await this.clientS.getClientBoite(params.id).subscribe(async (datas: any) => {
         this.boites = datas;
         this.currentBoite = this.boites;
@@ -110,12 +110,12 @@ export class ClientComponent implements OnInit {
     this.clientS.getClientType().subscribe((ct: any) => {
       this.allClientType = ct;
     },
-    (error) => {
-      if (error.status === 401) {
-        this.authS.logout();
-      }
+      (error) => {
+        if (error.status === 401) {
+          this.authS.logout();
+        }
 
-    });
+      });
   }
   newBoiteT() {
     this.boiteS.changeBoiteType(this.idUser, this.newBoiteType.get('newBoite').value).subscribe(async (data) => {
@@ -159,8 +159,9 @@ export class ClientComponent implements OnInit {
   }
   getUnpaid(historic) {
     const year = new Date().getFullYear();
-    for (let index = 0; index < year - historic.date; index++) {
-      this.unpaids[index] = { idClient: historic.idClient, date: historic.date + index + 1 };
+    for (let index = 0; index < year - parseInt(historic.date); index++) {
+      // tslint:disable-next-line: radix
+      this.unpaids[index] = { idClient: historic.idClient, date: parseInt(historic.date) + index + 1 };
 
     }
     this.unpaids.sort((a, b) => {

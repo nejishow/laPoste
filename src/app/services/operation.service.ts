@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class OperationService {
   url = 'https://lapostededjibouti.herokuapp.com'; //
-  //url = 'http://localhost:3000'; //
+  //  url = 'http://localhost:3000';
   headers;
   public operation;
   constructor(private http: HttpClient) { }
@@ -33,11 +33,11 @@ export class OperationService {
   }
   deleteOperation(id) {
     this.setHeader();
-    return this.http.post(this.url + '/deleteOp/'+id,{}, { headers: this.headers });
+    return this.http.post(this.url + '/deleteOp/' + id, {}, { headers: this.headers });
   }
-///////////////////////////////
+  ///////////////////////////////
 
-getDeletions(id) { // les operations d'une persone
+  getDeletions(id) { // les operations d'une persone
     this.setHeader();
     return this.http.get(this.url + '/deletions/' + id, { headers: this.headers });
   }
