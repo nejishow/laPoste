@@ -1,32 +1,107 @@
 <div class="row" *ngIf="!error">
   <div class="col-12">
     <ul class="list-group">
-      <li class="list-group-item">Pour la periode : {{date}}</li>
-      <li class="list-group-item">Paiement crée par : {{staff?.name}}</li>
-      <li class="list-group-item">Pour le client : {{client?.clientName}}</li>
-      <li class="list-group-item">Type de boite : {{client?.boiteType}}</li>
-      <li class="list-group-item"><div class="d-flex justify-content-between">
-        <div>Prix de la boite : {{ boite?.price }} Fdj</div>
-        <div><input (change)="changeBoitePrice()" *ngIf="boite?.price" type="text" placeholder="0" [(ngModel)]="boite.price"></div>
-      </div></li>      <li class="list-group-item"> Liste des forfaits: <span *ngIf="forfaits.length===0">Aucun forfait</span>
+      <li class="list-group-item">
+        Pour la periode : <span class="font-weight-bold">{{ date }}</span>
+      </li>
+      <li class="list-group-item">
+        Paiement crée par :
+        <span class="font-weight-bold">{{ staff?.name }}</span>
+      </li>
+      <li class="list-group-item">
+        Pour le client :
+        <span class="font-weight-bold">{{ client?.clientName }}</span>
+      </li>
+      <li class="list-group-item">
+        Type de boite :
+        <span class="font-weight-bold">{{ client?.boiteType }}</span>
+      </li>
+      <li class="list-group-item">
+        <div class="d-flex justify-content-between">
+          <div>
+            Prix de la boite :
+            <span class="font-weight-bold">{{ boite?.price }} Fdj</span>
+          </div>
+          <div>
+            <input
+              (change)="changeBoitePrice()"
+              *ngIf="boite?.price"
+              type="text"
+              placeholder="0"
+              [(ngModel)]="boite.price"
+            />
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        Liste des forfaits:
+        <span *ngIf="forfaits.length === 0">Aucun forfait</span>
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let forfait of forfaits">
-            <span class="mr-5">{{forfait?.name}}</span> <span>{{forfait?.price}}fDJ </span>
+            <span class="mr-5">{{ forfait?.name }}</span>
+            <span>{{ forfait?.price }}fDJ </span>
           </li>
         </ul>
       </li>
-      <li class="list-group-item">Penalité :<button *ngIf="tax" (click)="removeTax()" class="btn-danger">Oui</button>
-        <button *ngIf="!tax" disabled class="btn-success">Non</button></li>
-      <li class="list-group-item">Total : {{total}} Fdj</li>
+      <li class="list-group-item">
+        <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="d-flex justify-content-around"
+          [(ngModel)]="paymentType"
+        >
+          <mat-radio-button
+            class="example-radio-button"
+            value="Espèces"
+          >
+          Espèces
+          </mat-radio-button>
+          <mat-radio-button
+          class="example-radio-button"
+          value="Cheque"
+        >
+        Cheque
+        </mat-radio-button>
+        <mat-radio-button
+        class="example-radio-button"
+        value="Virement banquaire"
+      >
+      Virement banquaire
+      </mat-radio-button>
+        </mat-radio-group>
+      </li>
+      <li class="list-group-item" *ngIf="paymentType !=='Espèces'">
+        <label for="paymentnumber"
+          >Numero de cheque ou de virement banquaire:
+        </label>
+        <input id="paymentnumber" type="text" [value]="payment_number" />
+      </li>
+      <li class="list-group-item">
+        Penalité :<button *ngIf="tax" (click)="removeTax()" class="btn-danger">
+          Oui
+        </button>
+        <button *ngIf="!tax" disabled class="btn-success">Non</button>
+      </li>
+      <li class="list-group-item">Total : {{ total }} Fdj</li>
     </ul>
   </div>
   <div class="col-4 d-flex justify-content-between">
-    <button class="mt-5 align-content-center" [disabled]="encaisser" (click)="payment()">Encaisser</button>
-    <button class="mt-5 align-content-center" *ngIf="encaisser" [routerLink]="[ '/receipt/' + idPayment]">Recu</button>
-
+    <button
+      class="mt-5 align-content-center"
+      [disabled]="encaisser"
+      (click)="payment()"
+    >
+      Encaisser
+    </button>
+    <button
+      class="mt-5 align-content-center"
+      *ngIf="encaisser"
+      [routerLink]="['/receipt/' + idPayment]"
+    >
+      Recu
+    </button>
   </div>
 </div>
 <div class="row" *ngIf="error">
-  Si ce message apparait veuillez appeller le développeur, cela veut dire que vous voulez enregistrer un paiement pour
-  une date anormale
+  Si ce message apparait veuillez appeller le développeur, cela veut dire que
+  vous voulez enregistrer un paiement pour une date anormale
 </div>

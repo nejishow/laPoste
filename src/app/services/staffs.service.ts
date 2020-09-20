@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StaffsService {
-  url = 'https://lapostededjibouti.herokuapp.com'; //
-  //  url = 'http://localhost:3000';
+ // url = 'https://lapostededjibouti.herokuapp.com'; //
+    url = 'http://localhost:3000';
   headers;
   constructor(private http: HttpClient) { }
   setHeader() {

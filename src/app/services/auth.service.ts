@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  url = 'https://lapostededjibouti.herokuapp.com'; //
-  //  url = 'http://localhost:3000';
+ // url = 'https://lapostededjibouti.herokuapp.com'; //
+    url = 'http://localhost:3000';
   headers;
   public isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public error: BehaviorSubject<string> = new BehaviorSubject<string>('');

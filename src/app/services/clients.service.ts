@@ -4,8 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ClientsService {
-  url = 'https://lapostededjibouti.herokuapp.com'; //
-  //  url = 'http://localhost:3000';
+ // url = 'https://lapostededjibouti.herokuapp.com'; //
+    url = 'http://localhost:3000';
   headers = new HttpHeaders().set('Content-Type', 'application/json')
     .set('X-Requested-Width', 'XMLHttpRequest').set('Authorization', localStorage.getItem('token'));
   constructor(private http: HttpClient) {
@@ -78,6 +78,11 @@ export class ClientsService {
   modifiyClient(id, client) {
     this.setHeader();
     return this.http.post(this.url + '/modifyClient/' + id, client, { headers: this.headers });
+  }
+
+  checkClientBoite(id) {
+    this.setHeader();
+    return this.http.post(this.url + '/checkClientBoite/' + id, {}, { headers: this.headers });
   }
 
 }

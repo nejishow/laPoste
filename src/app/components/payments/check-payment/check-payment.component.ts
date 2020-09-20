@@ -34,6 +34,7 @@ export class CheckPaymentComponent implements OnInit {
       this.id = params.id;
       await this.payS.getPayment(this.id).subscribe((_data: any) => {
         this.payment = _data;
+       
         this.staffS.getStaff(_data.idStaff).subscribe((data) => {
           this.staff = data;
         },
@@ -69,7 +70,9 @@ export class CheckPaymentComponent implements OnInit {
 
   cancelPayment() {
     this.payS.removePayment(this.payment._id).subscribe(() => {
-      this.router.navigate(['/client/', this.payment.idClient]);
+      this.clientS.checkClientBoite(this.payment.idClient).subscribe((data)=>{
+        this.router.navigate(['/client/', this.payment.idClient]);
+      })
     });
   }
 }
