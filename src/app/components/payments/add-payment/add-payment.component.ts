@@ -18,11 +18,14 @@ export class AddPaymentComponent implements OnInit {
   date;
   boite;
   tax = false;
+  penalite= 0;
   error = false;
   staff;
   total = 0;
   forfaits = [];
   encaisser = false;
+  payment_number ="";
+  paymentType="Espèces"
   constructor(
     private payS: PaymentsService,
     private authS: AuthService,
@@ -68,8 +71,8 @@ export class AddPaymentComponent implements OnInit {
     });
     this.clientS.getClientBoite(this.idClient).subscribe((data: any) => {
       this.client = data;
-      this.boiteS.getBoiteType(this.client.idBoiteType).subscribe((data1: any) => {
-        this.boite = data1;
+      this.boiteS.getBoiteType(this.client.idBoiteType).subscribe((result: any) => {
+        this.boite = result;
         this.total += this.boite.price;
 
       });
@@ -98,8 +101,11 @@ export class AddPaymentComponent implements OnInit {
     if (this.tax) {
       if (parseInt(this.date) > 2014) {
         this.total = this.total + 3000;
+        this.penalite = 3000;
       } else {
         this.total = this.total + 6000;
+        this.penalite = 6000
+
       }
     }
 
@@ -124,10 +130,13 @@ export class AddPaymentComponent implements OnInit {
       priceBoite: this.boite.price,
       idClient: this.idClient,
       tax: this.tax,
+      penalite: this.penalite,
       forfaits: this.forfaits,
       idStaff: this.staff.id,
       date: this.date,
       total: this.total,
+      payment_number: this.payment_number,
+      payment_type: this.paymentType
     };
     await this.payS.postPayment(this.newPayment).subscribe(async (result: any) => {
       this.clientS.updateClient(this.idClient).subscribe(async (data: any) => {
@@ -143,8 +152,11 @@ export class AddPaymentComponent implements OnInit {
     this.tax = false;
     if (parseInt(this.date) > 2014) {
       this.total = this.total - 3000;
+      this.penalite = 0;
     } else {
       this.total = this.total - 6000;
+      this.penalite = 0
+
     }
     
   }

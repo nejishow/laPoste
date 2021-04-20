@@ -41,12 +41,12 @@ export const ROUTES: RouteInfo[] = [
     icon: faUser,
     class: 'text-danger',
   },
-  {
-    path: '/allBp',
-    title: 'Boites postales',
-    icon: faBox,
-    class: '',
-  },
+  // {
+  //   path: '/allBp',
+  //   title: 'Boites postales',
+  //   icon: faBox,
+  //   class: '',
+  // },
   {
     path: '/stats',
     title: 'Statistiques',
@@ -81,15 +81,15 @@ export class SidebarComponent implements OnInit {
 
   MENU = [
 
-    {
-      path: '/allBp',
-      title: 'Boites postales',
-      hasPower: true,
-      isSuperviseur: true,
-      isVisiteur: true,
-      icon: faBox,
-      class: '',
-    },
+    // {
+    //   path: '/allBp',
+    //   title: 'Boites postales',
+    //   hasPower: true,
+    //   isSuperviseur: true,
+    //   isVisiteur: true,
+    //   icon: faBox,
+    //   class: '',
+    // },
     {
       path: '/activity',
       title: 'Activités',

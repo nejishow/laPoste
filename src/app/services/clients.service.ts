@@ -80,4 +80,9 @@ export class ClientsService {
     return this.http.post(this.url + '/modifyClient/' + id, client, { headers: this.headers });
   }
 
+  checkClientBoite(id) {
+    this.setHeader();
+    return this.http.post(this.url + '/checkClientBoite/' + id, {}, { headers: this.headers });
+  }
+
 }

@@ -1,29 +1,48 @@
 <div class="row">
   <div class="col-12">
-     Total: {{total}} | Redevance: {{redevance}}
+    Total: {{ total }} | Redevance: {{ redevance }} | Penalité: {{ penalite }}
+  </div>
+  <div class="col-12">
+    Livraison à domicile: {{ operations.livraison_domicile }} | Changement de nom: {{ operations.changement_nom }} | Changement de statut: {{ operations.changement_statut }}
+  Collecte: {{ operations.collecte }} | Achat clé: {{ operations.achat_cle }} | sous couvert: {{ operations.sc }}
+
   </div>
 </div>
 <div class="row">
-  <div class="col-12" *ngIf="allPayments.length>0">
+  <div class="col-12" *ngIf="allPayments.length > 0">
     <mat-form-field appearance="fill">
       <mat-label>Filtrer par date</mat-label>
-      <input [max]="maxDate" matInput [matDatepicker]="picker" readonly [(ngModel)]="date" (dateInput)="checkDate()">
+      <input
+        [max]="maxDate"
+        matInput
+        [matDatepicker]="picker"
+        readonly
+        [(ngModel)]="date"
+        (dateInput)="checkDate()"
+      />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
 </div>
-<div class="row" *ngIf="allPayments.length>0">
+<div class="row" *ngIf="allPayments.length > 0">
   <div class="col-12">
     <h1>Paiement des redevances</h1>
-    <button *ngIf="filteredPayments.length>0" (click)="exportAsXLSX()">Telecharger</button>
+    <button *ngIf="filteredPayments.length > 0" (click)="exportAsXLSX()">
+      Telecharger
+    </button>
   </div>
   <div class="col-12 col-md-10">
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+    <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      showFirstLastButtons
+    >
     </mat-paginator>
   </div>
   <div class="col-sm-12 col-md-10">
-    <div class="card" *ngIf="filteredPayments.length>0">
+    <div class="card" *ngIf="filteredPayments.length > 0">
       <div class="example-container mat-elevation-z8 card-body">
         <mat-table [dataSource]="datasource" matSort>
           <!-- status Column -->
@@ -32,7 +51,6 @@
               Nouvelle abonné
             </mat-header-cell>
             <mat-cell class="mr-2" *matCellDef="let row">
-
               <span *ngIf="row?.NA" class="text-warning">
                 <mat-icon>star</mat-icon>
               </span>
@@ -44,8 +62,11 @@
               Nom du client
             </mat-header-cell>
             <mat-cell class="mr-2" *matCellDef="let row">
-              <a [routerLink]="['/client/' + row.idClient]"
-                routerLinkActive="router-link-active">{{row?.clientName}}</a>
+              <a
+                [routerLink]="['/client/' + row.idClient]"
+                routerLinkActive="router-link-active"
+                >{{ row?.clientName }}</a
+              >
             </mat-cell>
           </ng-container>
 
@@ -54,7 +75,9 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Numero de la boite
             </mat-header-cell>
-            <mat-cell class="mr-2" *matCellDef="let row"> {{ row.boiteNumber }} </mat-cell>
+            <mat-cell class="mr-2" *matCellDef="let row">
+              {{ row.boiteNumber }}
+            </mat-cell>
           </ng-container>
 
           <!-- clientType Column -->
@@ -62,14 +85,18 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Type de boite
             </mat-header-cell>
-            <mat-cell class="mr-2" *matCellDef="let row"> {{ row.boiteType }} </mat-cell>
+            <mat-cell class="mr-2" *matCellDef="let row">
+              {{ row.boiteType }}
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="total">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Montant payé
             </mat-header-cell>
-            <mat-cell class="mr-2" *matCellDef="let row"> {{ row.total }} </mat-cell>
+            <mat-cell class="mr-2" *matCellDef="let row">
+              {{ row.total }}
+            </mat-cell>
           </ng-container>
 
           <!-- Action Column -->
@@ -78,7 +105,16 @@
               Agent
             </mat-header-cell>
             <mat-cell class="mr-2" *matCellDef="let row">
-              {{row?.staffName}}
+              {{ row?.staffName }}
+            </mat-cell>
+          </ng-container>
+          <!-- Action Column -->
+          <ng-container matColumnDef="penalite">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Penalite
+            </mat-header-cell>
+            <mat-cell class="mr-2" *matCellDef="let row">
+              {{ row?.penalite }}
             </mat-cell>
           </ng-container>
 
@@ -91,48 +127,34 @@
 </div>
 <div class="row">
   <div class="col-12">
-    <div class="loading" *ngIf="allPayments.length<1">
+    <div class="loading" *ngIf="allPayments.length < 1">
       <mat-spinner color="warning" diameter="100"></mat-spinner>
     </div>
-  </div>
-</div>
-<div class="row mt-5" *ngIf="allPayments.length>0">
-  <div class="col-12 col-md-5">
-    <div class=" mat-raised-button rounded border border-success p-3" style="display: block;">
-      <div class="mb-5">
-        <span class="h6">La répartition de toute les boites payées</span>
-      </div>
-      <canvas *ngIf="filteredPayments.length>0" baseChart [data]="pieChartData" [labels]="pieChartLabels"
-        [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
-      </canvas>
-    </div>
-
-  </div>
-  <div class="col-12 col-md-5">
-    <div class=" mat-raised-button rounded border border-success p-3" style="display: block;">
-      <div class="mb-5">
-        <span class="h6">La répartition des nouvelles boites attribuées</span>
-      </div>
-      <canvas *ngIf="filteredPayments.length>0" baseChart [data]="pieChartData2" [labels]="pieChartLabels"
-        [chartType]="pieChartType" [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
-      </canvas>
-    </div>
-
   </div>
 </div>
 
 <div class="row mt-5 mb-5">
   <div class="col-12 mb-5">
     <h1 class="mt-5">Autres paiements</h1>
-    <button *ngIf="filteredOperations.length>0" (click)="exportAsXLSX_OP()">Telecharger</button>
+    <button *ngIf="filteredOperations.length > 0" (click)="exportAsXLSX_OP()">
+      Telecharger
+    </button>
 
     <div class="d-flex justify-content-between p-2">
-      <ngb-pagination [collectionSize]="operationTab?.length" [(page)]="currentPage" [pageSize]="pageSize2"
-        (pageChange)="refreshOperations()">
+      <ngb-pagination
+        [collectionSize]="operationTab?.length"
+        [(page)]="currentPage"
+        [pageSize]="pageSize2"
+        (pageChange)="refreshOperations()"
+      >
       </ngb-pagination>
 
-      <select class="custom-select border-warning" style="width: auto" [(ngModel)]="pageSize2"
-        (ngModelChange)="refreshOperations()">
+      <select
+        class="custom-select border-warning"
+        style="width: auto"
+        [(ngModel)]="pageSize2"
+        (ngModelChange)="refreshOperations()"
+      >
         <option [ngValue]="2">2 opérations par page</option>
         <option [ngValue]="4">4 opérations par page</option>
         <option [ngValue]="6">6 opérations par page</option>
@@ -154,13 +176,11 @@
           <td>
             {{ operation.name }}
           </td>
-          <td>{{ operations.clientName}}</td>
+          <td>{{ operations.clientName }}</td>
           <td>{{ operation.price }}</td>
           <td>{{ operations.staffName }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-
-
 </div>
