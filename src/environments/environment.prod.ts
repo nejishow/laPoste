@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUrl: 'https://lapostededjibouti.herokuapp.com'
+  backendURL: 'https://lapostededjibouti.herokuapp.com'
 };
