@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ClientsService {
-  url = 'https://lapostededjibouti.herokuapp.com'; //
-  //  url = 'http://localhost:3000';
+  url = environment.backendURL;
   headers = new HttpHeaders().set('Content-Type', 'application/json')
     .set('X-Requested-Width', 'XMLHttpRequest').set('Authorization', localStorage.getItem('token'));
   constructor(private http: HttpClient) {

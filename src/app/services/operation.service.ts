@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OperationService {
-  url = 'https://lapostededjibouti.herokuapp.com'; //
-  //  url = 'http://localhost:3000';
+  url = environment.backendURL;
   headers;
   public operation;
   constructor(private http: HttpClient) { }

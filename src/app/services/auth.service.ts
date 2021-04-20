@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -7,8 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  url = 'https://lapostededjibouti.herokuapp.com'; //
-  //  url = 'http://localhost:3000';
+  url = environment.backendURL;
   headers;
   public isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public error: BehaviorSubject<string> = new BehaviorSubject<string>('');
